@@ -1,5 +1,5 @@
 import React from "react";
-import type { Workout } from "~/types/workout";
+import type { Workout } from "~/features/workout/types/workout";
 
 interface WorkoutContextType {
   workout: Workout;

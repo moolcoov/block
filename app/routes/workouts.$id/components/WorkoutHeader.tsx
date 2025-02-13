@@ -1,11 +1,12 @@
-import type { WorkoutTag } from "~/types/workout";
+import type { WorkoutTag } from "~/features/workout/types/workout";
 import { useWorkout } from "./WorkoutProvider";
+import { DifficultyEasyIcon } from "~/components/icons";
 
 export const WorkoutHeader = () => {
   const workout = useWorkout();
 
   return (
-    <header className="relative flex h-[80dvh] w-full flex-col items-center justify-end bg-gradient-to-t bg-[url(/hero.jpg)] bg-cover bg-center text-center">
+    <header className="relative flex h-[75svh] w-full flex-col items-center justify-end bg-gradient-to-t bg-[url(/hero.jpg)] bg-cover bg-center text-center">
       <div className="absolute inset-0 bg-black/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent to-40%" />
 
@@ -14,7 +15,7 @@ export const WorkoutHeader = () => {
           {workout.title}
         </h1>
         {workout.tags && (
-          <div className="mt-4 flex gap-2">
+          <div className="mt-3 flex gap-2">
             {workout.tags.map((tag) => (
               <Tag key={tag.id} tag={tag} />
             ))}
@@ -30,7 +31,7 @@ export const WorkoutHeader = () => {
             label="Время тренировки"
           />
           <span className="bg-border h-10 w-[1px]" />
-          <InfoCard info={<></>} label="Легко" />
+          <InfoCard info={<DifficultyEasyIcon size={22} />} label="Легко" />
         </div>
       </div>
     </header>
@@ -41,7 +42,7 @@ const Tag = ({ tag }: { tag: WorkoutTag }) => {
   return (
     <div
       style={{ background: "rgba(0, 0, 0, 0.4)" }}
-      className="flex h-[27px] items-center rounded-md px-2.5 text-xs font-medium"
+      className="flex h-[27px] items-center rounded-md px-2.5 text-xs font-medium backdrop-blur-sm"
     >
       {tag.label}
     </div>
@@ -56,7 +57,7 @@ const InfoCard = ({
   label: string;
 }) => {
   return (
-    <div className="flex flex-1 flex-col items-center gap-1.5">
+    <div className="flex h-full flex-1 flex-col items-center justify-between gap-1">
       {info}
       <span className="text-sm font-medium">{label}</span>
     </div>
