@@ -1,24 +1,20 @@
+import type { Tag } from "./tags";
+
 export interface Exercise {
+  id: number;
   title: string;
   difficulty: ExerciseDifficulty;
-  equipment: [
-    {
-      id: number;
-      label: string;
-    },
-  ];
-  tags?: ExerciseTag[];
+  equipment: {
+    id: number;
+    label: string;
+  }[];
+  tags?: Tag[];
 }
 
 export enum ExerciseDifficulty {
   EASY = "easy",
   MEDIUM = "medium",
   HARD = "hard",
-}
-
-export interface ExerciseTag {
-  id: number;
-  label: string;
 }
 
 export interface ExerciseFilters {
