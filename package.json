@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
-    "dev": "vite dev --host",
-    "start": "react-router-serve",
+    "dev": "react-router dev --host",
+    "start": "vite",
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {

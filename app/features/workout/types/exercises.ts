@@ -7,6 +7,7 @@ export interface Exercise {
       label: string;
     },
   ];
+  tags?: ExerciseTag[];
 }
 
 export enum ExerciseDifficulty {
@@ -21,6 +22,7 @@ export interface ExerciseTag {
 }
 
 export interface ExerciseFilters {
-  tags?: ExerciseTag[];
+  tags?: number[];
   difficulty?: ExerciseDifficulty[];
+  equipment?: number[];
 }

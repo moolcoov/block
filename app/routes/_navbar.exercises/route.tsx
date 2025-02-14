@@ -13,8 +13,18 @@ export const exercises: Exercise[] = [
     difficulty: ExerciseDifficulty.HARD,
     equipment: [
       {
-        id: 1,
+        id: 2,
         label: "Гиря",
+      },
+    ],
+    tags: [
+      {
+        id: 1,
+        label: "Штанга",
+      },
+      {
+        id: 2,
+        label: "Штанга",
       },
     ],
   },
@@ -27,11 +37,24 @@ export const exercises: Exercise[] = [
         label: "Брусья",
       },
     ],
+    tags: [
+      {
+        id: 2,
+        label: "Штанга",
+      },
+    ],
   },
   {
     title: "Приседания",
     difficulty: ExerciseDifficulty.EASY,
     equipment: [
+      {
+        id: 3,
+        label: "Штанга",
+      },
+    ],
+
+    tags: [
       {
         id: 3,
         label: "Штанга",

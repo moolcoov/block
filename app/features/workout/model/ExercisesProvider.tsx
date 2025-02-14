@@ -9,7 +9,8 @@ interface ExercisesContextType {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   filters: ExerciseFilters;
-  setFilters: (filters: ExerciseFilters) => void;
+  setFilters: React.Dispatch<React.SetStateAction<ExerciseFilters>>;
+  activeFilters: number;
 }
 
 const ExercisesContext = React.createContext<ExercisesContextType | undefined>(
@@ -28,9 +29,43 @@ export const ExercisesProvider = ({
   const [searchQuery, setSearchQuery] = React.useState("");
   const [filters, setFilters] = React.useState<ExerciseFilters>({});
 
+  const activeFilters = React.useMemo(() => {
+    return Object.values(filters).reduce((acc, curr) => acc + curr.length, 0);
+  }, [filters]);
+
+  const filteredExercises = React.useMemo(() => {
+    if (searchQuery != "") {
+      return exercises;
+    }
+
+    return exercises.filter((exercise) => {
+      const matchesDifficulty =
+        !(filters.difficulty && filters.difficulty.length > 0) ||
+        filters.difficulty.includes(exercise.difficulty);
+
+      const matchesEquipment =
+        !(filters.equipment && filters.equipment.length > 0) ||
+        exercise.equipment.some((eq) => filters.equipment!.includes(eq.id));
+
+      const matchesTags =
+        !(filters.tags && filters.tags.length > 0) ||
+        (exercise.tags &&
+          exercise.tags.some((tag) => filters.tags!.includes(tag.id)));
+
+      return matchesDifficulty && matchesEquipment && matchesTags;
+    });
+  }, [exercises, filters, searchQuery]);
+
   return (
     <ExercisesContext.Provider
-      value={{ exercises, searchQuery, setSearchQuery, filters, setFilters }}
+      value={{
+        exercises: filteredExercises,
+        searchQuery,
+        setSearchQuery,
+        filters,
+        setFilters,
+        activeFilters,
+      }}
     >
       {children}
     </ExercisesContext.Provider>
@@ -53,10 +88,14 @@ export const useExercisesSearchQuery = () => {
   return [context.searchQuery, context.setSearchQuery];
 };
 
-export const useExercisesFilters = () => {
+export const useExercisesFilters = (): [
+  ExerciseFilters,
+  React.Dispatch<React.SetStateAction<ExerciseFilters>>,
+  number,
+] => {
   const context = React.useContext(ExercisesContext);
   if (context === undefined) {
     throw new Error("useFilters must be used within a ExercisesProvider");
   }
-  return [context.filters, context.setFilters];
+  return [context.filters, context.setFilters, context.activeFilters];
 };
