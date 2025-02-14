@@ -33,7 +33,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <div data-vaul-drawer-wrapper>{children}</div>
         <ScrollRestoration />
         <Scripts />
       </body>

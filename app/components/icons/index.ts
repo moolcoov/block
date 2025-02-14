@@ -4,8 +4,10 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
 
 export const fillPrimary = "var(--fill-primary, currentColor)";
 
+export * from "./Check";
 export * from "./Difficulty";
 export * from "./Filters";
 export * from "./Heart";
 export * from "./Pencil";
 export * from "./Share";
+export * from "./Xmark";
