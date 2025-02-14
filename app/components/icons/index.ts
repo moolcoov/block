@@ -8,6 +8,7 @@ export * from "./Check";
 export * from "./Difficulty";
 export * from "./Filters";
 export * from "./Heart";
+export * from "./Magnifier";
 export * from "./Pencil";
 export * from "./Share";
 export * from "./Xmark";

@@ -1,14 +1,19 @@
-import React from "react";
 import { FiltersButton } from "~/components/FiltersButton";
 import {
   useExercises,
   useExercisesFilters,
+  useExercisesSearchQuery,
 } from "~/features/workout/model/ExercisesProvider";
 import { ExercisesFiltersModal } from "~/features/workout/ui/ExercisesFiltersModal";
 
 export const ExercisesInfo = () => {
   const exercises = useExercises();
+  const [searchQuery] = useExercisesSearchQuery();
   const [, , activeFilters] = useExercisesFilters();
+
+  if (searchQuery !== "") {
+    return null;
+  }
 
   return (
     <div className="flex items-center justify-between">

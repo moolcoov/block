@@ -7,7 +7,7 @@ import type {
 interface ExercisesContextType {
   exercises: Exercise[];
   searchQuery: string;
-  setSearchQuery: (query: string) => void;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   filters: ExerciseFilters;
   setFilters: React.Dispatch<React.SetStateAction<ExerciseFilters>>;
   activeFilters: number;
@@ -35,7 +35,19 @@ export const ExercisesProvider = ({
 
   const filteredExercises = React.useMemo(() => {
     if (searchQuery != "") {
-      return exercises;
+      const searchQueryLower = searchQuery.toLowerCase();
+
+      return exercises.filter((exercise) => {
+        const matchesName = exercise.title
+          .toLowerCase()
+          .includes(searchQueryLower);
+
+        const matchesEquipment = exercise.equipment.some((eq) => {
+          return eq.label.toLowerCase().includes(searchQueryLower);
+        });
+
+        return matchesName || matchesEquipment;
+      });
     }
 
     return exercises.filter((exercise) => {
@@ -80,7 +92,10 @@ export const useExercises = () => {
   return context.exercises;
 };
 
-export const useExercisesSearchQuery = () => {
+export const useExercisesSearchQuery = (): [
+  string,
+  React.Dispatch<React.SetStateAction<string>>,
+] => {
   const context = React.useContext(ExercisesContext);
   if (context === undefined) {
     throw new Error("useSearchQuery must be used within a ExercisesProvider");
