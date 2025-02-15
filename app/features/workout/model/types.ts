@@ -1,25 +1,44 @@
-import type { UUID } from "crypto";
+import type { Exercise } from "~/features/exercise/model/types";
 import type { Difficulty } from "~/shared/types/difficulty";
+import type { Equipment } from "~/shared/types/equipment";
+import type { Tag } from "~/shared/types/tags";
+import type { UUID } from "~/shared/types/uuid";
 
 export interface Workout {
   id: UUID;
   title: string;
-  tags?: WorkoutTag[];
-  workoutTime: number;
+  workoutTime: number; // в мин
   difficulty: Difficulty;
 
-  // sections: [
-  //   {
-  //     title: "JISDJskd";
+  equipment?: Equipment[];
+  tags?: Tag[];
 
-  //     exersizes: [];
-  //   },
-  // ];
+  sections: WorkoutSection[];
+
+  createdAt: Date;
+
+  saved?: boolean;
 }
 
-// type Difficulty = "easy" | "medium" | "hard";
-
-export interface WorkoutTag {
+export interface WorkoutSection {
   id: number;
-  label: string;
+  title: string;
+  exercises: WorkoutExercise[];
+}
+
+export interface WorkoutExercise extends Exercise {
+  sets: WorkoutExerciseSet[];
+}
+
+export interface WorkoutExerciseSet {
+  id: number;
+  reps: number;
+  weight?: "bodyWeight" | number;
+  time?: number;
+}
+
+export interface WorkoutFilters {
+  tags?: UUID[];
+  difficulty?: Difficulty[];
+  equipment?: UUID[];
 }

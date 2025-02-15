@@ -29,7 +29,7 @@ export const Navbar = () => {
   const pathname = useLocation().pathname;
 
   return (
-    <div className="fixed bottom-0 w-full px-5 pb-(--bottom-navbar)">
+    <div className="fixed bottom-0 z-40 w-full px-5 pb-(--bottom-navbar)">
       <nav className="bg-navbar flex h-[70px] w-full items-center rounded-full px-2.5 backdrop-blur-[50px]">
         <div className="flex w-full items-center">
           {links.map((link) => (
@@ -37,7 +37,7 @@ export const Navbar = () => {
               key={link.label}
               to={link.href}
               className={cn(
-                "text-navbar-inactive flex flex-1 flex-col items-center gap-1",
+                "text-navbar-inactive flex flex-1 flex-col items-center gap-1 transition-transform active:scale-[0.9]",
                 {
                   "text-navbar-active": pathname === link.href,
                 },

@@ -5,7 +5,7 @@ const DB_NAME = "workoutDB";
 const VERSION = 1;
 
 export const initDB = async () => {
-  return openDB(DB_NAME, 3, {
+  return openDB(DB_NAME, VERSION, {
     upgrade(db) {
       if (!db.objectStoreNames.contains("exercises")) {
         db.createObjectStore("exercises", {

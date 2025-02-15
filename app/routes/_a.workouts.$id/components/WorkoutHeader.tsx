@@ -7,7 +7,7 @@ export const WorkoutHeader = () => {
   const workout = useWorkout();
 
   return (
-    <header className="relative flex h-[75svh] w-full flex-col items-center justify-end bg-[url(/hero.jpg)] bg-cover bg-center text-center">
+    <header className="relative flex h-[75vh] w-full flex-col items-center justify-end bg-[url(/hero.jpg)] bg-cover bg-center text-center">
       <div className="absolute inset-0 bg-black/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent to-40%" />
 

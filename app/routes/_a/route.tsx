@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router";
-import { useExercisesStore } from "~/features/exercises/model/store";
+import { useExercisesStore } from "~/features/exercise/model/store";
 
 export default function AppLayout() {
   const { fetchExercises, ins } = useExercisesStore();
@@ -21,7 +21,7 @@ export default function AppLayout() {
   return (
     <>
       <Outlet />
-      <button onClick={async () => await ins()}>INS</button>
+      {/* <button onClick={async () => await ins()}>INS</button> */}
     </>
   );
 }

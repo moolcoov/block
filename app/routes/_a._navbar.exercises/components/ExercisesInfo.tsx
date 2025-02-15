@@ -3,8 +3,8 @@ import {
   useExercises,
   useExercisesFilters,
   useExercisesSearchQuery,
-} from "~/features/exercises/model/ExercisesProvider";
-import { ExercisesFiltersModal } from "~/features/exercises/ui/ExercisesFiltersModal";
+} from "~/features/exercise/model/ExercisesProvider";
+import { ExercisesFiltersModal } from "~/features/exercise/ui/ExercisesFiltersModal";
 import { pluralize } from "~/shared/lib/pluralize";
 
 export const ExercisesInfo = () => {

@@ -1,5 +1,4 @@
 import { type Workout } from "~/features/workout/model/types";
-import type { Route } from "./+types/route";
 import { WorkoutProvider } from "./components/WorkoutProvider";
 import { WorkoutHeader } from "./components/WorkoutHeader";
 import { WorkoutButton } from "./components/WorkoutButton";
@@ -12,31 +11,35 @@ const workout: Workout = {
   title: "ВЕРХ ТЕЛА НА СИЛУ",
   tags: [
     {
-      id: 1,
+      id: "1",
       label: "Мышцы кора",
     },
     {
-      id: 2,
+      id: "2",
       label: "Пресс",
     },
     {
-      id: 3,
+      id: "3",
       label: "Для начинающих",
     },
   ],
   workoutTime: 28,
   difficulty: Difficulty.EASY,
+  sections: [],
+  createdAt: new Date(),
 };
 
-export default function WorkoutPage({ params }: Route.ComponentProps) {
+export default function WorkoutPage() {
   return (
-    <WorkoutProvider workout={workout}>
-      <div className="pb-[84px]">
-        <WorkoutHeader />
-        <WorkoutActions />
-        <WorkoutExercises />
-        <WorkoutButton />
-      </div>
-    </WorkoutProvider>
+    <div>
+      <WorkoutProvider workout={workout}>
+        <div className="pb-[84px]">
+          <WorkoutHeader />
+          <WorkoutActions />
+          <WorkoutExercises />
+          <WorkoutButton />
+        </div>
+      </WorkoutProvider>
+    </div>
   );
 }
