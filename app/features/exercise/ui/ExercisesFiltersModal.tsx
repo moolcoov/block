@@ -13,6 +13,7 @@ import { getDifficultyIcon, getDifficultyLabel } from "~/shared/lib/difficulty";
 import { CheckIcon, XmarkIcon } from "~/shared/ui/icons";
 import { Button } from "~/shared/ui/Button";
 import { Difficulty } from "~/shared/types/difficulty";
+import type { UUID } from "~/shared/types/uuid";
 
 export const ExercisesFiltersModal = ({
   children,
@@ -69,12 +70,12 @@ const ExercisesFilters = () => {
 };
 
 const tags = [
-  { id: 1, label: "Штанга" },
-  { id: 2, label: "Бокс" },
-  { id: 3, label: "Брусья" },
-  { id: 4, label: "Бутерброд" },
-  { id: 5, label: "Велосипед" },
-  { id: 6, label: "Велотрековая баска" },
+  { id: "1", label: "Штанга" },
+  { id: "2", label: "Бокс" },
+  { id: "3", label: "Брусья" },
+  { id: "4", label: "Бутерброд" },
+  { id: "5", label: "Велосипед" },
+  { id: "6", label: "Велотрековая баска" },
 ];
 
 const ExercisesFiltersTags = () => {
@@ -84,7 +85,7 @@ const ExercisesFiltersTags = () => {
     return null;
   }
 
-  const addTag = React.useCallback((id: number) => {
+  const addTag = React.useCallback((id: UUID) => {
     return () => {
       setFilters((prev) => {
         return { ...prev, tags: [...(prev.tags || []), id] };
@@ -92,7 +93,7 @@ const ExercisesFiltersTags = () => {
     };
   }, []);
 
-  const removeTag = React.useCallback((id: number) => {
+  const removeTag = React.useCallback((id: UUID) => {
     return () => {
       setFilters((prev) => {
         return { ...prev, tags: prev.tags?.filter((tag) => tag !== id) };
@@ -180,19 +181,19 @@ const ExercisesFiltersDifficulty = () => {
 };
 
 const equipment = [
-  { id: 1, label: "Брусья" },
-  { id: 2, label: "Бутерброд" },
-  { id: 3, label: "Велосипед" },
-  { id: 4, label: "Велотрековая баска" },
-  { id: 5, label: "Гимнастический коврик" },
-  { id: 6, label: "Гиря" },
-  { id: 7, label: "Губка" },
+  { id: "1", label: "Брусья" },
+  { id: "2", label: "Бутерброд" },
+  { id: "3", label: "Велосипед" },
+  { id: "4", label: "Велотрековая баска" },
+  { id: "5", label: "Гимнастический коврик" },
+  { id: "6", label: "Гиря" },
+  { id: "7", label: "Губка" },
 ];
 
 const ExercisesEquipment = () => {
   const [filters, setFilters] = useExercisesFilters();
 
-  const addEquipment = React.useCallback((equipment: number) => {
+  const addEquipment = React.useCallback((equipment: UUID) => {
     return () => {
       setFilters((prev) => {
         return { ...prev, equipment: [...(prev.equipment || []), equipment] };
@@ -200,7 +201,7 @@ const ExercisesEquipment = () => {
     };
   }, []);
 
-  const removeEquipment = React.useCallback((equipment: number) => {
+  const removeEquipment = React.useCallback((equipment: UUID) => {
     return () => {
       setFilters((prev) => {
         return {
