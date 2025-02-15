@@ -5,6 +5,7 @@ import {
   useExercisesSearchQuery,
 } from "~/features/exercises/model/ExercisesProvider";
 import { ExercisesFiltersModal } from "~/features/exercises/ui/ExercisesFiltersModal";
+import { pluralize } from "~/shared/lib/pluralize";
 
 export const ExercisesInfo = () => {
   const exercises = useExercises();
@@ -17,7 +18,13 @@ export const ExercisesInfo = () => {
 
   return (
     <div className="flex items-center justify-between">
-      <h2 className="text-xl font-black">{exercises.length} УПРАЖНЕНИЙ</h2>
+      <h2 className="text-xl font-black">
+        {pluralize(exercises.length, [
+          "УПРАЖНЕНИЕ",
+          "УПРАЖНЕНИЯ",
+          "УПРАЖНЕНИЙ",
+        ])}
+      </h2>
       <ExercisesFiltersModal asChild>
         <FiltersButton activeFilters={activeFilters} />
       </ExercisesFiltersModal>
