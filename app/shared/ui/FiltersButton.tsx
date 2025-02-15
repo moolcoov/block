@@ -1,5 +1,6 @@
 import { cn } from "~/shared/lib/utils";
 import { FiltersIcon } from "./icons";
+import { pluralize } from "../lib/pluralize";
 
 interface FiltersButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -21,7 +22,7 @@ export const FiltersButton = ({
       <FiltersIcon size={12} />
       <span className="text-xs font-medium">
         {activeFilters && activeFilters > 0
-          ? `${activeFilters} фильтров`
+          ? pluralize(activeFilters, ["фильтр", "фильтра", "фильтров"])
           : "Фильтры"}
       </span>
     </button>
