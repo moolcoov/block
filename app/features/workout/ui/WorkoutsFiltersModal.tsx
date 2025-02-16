@@ -31,9 +31,13 @@ export const WorkoutsFiltersModal = ({
       <DrawerTrigger asChild={asChild}>{children}</DrawerTrigger>
       <DrawerContent className="max-h-[85vh]">
         <DrawerClose asChild>
-          <button className="bg-muted fixed top-5 left-5 z-30 flex h-9 w-9 items-center justify-center rounded-full">
+          <Button
+            variant={"secondary"}
+            size={"icon"}
+            className="fixed top-5 left-5 z-30"
+          >
             <XmarkIcon size={19} />
-          </button>
+          </Button>
         </DrawerClose>
         <DrawerHeader>
           <DrawerTitle>ФИЛЬТРЫ</DrawerTitle>
