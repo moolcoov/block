@@ -11,6 +11,8 @@ export interface Exercise {
   equipment?: Equipment[];
   tags?: Tag[];
 
+  notes?: string;
+
   createdAt: Date;
   editedAt?: Date;
 }

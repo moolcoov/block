@@ -22,6 +22,11 @@ export const getExerciseByIdFromDB = async (id: UUID) => {
   return db.get(EXERCISES_STORE_NAME, id);
 };
 
+export const updateExerciseInDB = async (exercise: Exercise) => {
+  const db = await initDB();
+  return db.put(EXERCISES_STORE_NAME, exercise);
+};
+
 export const deleteExerciseFromDB = async (id: UUID) => {
   const db = await initDB();
   return db.delete(EXERCISES_STORE_NAME, id);

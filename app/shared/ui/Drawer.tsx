@@ -7,13 +7,20 @@ import { cn } from "~/shared/lib/utils";
 
 const Drawer = ({
   shouldScaleBackground = true,
+  nested,
   ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
-  <DrawerPrimitive.Root
-    shouldScaleBackground={shouldScaleBackground}
-    {...props}
-  />
-);
+}: React.ComponentProps<typeof DrawerPrimitive.Root>) =>
+  !nested ? (
+    <DrawerPrimitive.Root
+      shouldScaleBackground={shouldScaleBackground}
+      {...props}
+    />
+  ) : (
+    <DrawerPrimitive.NestedRoot
+      shouldScaleBackground={shouldScaleBackground}
+      {...props}
+    />
+  );
 Drawer.displayName = "Drawer";
 
 const DrawerTrigger = DrawerPrimitive.Trigger;
@@ -80,6 +87,18 @@ const DrawerTitle = React.forwardRef<
 ));
 DrawerTitle.displayName = DrawerPrimitive.Title.displayName;
 
+const DrawerHandle = React.forwardRef<
+  React.ComponentRef<typeof DrawerPrimitive.Handle>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Handle>
+>(({ className, ...props }, ref) => (
+  <div
+    className="bg-muted absolute top-3 right-1/2 left-1/2 h-2 w-11 -translate-x-1/2 rounded-full"
+    ref={ref}
+    {...props}
+  />
+));
+DrawerHandle.displayName = DrawerPrimitive.Handle.displayName;
+
 export {
   Drawer,
   DrawerPortal,
@@ -89,4 +108,5 @@ export {
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
+  DrawerHandle,
 };

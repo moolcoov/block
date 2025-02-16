@@ -13,6 +13,11 @@ import type { UUID } from "~/shared/types/uuid";
 import React from "react";
 import { useDatabase } from "~/shared/lib/indexedDB";
 import { getExerciseByIdFromDB } from "../model/db";
+import { Button } from "~/shared/ui/Button";
+import { Loading } from "~/shared/ui/Loading";
+import { ExerciseNotesModal } from "./ExerciseNotesModal";
+import { ExerciseProvider } from "../model/ExerciseProvider";
+import type { Equipment } from "~/shared/types/equipment";
 
 interface ExerciseModalProps {
   id: UUID;
@@ -25,9 +30,13 @@ export const ExerciseModal = ({ id, children }: ExerciseModalProps) => {
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="h-[85vh] overflow-hidden">
         <DrawerClose asChild>
-          <button className="bg-muted/50 absolute top-5 left-5 z-30 flex h-9 w-9 items-center justify-center rounded-full backdrop-blur-xs">
+          <Button
+            variant={"secondary"}
+            size={"icon"}
+            className="fixed top-5 left-5 z-40"
+          >
             <XmarkIcon size={19} />
-          </button>
+          </Button>
         </DrawerClose>
         <Content id={id} />
       </DrawerContent>
@@ -40,43 +49,44 @@ const Content = ({ id }: { id: UUID }) => {
     getExerciseByIdFromDB(id),
   );
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading />;
 
   if (!exercise) return <div>Exercise not found</div>;
+  // TODO
 
   const DifficultyIcon = getDifficultyIcon(exercise.difficulty);
 
   return (
-    <div>
-      <div className="relative flex h-[50vh] w-full items-end justify-center bg-[url(/exercise.png)] bg-cover bg-center text-center">
-        <div className="absolute inset-0 bg-black/20" />
-        <div className="from-background-200 absolute inset-0 bg-gradient-to-t to-transparent to-30%" />
-        <h1 className="z-10 text-3xl font-black">{exercise.title}</h1>
-      </div>
-      <div className="px-5">
-        <ActionButtons />
-        <div className="mt-6 flex w-full items-center px-3">
-          <InfoColumn
-            info={<span className="text-xl font-black">22 раза</span>}
-            label="Рекорд за день"
-          />
-          <InfoColumn info={<DifficultyIcon size={25} />} label="Легко" />
+    <ExerciseProvider exercise={exercise}>
+      <div className="relative">
+        <div className="relative flex h-[50vh] w-full items-end justify-center bg-[url(/exercise.png)] bg-cover bg-center text-center">
+          <div className="absolute inset-0 bg-black/20" />
+          <div className="from-background-200 absolute inset-0 bg-gradient-to-t to-transparent to-30%" />
+          <h1 className="z-10 text-3xl font-black">{exercise.title}</h1>
         </div>
-        <div className="my-8 flex gap-2.5 px-2">
-          <Equipment equipment={exercise.equipment} />
-          {exercise.tags && <Tags tags={exercise.tags} />}
-        </div>
-      </div>
-    </div>
-  );
-};
+        <div className="px-5">
+          <div className="my-3 flex items-center justify-center gap-2.5">
+            <ExerciseNotesModal>
+              <ActionButton label="Заметки" onClick={() => {}} />
+            </ExerciseNotesModal>
+            <ActionButton label="История" onClick={() => {}} />
+          </div>
 
-const ActionButtons = () => {
-  return (
-    <div className="my-3 flex items-center justify-center gap-2.5">
-      <ActionButton label="Заметки" onClick={() => {}} />
-      <ActionButton label="История" onClick={() => {}} />
-    </div>
+          <div className="mt-6 flex w-full items-center px-3">
+            <InfoColumn
+              info={<span className="text-xl font-black">22 раза</span>}
+              label="Рекорд за день"
+            />
+            <InfoColumn info={<DifficultyIcon size={25} />} label="Легко" />
+          </div>
+
+          <div className="my-8 flex gap-2.5 px-2">
+            <Equipment equipment={exercise.equipment} />
+            {exercise.tags && <Tags tags={exercise.tags} />}
+          </div>
+        </div>
+      </div>
+    </ExerciseProvider>
   );
 };
 
@@ -96,14 +106,7 @@ const ActionButton = ({ label, onClick }: ActionButtonProps) => {
   );
 };
 
-const Equipment = ({
-  equipment,
-}: {
-  equipment: {
-    id: number;
-    label: string;
-  }[];
-}) => {
+const Equipment = ({ equipment }: { equipment: Equipment[] }) => {
   return (
     <section className="flex flex-1 flex-col gap-3">
       <h2 className="font-bold">Оборудование</h2>
