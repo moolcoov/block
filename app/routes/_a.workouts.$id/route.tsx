@@ -7,7 +7,7 @@ import { WorkoutExercises } from "./components/WorkoutExercises";
 import { Difficulty } from "~/shared/types/difficulty";
 import { Button } from "~/shared/ui/Button";
 import { XmarkIcon } from "~/shared/ui/icons";
-import { Link } from "react-router";
+import { Link, useNavigate, useNavigationType } from "react-router";
 
 const workout: Workout = {
   id: "e3deb89b-5bed-4ddb-b12c-e18aeefe3d71",
@@ -33,18 +33,27 @@ const workout: Workout = {
 };
 
 export default function WorkoutPage() {
+  const navigate = useNavigate();
+  const navigationType = useNavigationType();
+
   return (
     <div>
       <WorkoutProvider workout={workout}>
-        <Link to="/workouts">
-          <Button
-            variant={"secondary"}
-            size={"icon"}
-            className="fixed top-5 left-5 z-30"
-          >
-            <XmarkIcon size={19} />
-          </Button>
-        </Link>
+        <Button
+          variant={"secondary"}
+          size={"icon"}
+          className="fixed top-5 left-5 z-30"
+          onClick={() => {
+            if (navigationType === "POP") {
+              navigate("/workouts");
+              return;
+            }
+
+            navigate(-1);
+          }}
+        >
+          <XmarkIcon size={19} />
+        </Button>
 
         <div className="pb-[84px]">
           <WorkoutHeader />

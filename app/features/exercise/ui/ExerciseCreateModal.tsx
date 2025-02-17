@@ -23,10 +23,12 @@ import { useExercisesStore } from "../model/store";
 import { v4 as uuidv4 } from "uuid";
 import { Difficulty } from "~/shared/types/difficulty";
 import { addMediaToDB } from "~/features/media/model/db";
+import { getDifficultyIcon, getDifficultyLabel } from "~/shared/lib/difficulty";
 
 interface CreateExerciseObject {
   title?: string;
   type?: ExerciseType;
+  difficulty?: Difficulty;
   equipment?: UUID[];
   tags?: UUID[];
 
@@ -58,7 +60,7 @@ export const ExerciseCreateModal = ({
       id: uuidv4(),
       title: exerciseObject.title || "Без названия",
       type: exerciseObject.type || ExerciseType.QUANTITY,
-      difficulty: Difficulty.EASY,
+      difficulty: exerciseObject.difficulty || Difficulty.MEDIUM,
       createdAt: new Date(),
       editedAt: new Date(),
     };
@@ -123,6 +125,7 @@ export const ExerciseCreateModal = ({
               TitleScreen,
               PhotoScreen,
               VideoScreen,
+              DifficultyScreen,
               EquipmentScreen,
               TagsScreen,
             ]}
@@ -254,6 +257,41 @@ const VideoScreen: CreateScreen = ({ next, prev }) => {
       </div>
 
       <ControlButtons onNext={onSubmit} label="ДАЛЕЕ" disabled={!file} />
+    </div>
+  );
+};
+
+const DifficultyScreen: CreateScreen = ({ next, prev }) => {
+  const { setExerciseObject } = useCreateExercise();
+  const [difficulty, setDifficulty] = React.useState<Difficulty>();
+
+  const onSubmit = React.useCallback(async () => {
+    setExerciseObject((prev) => ({ ...prev, difficulty }));
+    await next();
+  }, [difficulty, next]);
+
+  return (
+    <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button)">
+      <div className="flex flex-1 flex-col gap-8 overflow-y-scroll pt-20">
+        <h1 className="text-3xl font-black text-balance">УКАЖИТЕ СЛОЖНОСТЬ</h1>
+
+        <div className="flex flex-col gap-1.5">
+          {Object.values(Difficulty).map((d) => {
+            const Icon = getDifficultyIcon(d);
+
+            return (
+              <Checkbox
+                icon={<Icon size={18} />}
+                key={d}
+                label={getDifficultyLabel(d)}
+                checked={difficulty === d}
+                onChange={() => setDifficulty(d)}
+              />
+            );
+          })}
+        </div>
+      </div>
+      <ControlButtons onNext={onSubmit} label="ДАЛЕЕ" disabled={!difficulty} />
     </div>
   );
 };

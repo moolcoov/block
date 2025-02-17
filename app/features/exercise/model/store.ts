@@ -1,8 +1,14 @@
 import { create } from "zustand";
 import type { Exercise } from "./types";
-import { addExerciseToDB, getExercisesFromDB, updateExerciseInDB } from "./db";
+import {
+  addExerciseToDB,
+  deleteExerciseFromDB,
+  getExercisesFromDB,
+  updateExerciseInDB,
+} from "./db";
 import { Difficulty } from "~/shared/types/difficulty";
 import { v4 as uuidv4 } from "uuid";
+import type { UUID } from "~/shared/types/uuid";
 
 export const exercises: Exercise[] = [
   {
@@ -181,6 +187,7 @@ interface ExercisesState {
   addExercise: (exercise: Exercise) => Promise<void>;
   ins: () => Promise<void>;
   updateExercise: (exercise: Exercise) => Promise<void>;
+  deleteExercise: (id: UUID) => Promise<void>;
 }
 
 const useExercisesStore = create<ExercisesState>((set, get) => ({
@@ -216,6 +223,13 @@ const useExercisesStore = create<ExercisesState>((set, get) => ({
       exercises: state.exercises.map((e) =>
         e.id === exercise.id ? exercise : e,
       ),
+    }));
+  },
+
+  deleteExercise: async (id: UUID) => {
+    await deleteExerciseFromDB(id);
+    set((state) => ({
+      exercises: state.exercises.filter((e) => e.id !== id),
     }));
   },
 }));

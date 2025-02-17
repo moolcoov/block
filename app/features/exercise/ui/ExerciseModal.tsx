@@ -8,7 +8,7 @@ import { XmarkIcon } from "~/shared/ui/icons";
 import { TagBadge } from "~/shared/ui/Tag";
 import type { Tag } from "~/shared/types/tags";
 import { InfoColumn } from "~/shared/ui/InfoColumn";
-import { getDifficultyIcon } from "~/shared/lib/difficulty";
+import { getDifficultyIcon, getDifficultyLabel } from "~/shared/lib/difficulty";
 import type { UUID } from "~/shared/types/uuid";
 import React from "react";
 import { useDatabase } from "~/shared/lib/indexedDB";
@@ -22,6 +22,15 @@ import { AnimatePresence, motion } from "motion/react";
 import { getMediaFromDB } from "~/features/media/model/db";
 import type { ResourceMedia } from "~/features/media/model/types";
 import type { Exercise } from "../model/types";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/shared/ui/DropdownMenu";
+import { useExercisesStore } from "../model/store";
+import { MoreIcon } from "~/shared/ui/icons/More";
 
 interface ExerciseModalProps {
   id: UUID;
@@ -29,8 +38,17 @@ interface ExerciseModalProps {
 }
 
 export const ExerciseModal = ({ id, children }: ExerciseModalProps) => {
+  const [open, setOpen] = React.useState(false);
+  const deleteExercise = useExercisesStore((state) => state.deleteExercise);
+
+  const onDelete = React.useCallback(async () => {
+    setOpen(false);
+
+    setInterval(async () => await deleteExercise(id), 300);
+  }, [id, deleteExercise]);
+
   return (
-    <Drawer shouldScaleBackground={false}>
+    <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="h-[85vh] overflow-hidden">
         <DrawerClose asChild>
@@ -42,6 +60,26 @@ export const ExerciseModal = ({ id, children }: ExerciseModalProps) => {
             <XmarkIcon size={19} />
           </Button>
         </DrawerClose>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant={"secondary"}
+              size={"icon"}
+              className="fixed top-5 right-5 z-40"
+            >
+              <MoreIcon size={16} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="mr-2">
+            <DropdownMenuGroup>
+              <DropdownMenuItem className="text-red-500" onClick={onDelete}>
+                Удалить
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         <Content id={id} />
       </DrawerContent>
     </Drawer>
@@ -72,15 +110,18 @@ const Content = ({ id }: { id: UUID }) => {
             <ExerciseNotesModal>
               <ActionButton label="Заметки" onClick={() => {}} />
             </ExerciseNotesModal>
-            <ActionButton label="История" onClick={() => {}} />
+            {/* <ActionButton label="История" onClick={() => {}} /> */}
           </div>
 
           <div className="mt-6 flex w-full items-center px-3">
-            <InfoColumn
+            {/* <InfoColumn
               info={<span className="text-xl font-black">22 раза</span>}
               label="Рекорд за день"
+            /> */}
+            <InfoColumn
+              info={<DifficultyIcon size={25} />}
+              label={getDifficultyLabel(exercise.difficulty)}
             />
-            <InfoColumn info={<DifficultyIcon size={25} />} label="Легко" />
           </div>
 
           <div className="my-8 flex gap-2.5 px-2">
@@ -108,7 +149,7 @@ const Video = ({ videoSrc }: { videoSrc?: ResourceMedia }) => {
       {(video || videoSrc.externalSrc) && (
         <>
           <div className="absolute inset-0 z-[5] bg-black/20" />
-          <div className="from-background-200 absolute inset-0 bottom-[-1px] z-[5] bg-gradient-to-t to-transparent to-30%" />
+          <div className="from-background-200 absolute inset-0 bottom-[-1px] z-[5] bg-gradient-to-t to-transparent to-20%" />
           <motion.video
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
