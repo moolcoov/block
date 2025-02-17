@@ -12,7 +12,7 @@ import { getDifficultyIcon, getDifficultyLabel } from "~/shared/lib/difficulty";
 import type { UUID } from "~/shared/types/uuid";
 import React from "react";
 import { useDatabase } from "~/shared/lib/indexedDB";
-import { getExerciseByIdFromDB } from "../model/db";
+import { getExerciseFromDB } from "../model/db";
 import { Button } from "~/shared/ui/Button";
 import { Loading } from "~/shared/ui/Loading";
 import { ExerciseNotesModal } from "./ExerciseNotesModal";
@@ -88,7 +88,7 @@ export const ExerciseModal = ({ id, children }: ExerciseModalProps) => {
 
 const Content = ({ id }: { id: UUID }) => {
   const { data: exercise, loading } = useDatabase<Exercise>(async () =>
-    getExerciseByIdFromDB(id),
+    getExerciseFromDB(id),
   );
 
   if (loading) return <Loading />;

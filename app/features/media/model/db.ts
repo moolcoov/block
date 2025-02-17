@@ -1,5 +1,6 @@
 import { initDB } from "~/shared/lib/indexedDB";
 import type { MediaItem } from "./types";
+import type { UUID } from "~/shared/types/uuid";
 
 const EXERCISES_STORE_NAME = "media";
 
@@ -14,13 +15,21 @@ export const addMediaToDB = async (media: MediaItem) => {
 };
 
 export const getMediaFromDB = async (
-  id?: string,
+  id?: UUID,
 ): Promise<MediaItem | undefined> => {
   if (!id) {
     return undefined;
   }
   const db = await initDB();
   return db.get(EXERCISES_STORE_NAME, id);
+};
+
+export const deleteMediaFromDB = async (id?: UUID) => {
+  if (!id) {
+    return;
+  }
+  const db = await initDB();
+  return db.delete(EXERCISES_STORE_NAME, id);
 };
 
 export const getStorageUsage = async () => {

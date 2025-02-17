@@ -3,10 +3,12 @@ import type { Exercise } from "./types";
 import {
   addExerciseToDB,
   deleteExerciseFromDB,
+  getExerciseFromDB,
   getExercisesFromDB,
   updateExerciseInDB,
 } from "./db";
 import type { UUID } from "~/shared/types/uuid";
+import { deleteMediaFromDB } from "~/features/media/model/db";
 
 interface ExercisesState {
   exercises: Exercise[];
@@ -49,7 +51,18 @@ const useExercisesStore = create<ExercisesState>((set, get) => ({
   },
 
   deleteExercise: async (id: UUID) => {
+    const exercise = await getExerciseFromDB(id);
+
     await deleteExerciseFromDB(id);
+
+    if (exercise.image?.type === "stored") {
+      await deleteMediaFromDB(exercise.image.storedId);
+    }
+
+    if (exercise.video?.type === "stored") {
+      await deleteMediaFromDB(exercise.video.storedId);
+    }
+
     set((state) => ({
       exercises: state.exercises.filter((e) => e.id !== id),
     }));
