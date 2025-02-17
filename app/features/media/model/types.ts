@@ -7,4 +7,10 @@ export interface MediaItem {
   size: number;
 }
 
+export interface ResourceMedia {
+  type: "stored" | "external";
+  storedId?: UUID;
+  externalSrc?: string;
+}
+
 export type MediaType = "photo" | "video";

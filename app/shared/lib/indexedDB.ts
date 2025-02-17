@@ -17,6 +17,11 @@ export const initDB = async () => {
           keyPath: "id",
         });
       }
+      if (!db.objectStoreNames.contains("media")) {
+        db.createObjectStore("media", {
+          keyPath: "id",
+        });
+      }
     },
   });
 };
@@ -36,7 +41,7 @@ export const useDatabase = <T>(fn: () => Promise<T>) => {
         setError(error);
         setLoading(false);
       });
-  }, [fn]);
+  }, []);
 
   return { loading, data, error };
 };

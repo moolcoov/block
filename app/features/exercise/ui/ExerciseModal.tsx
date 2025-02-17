@@ -18,6 +18,10 @@ import { Loading } from "~/shared/ui/Loading";
 import { ExerciseNotesModal } from "./ExerciseNotesModal";
 import { ExerciseProvider } from "../model/ExerciseProvider";
 import type { Equipment } from "~/shared/types/equipment";
+import { AnimatePresence, motion } from "motion/react";
+import { getMediaFromDB } from "~/features/media/model/db";
+import type { ResourceMedia } from "~/features/media/model/types";
+import type { Exercise } from "../model/types";
 
 interface ExerciseModalProps {
   id: UUID;
@@ -45,7 +49,7 @@ export const ExerciseModal = ({ id, children }: ExerciseModalProps) => {
 };
 
 const Content = ({ id }: { id: UUID }) => {
-  const { data: exercise, loading } = useDatabase(async () =>
+  const { data: exercise, loading } = useDatabase<Exercise>(async () =>
     getExerciseByIdFromDB(id),
   );
 
@@ -59,9 +63,8 @@ const Content = ({ id }: { id: UUID }) => {
   return (
     <ExerciseProvider exercise={exercise}>
       <div className="relative">
-        <div className="relative flex h-[50vh] w-full items-end justify-center bg-[url(/exercise.png)] bg-cover bg-center text-center">
-          <div className="absolute inset-0 bg-black/20" />
-          <div className="from-background-200 absolute inset-0 bg-gradient-to-t to-transparent to-30%" />
+        <div className="relative flex h-[50vh] w-full items-end justify-center bg-cover bg-center text-center">
+          <Video videoSrc={exercise.video} />
           <h1 className="z-10 text-3xl font-black">{exercise.title}</h1>
         </div>
         <div className="px-5">
@@ -87,6 +90,38 @@ const Content = ({ id }: { id: UUID }) => {
         </div>
       </div>
     </ExerciseProvider>
+  );
+};
+
+const Video = ({ videoSrc }: { videoSrc?: ResourceMedia }) => {
+  const { data: video, loading: videoLoading } = useDatabase(async () =>
+    getMediaFromDB(videoSrc?.storedId),
+  );
+
+  if (!videoSrc) {
+    return null;
+  }
+
+  return (
+    <AnimatePresence>
+      {videoLoading && <Loading key="loading" />}
+      {(video || videoSrc.externalSrc) && (
+        <>
+          <div className="absolute inset-0 z-[5] bg-black/20" />
+          <div className="from-background-200 absolute inset-0 bottom-[-1px] z-[5] bg-gradient-to-t to-transparent to-30%" />
+          <motion.video
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 mb-[-1px] h-full w-full object-cover object-center"
+            src={video ? URL.createObjectURL(video.data) : videoSrc.externalSrc}
+          />
+        </>
+      )}
+    </AnimatePresence>
   );
 };
 

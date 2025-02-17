@@ -1,3 +1,4 @@
+import type { ResourceMedia } from "~/features/media/model/types";
 import type { Difficulty } from "~/shared/types/difficulty";
 import type { Equipment } from "~/shared/types/equipment";
 import type { Tag } from "~/shared/types/tags";
@@ -15,6 +16,9 @@ export interface Exercise {
 
   createdAt: Date;
   editedAt?: Date;
+
+  image?: ResourceMedia;
+  video?: ResourceMedia;
 }
 
 export enum ExerciseType {

@@ -13,6 +13,16 @@ export const addMediaToDB = async (media: MediaItem) => {
   return db.add(EXERCISES_STORE_NAME, media);
 };
 
+export const getMediaFromDB = async (
+  id?: string,
+): Promise<MediaItem | undefined> => {
+  if (!id) {
+    return undefined;
+  }
+  const db = await initDB();
+  return db.get(EXERCISES_STORE_NAME, id);
+};
+
 export const getStorageUsage = async () => {
   if (navigator.storage && navigator.storage.estimate) {
     const { quota, usage } = await navigator.storage.estimate();

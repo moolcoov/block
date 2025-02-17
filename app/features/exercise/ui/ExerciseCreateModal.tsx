@@ -22,6 +22,7 @@ import { CreateModal, type CreateScreen } from "~/shared/ui/CreateModal";
 import { useExercisesStore } from "../model/store";
 import { v4 as uuidv4 } from "uuid";
 import { Difficulty } from "~/shared/types/difficulty";
+import { addMediaToDB } from "~/features/media/model/db";
 
 interface CreateExerciseObject {
   title?: string;
@@ -53,8 +54,6 @@ export const ExerciseCreateModal = ({
     React.useState<CreateExerciseObject>({});
 
   const finish = React.useCallback(async () => {
-    console.log(exerciseObject);
-
     const exercise: Exercise = {
       id: uuidv4(),
       title: exerciseObject.title || "Без названия",
@@ -63,6 +62,38 @@ export const ExerciseCreateModal = ({
       createdAt: new Date(),
       editedAt: new Date(),
     };
+
+    if (exerciseObject.image) {
+      const id = uuidv4();
+
+      await addMediaToDB({
+        type: "photo",
+        data: exerciseObject.image,
+        id: id,
+        size: exerciseObject.image.size,
+      });
+
+      exercise.image = {
+        type: "stored",
+        storedId: id,
+      };
+    }
+
+    if (exerciseObject.video) {
+      const id = uuidv4();
+
+      await addMediaToDB({
+        type: "video",
+        data: exerciseObject.video,
+        id: id,
+        size: exerciseObject.video.size,
+      });
+
+      exercise.video = {
+        type: "stored",
+        storedId: id,
+      };
+    }
 
     await addExercise(exercise);
     setOpen(false);
@@ -276,6 +307,7 @@ const EquipmentScreen: CreateScreen = ({ next, prev }) => {
 
             return (
               <Checkbox
+                key={e.id}
                 label={e.label}
                 checked={active}
                 onChange={active ? removeEquipment(e.id) : addEquipment(e.id)}
