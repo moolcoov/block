@@ -1,6 +1,26 @@
-import { type IconProps } from ".";
+import { fillPrimary, type IconProps } from ".";
 
 const DumbBellIcon = ({ size = 30, ...props }: IconProps) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 32 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M1.79484 20.2686C2.81577 20.2686 3.59929 19.4851 3.59929 18.4876V9.50163C3.59929 8.4903 2.81577 7.69929 1.79484 7.69929C0.785623 7.69929 0 8.4903 0 9.50163V18.4876C0 19.4851 0.785623 20.2686 1.79484 20.2686ZM7.68186 22.9892C9.36701 22.9892 10.5286 21.8386 10.5286 20.2144V7.78647C10.5286 6.15265 9.36701 5 7.68186 5C6.00421 5 4.84476 6.15265 4.84476 7.78647V20.2144C4.84476 21.8386 6.00421 22.9892 7.68186 22.9892ZM11.8626 16.4293H19.2581V11.5599H11.8626V16.4293ZM23.4368 22.9892C25.1261 22.9892 26.2856 21.8386 26.2856 20.2144V7.78647C26.2856 6.15265 25.1261 5 23.4368 5C21.7612 5 20.6018 6.15265 20.6018 7.78647V20.2144C20.6018 21.8386 21.7612 22.9892 23.4368 22.9892ZM29.2256 20.2686C30.2369 20.2686 31.0321 19.4851 31.0321 18.4876V9.50163C31.0321 8.4903 30.2369 7.69929 29.2256 7.69929C28.2164 7.69929 27.4328 8.4903 27.4328 9.50163V18.4876C27.4328 19.4851 28.2164 20.2686 29.2256 20.2686Z"
+        fill={fillPrimary}
+      />
+    </svg>
+  );
+};
+
+DumbBellIcon.displayName = "DumbBellIcon";
+
+const DumbBellColoredIcon = ({ size = 30, ...props }: IconProps) => {
   return (
     <svg
       width={size}
@@ -8,6 +28,7 @@ const DumbBellIcon = ({ size = 30, ...props }: IconProps) => {
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <rect
         width="8.46745"
@@ -121,6 +142,6 @@ const DumbBellIcon = ({ size = 30, ...props }: IconProps) => {
   );
 };
 
-DumbBellIcon.displayName = "DumbBellIcon";
+DumbBellColoredIcon.displayName = "DumbBellColoredIcon";
 
-export { DumbBellIcon };
+export { DumbBellColoredIcon, DumbBellIcon };

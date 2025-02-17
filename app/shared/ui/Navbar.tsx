@@ -1,26 +1,21 @@
 import { Link, useLocation, useNavigation } from "react-router";
-import { HeartIcon } from "./icons";
+import { BulletListIcon, DumbBellIcon, HeartIcon, PersonIcon } from "./icons";
 import { cn } from "~/shared/lib/utils";
 
 const links = [
   {
     label: "Тренировки",
-    icon: HeartIcon,
+    icon: <DumbBellIcon size={30} />,
     href: "/workouts",
   },
   {
     label: "Упражнения",
-    icon: HeartIcon,
+    icon: <BulletListIcon size={30} />,
     href: "/exercises",
   },
   {
-    label: "Прогресс",
-    icon: HeartIcon,
-    href: "/progress",
-  },
-  {
     label: "Профиль",
-    icon: HeartIcon,
+    icon: <PersonIcon size={30} />,
     href: "/profile",
   },
 ];
@@ -43,7 +38,7 @@ export const Navbar = () => {
                 },
               )}
             >
-              <link.icon size={25} />
+              {link.icon}
               <span className="text-[10px] font-medium">{link.label}</span>
             </Link>
           ))}

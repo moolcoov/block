@@ -4,7 +4,7 @@ import { useExercisesStore } from "~/features/exercise/model/store";
 import { getUser } from "~/features/user/model/storage";
 
 export default function AppLayout() {
-  const { fetchExercises, ins } = useExercisesStore();
+  const { fetchExercises } = useExercisesStore();
   const navigate = useNavigate();
 
   React.useEffect(() => {

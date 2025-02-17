@@ -3,6 +3,7 @@ import type {
   Exercise,
   ExerciseFilters,
 } from "~/features/exercise/model/types";
+import { getEquipmentLabel } from "~/shared/lib/equipment";
 
 interface ExercisesContextType {
   exercises: Exercise[];
@@ -44,7 +45,9 @@ export const ExercisesProvider = ({
           .includes(searchQueryLower);
 
         const matchesEquipment = exercise.equipment?.some((eq) => {
-          return eq.label.toLowerCase().includes(searchQueryLower);
+          return getEquipmentLabel(eq)
+            ?.toLowerCase()
+            .includes(searchQueryLower);
         });
 
         return matchesName || matchesEquipment;
@@ -58,7 +61,7 @@ export const ExercisesProvider = ({
 
       const matchesEquipment =
         !(filters.equipment && filters.equipment.length > 0) ||
-        exercise.equipment?.some((eq) => filters.equipment!.includes(eq.id));
+        exercise.equipment?.some((eq) => filters.equipment!.includes(eq));
 
       const matchesTags =
         !(filters.tags && filters.tags.length > 0) ||

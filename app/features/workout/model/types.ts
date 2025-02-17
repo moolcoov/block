@@ -1,6 +1,6 @@
 import type { Exercise } from "~/features/exercise/model/types";
+import type { EquipmentType } from "~/shared/lib/equipment";
 import type { Difficulty } from "~/shared/types/difficulty";
-import type { Equipment } from "~/shared/types/equipment";
 import type { Tag } from "~/shared/types/tags";
 import type { UUID } from "~/shared/types/uuid";
 
@@ -10,7 +10,7 @@ export interface Workout {
   workoutTime: number; // в мин
   difficulty: Difficulty;
 
-  equipment?: Equipment[];
+  equipment?: EquipmentType[];
   tags?: Tag[];
 
   sections: WorkoutSection[];

@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import React from "react";
 import { useWorkoutsSearchQuery } from "~/features/workout/model/WorkoutsProvider";
 import { HeaderSearch } from "~/shared/ui/HeaderSearch";
-import { DumbBellIcon, LottieCoinIcon } from "~/shared/ui/icons";
+import { DumbBellColoredIcon, LottieCoinIcon } from "~/shared/ui/icons";
 
 export const WorkoutsHeader = () => {
   const [expanded, setExpanded] = React.useState(false);
@@ -19,7 +19,7 @@ export const WorkoutsHeader = () => {
         }
       >
         <div className="flex items-center gap-2">
-          <DumbBellIcon size={32} />
+          <DumbBellColoredIcon size={32} />
           <span className="font-bold text-[#5BC5F3]">3 ур</span>
         </div>
         <div className="flex items-center gap-3">

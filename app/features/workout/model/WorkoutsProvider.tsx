@@ -1,5 +1,6 @@
 import React from "react";
 import type { Workout, WorkoutFilters } from "./types";
+import { getEquipmentLabel } from "~/shared/lib/equipment";
 
 interface WorkoutsContextType {
   workouts: Workout[];
@@ -48,7 +49,9 @@ export const WorkoutsProvider = ({
           .includes(searchQueryLower);
 
         const matchesEquipment = workout.equipment?.some((eq) => {
-          return eq.label.toLowerCase().includes(searchQueryLower);
+          return getEquipmentLabel(eq)
+            ?.toLowerCase()
+            .includes(searchQueryLower);
         });
 
         return matchesName || matchesEquipment;
@@ -62,7 +65,7 @@ export const WorkoutsProvider = ({
 
       const matchesEquipment =
         !(filters.equipment && filters.equipment.length > 0) ||
-        workout.equipment?.some((eq) => filters.equipment!.includes(eq.id));
+        workout.equipment?.some((eq) => filters.equipment!.includes(eq));
 
       const matchesTags =
         !(filters.tags && filters.tags.length > 0) ||
