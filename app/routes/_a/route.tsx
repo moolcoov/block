@@ -12,6 +12,12 @@ export default function AppLayout() {
     fetchData();
   }, []);
 
+  React.useEffect(() => {
+    if (!getUser()) {
+      navigate("/onboarding");
+    }
+  }, []);
+
   return (
     <>
       <Outlet />
