@@ -24,6 +24,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Difficulty } from "~/shared/types/difficulty";
 import { addMediaToDB } from "~/features/media/model/db";
 import { getDifficultyIcon, getDifficultyLabel } from "~/shared/lib/difficulty";
+import { getEquipment, type EquipmentType } from "~/shared/lib/equipment";
 
 interface CreateExerciseObject {
   title?: string;
@@ -61,6 +62,7 @@ export const ExerciseCreateModal = ({
       title: exerciseObject.title || "Без названия",
       type: exerciseObject.type || ExerciseType.QUANTITY,
       difficulty: exerciseObject.difficulty || Difficulty.MEDIUM,
+      equipment: exerciseObject.equipment || ["body_weight"],
       createdAt: new Date(),
       editedAt: new Date(),
     };
@@ -296,41 +298,29 @@ const DifficultyScreen: CreateScreen = ({ next, prev }) => {
   );
 };
 
-const equipments = [
-  { id: "1", label: "Брусья" },
-  { id: "2", label: "Бутерброд" },
-  { id: "3", label: "Велосипед" },
-  { id: "4", label: "Велотрековая баска" },
-  { id: "5", label: "Гимнастический коврик" },
-  { id: "6", label: "Гиря" },
-  { id: "7", label: "Губка" },
-  { id: "7", label: "Губка" },
-  { id: "7", label: "Губка" },
-  { id: "7", label: "Губка" },
-  { id: "7", label: "Губка" },
-  { id: "7", label: "Губка" },
-];
-
 const EquipmentScreen: CreateScreen = ({ next, prev }) => {
+  const equipment = getEquipment();
   const { setExerciseObject } = useCreateExercise();
-  const [equipment, setEquipment] = React.useState<UUID[]>([]);
+  const [activeEquipment, setEquipment] = React.useState<EquipmentType[]>([
+    "body_weight",
+  ]);
 
-  const addEquipment = React.useCallback((equipment: UUID) => {
+  const addEquipment = React.useCallback((equipmentType: EquipmentType) => {
     return () => {
-      setEquipment((prev) => [...prev, equipment]);
+      setEquipment((prev) => [...prev, equipmentType]);
     };
   }, []);
 
-  const removeEquipment = React.useCallback((equipment: UUID) => {
+  const removeEquipment = React.useCallback((equipmentType: EquipmentType) => {
     return () => {
-      setEquipment((prev) => prev.filter((e) => e !== equipment));
+      setEquipment((prev) => prev.filter((e) => e !== equipmentType));
     };
   }, []);
 
   const onSubmit = React.useCallback(async () => {
-    setExerciseObject((prev) => ({ ...prev, equipment }));
+    setExerciseObject((prev) => ({ ...prev, equipment: activeEquipment }));
     await next();
-  }, [equipment, next]);
+  }, [activeEquipment, next]);
 
   return (
     <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button)">
@@ -340,15 +330,17 @@ const EquipmentScreen: CreateScreen = ({ next, prev }) => {
         </h1>
 
         <div className="flex flex-col gap-1.5">
-          {equipments.map((e) => {
-            const active = equipment?.includes(e.id);
+          {equipment.map((e) => {
+            const active = activeEquipment?.includes(e.type);
 
             return (
               <Checkbox
-                key={e.id}
-                label={e.label}
+                key={e.type}
+                label={e.name}
                 checked={active}
-                onChange={active ? removeEquipment(e.id) : addEquipment(e.id)}
+                onChange={
+                  active ? removeEquipment(e.type) : addEquipment(e.type)
+                }
               />
             );
           })}
@@ -357,7 +349,7 @@ const EquipmentScreen: CreateScreen = ({ next, prev }) => {
       <ControlButtons
         onNext={onSubmit}
         label="ДАЛЕЕ"
-        disabled={!(equipment.length > 0)}
+        disabled={!(activeEquipment.length > 0)}
       />
     </div>
   );

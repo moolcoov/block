@@ -15,6 +15,7 @@ import { Button } from "~/shared/ui/Button";
 import { Difficulty } from "~/shared/types/difficulty";
 import type { UUID } from "~/shared/types/uuid";
 import { Checkbox } from "~/shared/ui/Checkbox";
+import { getEquipment } from "~/shared/lib/equipment";
 
 export const ExercisesFiltersModal = ({
   children,
@@ -185,17 +186,8 @@ const ExercisesFiltersDifficulty = () => {
   );
 };
 
-const equipment = [
-  { id: "1", label: "Брусья" },
-  { id: "2", label: "Бутерброд" },
-  { id: "3", label: "Велосипед" },
-  { id: "4", label: "Велотрековая баска" },
-  { id: "5", label: "Гимнастический коврик" },
-  { id: "6", label: "Гиря" },
-  { id: "7", label: "Губка" },
-];
-
 const ExercisesEquipment = () => {
+  const equipment = getEquipment();
   const [filters, setFilters] = useExercisesFilters();
 
   const addEquipment = React.useCallback((equipment: UUID) => {
@@ -220,18 +212,18 @@ const ExercisesEquipment = () => {
   return (
     <section className="flex flex-col gap-2">
       <h2 className="text-lg font-black">ОБОРУДОВАНИЕ</h2>
-      <div>
+      <div className="flex flex-col gap-1.5">
         {equipment.map((equipment) => {
-          const active = filters.equipment?.includes(equipment.id);
+          const active = filters.equipment?.includes(equipment.type);
           return (
             <Checkbox
-              key={equipment.id}
-              label={equipment.label}
+              key={equipment.type}
+              label={equipment.name}
               checked={active}
               onChange={
                 active
-                  ? removeEquipment(equipment.id)
-                  : addEquipment(equipment.id)
+                  ? removeEquipment(equipment.type)
+                  : addEquipment(equipment.type)
               }
             />
           );

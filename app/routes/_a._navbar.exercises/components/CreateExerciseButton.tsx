@@ -1,7 +1,5 @@
 import { motion } from "motion/react";
-import React from "react";
 import { ExerciseCreateModal } from "~/features/exercise/ui/ExerciseCreateModal";
-import { Button } from "~/shared/ui/Button";
 import { PlusIcon } from "~/shared/ui/icons";
 
 export const CreateExerciseButton = () => {

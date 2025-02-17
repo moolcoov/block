@@ -17,7 +17,6 @@ import { Button } from "~/shared/ui/Button";
 import { Loading } from "~/shared/ui/Loading";
 import { ExerciseNotesModal } from "./ExerciseNotesModal";
 import { ExerciseProvider } from "../model/ExerciseProvider";
-import type { Equipment } from "~/shared/types/equipment";
 import { AnimatePresence, motion } from "motion/react";
 import { getMediaFromDB } from "~/features/media/model/db";
 import type { ResourceMedia } from "~/features/media/model/types";
@@ -31,6 +30,7 @@ import {
 } from "~/shared/ui/DropdownMenu";
 import { useExercisesStore } from "../model/store";
 import { MoreIcon } from "~/shared/ui/icons/More";
+import { getEquipmentLabel, type EquipmentType } from "~/shared/lib/equipment";
 
 interface ExerciseModalProps {
   id: UUID;
@@ -182,7 +182,7 @@ const ActionButton = ({ label, onClick }: ActionButtonProps) => {
   );
 };
 
-const Equipment = ({ equipment }: { equipment?: Equipment[] }) => {
+const Equipment = ({ equipment }: { equipment?: EquipmentType[] }) => {
   if (!equipment || equipment.length === 0) return null;
 
   return (
@@ -190,8 +190,8 @@ const Equipment = ({ equipment }: { equipment?: Equipment[] }) => {
       <h2 className="font-bold">Оборудование</h2>
       <div className="flex flex-col gap-2">
         {equipment.map((item) => (
-          <p key={item.id} className="text-sm font-medium">
-            {item.label}
+          <p key={item} className="text-sm font-medium">
+            {getEquipmentLabel(item)}
           </p>
         ))}
       </div>

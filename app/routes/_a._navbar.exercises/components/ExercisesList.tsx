@@ -3,6 +3,7 @@ import { useExercises } from "~/features/exercise/model/ExercisesProvider";
 import type { Exercise } from "~/features/exercise/model/types";
 import { ExerciseModal } from "~/features/exercise/ui/ExerciseModal";
 import { getMediaFromDB } from "~/features/media/model/db";
+import { getEquipmentLabel } from "~/shared/lib/equipment";
 import { useDatabase } from "~/shared/lib/indexedDB";
 import { Loading } from "~/shared/ui/Loading";
 
@@ -26,7 +27,7 @@ const ExerciseCard = ({ exercise }: { exercise: Exercise }) => {
   return (
     <ExerciseModal id={exercise.id}>
       <div className="flex h-[60px] items-center gap-5">
-        <div className="bg-background-200 relative aspect-square h-full overflow-hidden rounded-2xl object-cover object-center">
+        <div className="bg-background-200 relative aspect-square h-full w-full max-w-[60px] min-w-[60px] overflow-hidden rounded-2xl object-cover object-center">
           <AnimatePresence>
             {loading && <Loading key="loading" />}
             {(image || exercise.image?.externalSrc) && (
@@ -43,13 +44,13 @@ const ExerciseCard = ({ exercise }: { exercise: Exercise }) => {
             )}
           </AnimatePresence>
         </div>
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-1.5 overflow-hidden">
           <h3 className="text-base">
             <span className="font-bold">{exercise.title}</span>
           </h3>
           {exercise.equipment && (
-            <p className="text-muted-foreground text-sm font-medium">
-              {exercise.equipment.map((e) => e.label).join(", ")}
+            <p className="text-muted-foreground overflow-hidden text-sm font-medium overflow-ellipsis whitespace-nowrap">
+              {exercise.equipment.map((e) => getEquipmentLabel(e)).join(", ")}
             </p>
           )}
         </div>

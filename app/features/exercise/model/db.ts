@@ -1,6 +1,5 @@
 import { initDB } from "~/shared/lib/indexedDB";
 import type { Exercise } from "./types";
-import {} from "uuid";
 import type { UUID } from "~/shared/types/uuid";
 
 const EXERCISES_STORE_NAME = "exercises";
