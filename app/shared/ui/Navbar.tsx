@@ -30,7 +30,7 @@ export const Navbar = () => {
 
   return (
     <div className="fixed bottom-0 z-40 w-full px-5 pb-(--bottom-navbar)">
-      <nav className="bg-navbar flex h-[70px] w-full items-center rounded-full px-2.5 backdrop-blur-[50px]">
+      <nav className="bg-navbar flex h-[70px] w-full items-center rounded-full px-2.5 backdrop-blur-lg">
         <div className="flex w-full items-center">
           {links.map((link) => (
             <Link

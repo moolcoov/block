@@ -106,7 +106,9 @@ const ActionButton = ({ label, onClick }: ActionButtonProps) => {
   );
 };
 
-const Equipment = ({ equipment }: { equipment: Equipment[] }) => {
+const Equipment = ({ equipment }: { equipment?: Equipment[] }) => {
+  if (!equipment || equipment.length === 0) return null;
+
   return (
     <section className="flex flex-1 flex-col gap-3">
       <h2 className="font-bold">Оборудование</h2>
@@ -121,7 +123,9 @@ const Equipment = ({ equipment }: { equipment: Equipment[] }) => {
   );
 };
 
-const Tags = ({ tags }: { tags: Tag[] }) => {
+const Tags = ({ tags }: { tags?: Tag[] }) => {
+  if (!tags || tags.length === 0) return null;
+
   return (
     <div className="flex flex-1 flex-wrap content-start items-start gap-2">
       {tags.map((tag) => (

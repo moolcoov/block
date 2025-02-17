@@ -44,6 +44,7 @@
       var(--tg-safe-area-inset-bottom, 0px)
   ); */
   --bottom-navbar: calc(env(safe-area-inset-bottom) + 10px);
+  --bottom-navbar-addition: calc(var(--bottom-navbar) + 36px);
 }
 
 * {

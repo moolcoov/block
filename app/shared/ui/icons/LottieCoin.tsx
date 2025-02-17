@@ -10,7 +10,7 @@ const LottieCoinIcon = ({ size = 30, ...props }: IconProps) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g clip-path="url(#clip0_61014_3867)">
+      <g clipPath="url(#clip0_61014_3867)">
         <path
           d="M13 0.702637H12.9999C6.20833 0.702637 0.702637 6.20833 0.702637 12.9999V13C0.702637 19.7916 6.20833 25.2973 12.9999 25.2973H13C19.7916 25.2973 25.2973 19.7916 25.2973 13V12.9999C25.2973 6.20833 19.7916 0.702637 13 0.702637Z"
           fill="url(#paint0_linear_61014_3867)"
@@ -18,9 +18,9 @@ const LottieCoinIcon = ({ size = 30, ...props }: IconProps) => {
         <path
           d="M13 0.702637H12.9999C6.20833 0.702637 0.702637 6.20833 0.702637 12.9999V13C0.702637 19.7916 6.20833 25.2973 12.9999 25.2973H13C19.7916 25.2973 25.2973 19.7916 25.2973 13V12.9999C25.2973 6.20833 19.7916 0.702637 13 0.702637Z"
           stroke="#9A9A9A"
-          stroke-width="0.59469"
+          strokeWidth="0.59469"
         />
-        <g clip-path="url(#clip1_61014_3867)">
+        <g clipPath="url(#clip1_61014_3867)">
           <rect
             x="2.5"
             y="5"
@@ -56,8 +56,8 @@ const LottieCoinIcon = ({ size = 30, ...props }: IconProps) => {
           y2="23.4496"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#7E7E7E" />
-          <stop offset="1" stop-color="#C8C7C7" />
+          <stop stopColor="#7E7E7E" />
+          <stop offset="1" stopColor="#C8C7C7" />
         </linearGradient>
         <clipPath id="clip0_61014_3867">
           <rect width="26" height="26" fill="white" />

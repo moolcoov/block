@@ -18,7 +18,7 @@ const ExerciseCard = ({ exercise }: { exercise: Exercise }) => {
   return (
     <ExerciseModal id={exercise.id}>
       <div className="flex h-[60px] items-center gap-5">
-        <div className="bg-muted aspect-square h-full rounded-2xl"></div>
+        <div className="bg-background-200 aspect-square h-full rounded-2xl"></div>
         <div className="flex flex-col gap-1.5">
           <h3 className="text-base">
             <span className="font-bold">{exercise.title}</span>

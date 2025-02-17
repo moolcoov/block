@@ -189,7 +189,11 @@ const useExercisesStore = create<ExercisesState>((set, get) => ({
 
   fetchExercises: async () => {
     set({ loading: true });
-    const exercises = await getExercisesFromDB();
+    const exercises: Exercise[] = (await getExercisesFromDB()).sort(
+      (a: Exercise, b: Exercise) =>
+        (b.editedAt ?? b.createdAt).getTime() -
+        (a.editedAt ?? a.createdAt).getTime(),
+    );
     set({ exercises, loading: false });
   },
 

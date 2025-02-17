@@ -6,7 +6,7 @@ import type { UUID } from "~/shared/types/uuid";
 export interface Exercise {
   id: UUID;
   title: string;
-  type: "quantity" | "timed";
+  type: ExerciseType;
   difficulty: Difficulty;
   equipment?: Equipment[];
   tags?: Tag[];
@@ -15,6 +15,11 @@ export interface Exercise {
 
   createdAt: Date;
   editedAt?: Date;
+}
+
+export enum ExerciseType {
+  QUANTITY = "quantity",
+  TIMED = "timed",
 }
 
 export interface ExerciseFilters {

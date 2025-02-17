@@ -6,6 +6,7 @@ import { useExercisesStore } from "~/features/exercise/model/store";
 import { useShallow } from "zustand/react/shallow";
 import { Loading } from "~/shared/ui/Loading";
 import { AnimatePresence } from "motion/react";
+import { CreateExerciseButton } from "./components/CreateExerciseButton";
 
 export default function ExercisesPage() {
   const [exercises, loading] = useExercisesStore(
@@ -17,15 +18,17 @@ export default function ExercisesPage() {
       <ExercisesHeader />
 
       <AnimatePresence>
-        {loading ? (
-          <Loading />
-        ) : (
-          <div className="flex flex-col gap-5 px-5 pt-5">
+        {loading && <Loading />}
+
+        {!loading && (
+          <div className="flex flex-col gap-5 px-5 pt-5 pb-[62px]">
             <ExercisesInfo />
             <ExercisesList />
           </div>
         )}
       </AnimatePresence>
+
+      <CreateExerciseButton />
     </ExercisesProvider>
   );
 }

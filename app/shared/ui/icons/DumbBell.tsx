@@ -15,7 +15,7 @@ const DumbBellIcon = ({ size = 30, ...props }: IconProps) => {
         transform="matrix(0.865765 -0.500451 0.499549 0.866285 11.6787 16.483)"
         fill="#BDC9CC"
       />
-      <g clip-path="url(#clip0_60983_3529)">
+      <g clipPath="url(#clip0_60983_3529)">
         <rect
           width="4.98085"
           height="11.9612"
@@ -31,7 +31,7 @@ const DumbBellIcon = ({ size = 30, ...props }: IconProps) => {
           fill="#59E3FB"
         />
       </g>
-      <g clip-path="url(#clip1_60983_3529)">
+      <g clipPath="url(#clip1_60983_3529)">
         <rect
           width="5.97702"
           height="17.4434"
@@ -47,7 +47,7 @@ const DumbBellIcon = ({ size = 30, ...props }: IconProps) => {
           fill="#59E3FB"
         />
       </g>
-      <g clip-path="url(#clip2_60983_3529)">
+      <g clipPath="url(#clip2_60983_3529)">
         <rect
           width="4.98085"
           height="11.9612"
@@ -63,7 +63,7 @@ const DumbBellIcon = ({ size = 30, ...props }: IconProps) => {
           fill="#59E3FB"
         />
       </g>
-      <g clip-path="url(#clip3_60983_3529)">
+      <g clipPath="url(#clip3_60983_3529)">
         <rect
           width="5.97702"
           height="17.4434"

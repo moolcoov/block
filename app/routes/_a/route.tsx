@@ -1,9 +1,11 @@
 import React from "react";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { useExercisesStore } from "~/features/exercise/model/store";
+import { getUser } from "~/features/user/model/storage";
 
 export default function AppLayout() {
   const { fetchExercises, ins } = useExercisesStore();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const fetchData = async () => {
