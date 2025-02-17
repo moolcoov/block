@@ -57,3 +57,32 @@ body {
 
   color-scheme: dark;
 }
+
+button,
+[role="button"] {
+  @apply cursor-pointer;
+}
+
+.spin-hide {
+  appearance: textfield;
+}
+
+.spin-hide::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.spin-hide::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+input:not(
+    [type="image" i],
+    [type="range" i],
+    [type="checkbox" i],
+    [type="radio" i]
+  ) {
+  overflow-clip-margin: 0px !important;
+  overflow: clip !important;
+}
