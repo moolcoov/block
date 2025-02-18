@@ -783,7 +783,6 @@ const SetRow = ({
         reps: calculateUserReps(25, difficulty, set.weight),
       }));
     }
-    console.log(set);
   }, [set.id, set.weight, difficulty, exerciseType, updateSet]);
 
   React.useEffect(() => {

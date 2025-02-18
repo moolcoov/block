@@ -98,8 +98,6 @@ const AnimationBuilder = ({
   if (!Block) return null;
 
   const next = React.useCallback(() => {
-    console.log(index);
-
     if (index === blocks.length - 1) {
       finish();
       return;

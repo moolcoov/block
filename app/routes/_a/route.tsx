@@ -27,7 +27,7 @@ export default function AppLayout() {
           );
         } else {
           console.warn(
-            "This app uses IndexedDB, storage may be cleared by the UA under storage pressure.",
+            "This app uses IndexedDB, but storage may be cleared by the UA under storage pressure.",
           );
         }
       });
