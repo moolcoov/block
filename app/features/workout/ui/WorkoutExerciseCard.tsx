@@ -33,14 +33,14 @@ export const WorkoutExerciseCard = ({
           )}
         </AnimatePresence>
       </div>
-      <div className="flex w-full flex-col gap-1.5 overflow-hidden">
+      <div className="flex w-full flex-col items-start gap-1.5 overflow-hidden">
         <h3 className="text-base">
           {exercise.sets.length > 1 && (
             <span className="mr-1.5 font-black">{exercise.sets.length}x</span>
           )}
           <span className="font-bold">{exercise.title}</span>
         </h3>
-        <p className="text-muted-foreground overflow-hidden text-sm font-medium overflow-ellipsis whitespace-nowrap">
+        <p className="text-muted-foreground w-full overflow-hidden text-left text-sm font-medium overflow-ellipsis whitespace-nowrap">
           Повторения:{" "}
           {exercise.sets.map((set) => set.reps ?? `${set.time} сек`).join(", ")}{" "}
           — {getEquipmentLabel(exercise.selectedEquipment)}{" "}

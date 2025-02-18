@@ -39,10 +39,6 @@
 
   --bottom-button: calc(env(safe-area-inset-bottom) + 10px);
 
-  /* --top-navbar: calc(
-    100dvh - 70px - (env(safe-area-inset-bottom) + 10px) -
-      var(--tg-safe-area-inset-bottom, 0px)
-  ); */
   --bottom-navbar: calc(env(safe-area-inset-bottom) + 10px);
   --bottom-navbar-addition: calc(var(--bottom-navbar) + 36px);
 }
@@ -59,9 +55,11 @@ body {
   color-scheme: dark;
 }
 
-button,
-[role="button"] {
-  @apply cursor-pointer;
+@layer base {
+  button,
+  [role="button"] {
+    @apply cursor-pointer;
+  }
 }
 
 .spin-hide {

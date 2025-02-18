@@ -122,7 +122,7 @@ export function getEquipment() {
   return equipment;
 }
 
-export function getEquipmentLabel(type: string) {
+export function getEquipmentLabel(type?: string) {
   return equipment.find((e) => e.type === type)?.name;
 }
 

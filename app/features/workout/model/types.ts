@@ -45,5 +45,5 @@ export interface WorkoutExerciseSet {
 export interface WorkoutFilters {
   tags?: UUID[];
   difficulty?: Difficulty[];
-  equipment?: UUID[];
+  equipment?: EquipmentType[];
 }

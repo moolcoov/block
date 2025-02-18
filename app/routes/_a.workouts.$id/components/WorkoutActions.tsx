@@ -1,9 +1,32 @@
-import { HeartIcon, ShareIcon, PencilIcon } from "~/shared/ui/icons";
+import {
+  HeartIcon,
+  ShareIcon,
+  PencilIcon,
+  HeartFillIcon,
+} from "~/shared/ui/icons";
+import { useWorkout } from "./WorkoutProvider";
+import React, { useState } from "react";
+import { useWorkoutsStore } from "~/features/workout/model/store";
 
 export const WorkoutActions = () => {
+  const workout = useWorkout();
+  const updateWorkout = useWorkoutsStore((state) => state.updateWorkout);
+
+  const [saved, setSaved] = useState(workout.saved ?? false);
+
+  React.useEffect(() => {
+    if (saved !== (workout.saved ?? false)) {
+      updateWorkout({ ...workout, saved });
+    }
+  }, [saved, workout]);
+
   return (
     <div className="mt-8 flex items-center justify-center gap-8">
-      <Action icon={<HeartIcon />} label="Сохранить" onClick={() => {}} />
+      <Action
+        icon={saved ? <HeartFillIcon className="text-white" /> : <HeartIcon />}
+        label={saved ? "Сохранено" : "Сохранить"}
+        onClick={() => setSaved(!saved)}
+      />
       <Action icon={<ShareIcon />} label="Поделиться" onClick={() => {}} />
       <Action icon={<PencilIcon />} label="Изменить" onClick={() => {}} />
     </div>

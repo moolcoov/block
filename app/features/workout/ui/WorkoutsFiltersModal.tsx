@@ -8,14 +8,15 @@ import {
 } from "~/shared/ui/Drawer";
 import { useWorkoutsFilters } from "../model/WorkoutsProvider";
 import { cn } from "~/shared/lib/utils";
-import React, { type JSX } from "react";
+import React from "react";
 import { getDifficultyIcon, getDifficultyLabel } from "~/shared/lib/difficulty";
-import { CheckIcon, XmarkIcon } from "~/shared/ui/icons";
+import { XmarkIcon } from "~/shared/ui/icons";
 import { Button } from "~/shared/ui/Button";
 import { Difficulty } from "~/shared/types/difficulty";
 import type { Tag } from "~/shared/types/tags";
 import type { UUID } from "~/shared/types/uuid";
 import { Checkbox } from "~/shared/ui/Checkbox";
+import { getEquipment, type EquipmentType } from "~/shared/lib/equipment";
 
 export const WorkoutsFiltersModal = ({
   children,
@@ -186,20 +187,11 @@ const WorkoutsFiltersDifficulty = () => {
   );
 };
 
-const equipment = [
-  { id: "1", label: "Брусья" },
-  { id: "2", label: "Бутерброд" },
-  { id: "3", label: "Велосипед" },
-  { id: "4", label: "Велотрековая баска" },
-  { id: "5", label: "Гимнастический коврик" },
-  { id: "6", label: "Гиря" },
-  { id: "7", label: "Губка" },
-];
-
 const WorkoutsEquipment = () => {
+  const equipment = getEquipment();
   const [filters, setFilters] = useWorkoutsFilters();
 
-  const addEquipment = React.useCallback((equipment: UUID) => {
+  const addEquipment = React.useCallback((equipment: EquipmentType) => {
     return () => {
       setFilters((prev) => {
         return { ...prev, equipment: [...(prev.equipment || []), equipment] };
@@ -207,7 +199,7 @@ const WorkoutsEquipment = () => {
     };
   }, []);
 
-  const removeEquipment = React.useCallback((equipment: UUID) => {
+  const removeEquipment = React.useCallback((equipment: EquipmentType) => {
     return () => {
       setFilters((prev) => {
         return {
@@ -222,18 +214,14 @@ const WorkoutsEquipment = () => {
     <section className="flex flex-col gap-2">
       <h2 className="text-lg font-black">ОБОРУДОВАНИЕ</h2>
       <div>
-        {equipment.map((equipment) => {
-          const active = filters.equipment?.includes(equipment.id);
+        {equipment.map((e) => {
+          const active = filters.equipment?.includes(e.type);
           return (
             <Checkbox
-              key={equipment.id}
-              label={equipment.label}
+              key={e.type}
+              label={e.name}
               checked={active}
-              onChange={
-                active
-                  ? removeEquipment(equipment.id)
-                  : addEquipment(equipment.id)
-              }
+              onChange={active ? removeEquipment(e.type) : addEquipment(e.type)}
             />
           );
         })}

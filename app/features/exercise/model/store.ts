@@ -22,7 +22,7 @@ interface ExercisesState {
 
 const useExercisesStore = create<ExercisesState>((set, get) => ({
   exercises: [],
-  loading: false,
+  loading: true,
 
   fetchExercises: async () => {
     set({ loading: true });

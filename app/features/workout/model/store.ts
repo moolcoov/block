@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import type { Workout } from "./types";
-import { addWorkoutToDB, getWorkoutsFromDB } from "./db";
+import { addWorkoutToDB, getWorkoutsFromDB, updateWorkoutInDB } from "./db";
 
 interface WorkoutsState {
   workouts: Workout[];
@@ -8,11 +8,12 @@ interface WorkoutsState {
 
   fetchWorkouts: () => Promise<void>;
   addWorkout: (workout: Workout) => Promise<void>;
+  updateWorkout: (workout: Workout) => Promise<void>;
 }
 
 const useWorkoutsStore = create<WorkoutsState>((set, get) => ({
   workouts: [],
-  loading: false,
+  loading: true,
 
   fetchWorkouts: async () => {
     set({ loading: true });
@@ -28,6 +29,13 @@ const useWorkoutsStore = create<WorkoutsState>((set, get) => ({
     await addWorkoutToDB(workout);
     set((state) => ({
       workouts: [workout, ...state.workouts],
+    }));
+  },
+
+  updateWorkout: async (workout) => {
+    await updateWorkoutInDB(workout);
+    set((state) => ({
+      workouts: state.workouts.map((w) => (w.id === workout.id ? workout : w)),
     }));
   },
 }));

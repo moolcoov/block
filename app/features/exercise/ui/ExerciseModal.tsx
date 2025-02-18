@@ -31,6 +31,7 @@ import {
 import { useExercisesStore } from "../model/store";
 import { MoreIcon } from "~/shared/ui/icons/More";
 import { getEquipmentLabel, type EquipmentType } from "~/shared/lib/equipment";
+import { cn } from "~/shared/lib/utils";
 
 interface ExerciseModalProps {
   id: UUID;
@@ -151,7 +152,7 @@ export const ExerciseVideo = ({ videoSrc }: { videoSrc?: ResourceMedia }) => {
   return (
     <AnimatePresence>
       {videoLoading && <Loading key="loading" />}
-      {(video || videoSrc.externalSrc) && (
+      {url && (
         <>
           <div className="absolute inset-0 z-[5] bg-black/20" />
           <div className="from-background-200 absolute inset-0 bottom-[-1px] z-[5] bg-gradient-to-t to-transparent to-20%" />
@@ -174,12 +175,20 @@ export const ExerciseVideo = ({ videoSrc }: { videoSrc?: ResourceMedia }) => {
 interface ActionButtonProps {
   label: string;
   onClick: () => void;
+  className?: string;
 }
 
-export const ExerciseActionButton = ({ label, onClick }: ActionButtonProps) => {
+export const ExerciseActionButton = ({
+  label,
+  onClick,
+  className,
+}: ActionButtonProps) => {
   return (
     <button
-      className="bg-muted flex h-[35px] items-center gap-1.5 rounded-full px-3"
+      className={cn(
+        "bg-muted flex h-[35px] items-center gap-1.5 rounded-full px-3",
+        className,
+      )}
       onClick={onClick}
     >
       <span className="text-xs font-medium">{label}</span>
