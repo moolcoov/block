@@ -1,6 +1,6 @@
-import { useExercises } from "~/features/exercises/model/ExercisesProvider";
-import type { Exercise } from "~/features/exercises/model/types";
-import { ExerciseModal } from "~/features/exercises/ui/ExerciseModal";
+import { useExercises } from "~/features/exercise/model/ExercisesProvider";
+import { ExerciseCard } from "~/features/exercise/ui/ExerciseCard";
+import { ExerciseModal } from "~/features/exercise/ui/ExerciseModal";
 
 export const ExercisesList = () => {
   const exercises = useExercises();
@@ -8,26 +8,10 @@ export const ExercisesList = () => {
   return (
     <div className="flex flex-col gap-4">
       {exercises.map((exercise) => (
-        <ExerciseCard key={exercise.id} exercise={exercise} />
+        <ExerciseModal key={exercise.id} id={exercise.id}>
+          <ExerciseCard exercise={exercise} />
+        </ExerciseModal>
       ))}
     </div>
-  );
-};
-
-const ExerciseCard = ({ exercise }: { exercise: Exercise }) => {
-  return (
-    <ExerciseModal id={exercise.id}>
-      <div className="flex h-[60px] items-center gap-5">
-        <div className="bg-muted aspect-square h-full rounded-2xl"></div>
-        <div className="flex flex-col gap-1.5">
-          <h3 className="text-base">
-            <span className="font-bold">{exercise.title}</span>
-          </h3>
-          <p className="text-muted-foreground text-sm font-medium">
-            {exercise.equipment.map((e) => e.label).join(", ")}
-          </p>
-        </div>
-      </div>
-    </ExerciseModal>
   );
 };

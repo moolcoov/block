@@ -2,10 +2,12 @@ import React from "react";
 import type {
   Exercise,
   ExerciseFilters,
-} from "~/features/exercises/model/types";
+} from "~/features/exercise/model/types";
+import { getEquipmentLabel } from "~/shared/lib/equipment";
 
 interface ExercisesContextType {
   exercises: Exercise[];
+
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   filters: ExerciseFilters;
@@ -19,7 +21,7 @@ const ExercisesContext = React.createContext<ExercisesContextType | undefined>(
 
 interface ExercisesProviderProps {
   exercises: Exercise[];
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export const ExercisesProvider = ({
@@ -42,8 +44,10 @@ export const ExercisesProvider = ({
           .toLowerCase()
           .includes(searchQueryLower);
 
-        const matchesEquipment = exercise.equipment.some((eq) => {
-          return eq.label.toLowerCase().includes(searchQueryLower);
+        const matchesEquipment = exercise.equipment?.some((eq) => {
+          return getEquipmentLabel(eq)
+            ?.toLowerCase()
+            .includes(searchQueryLower);
         });
 
         return matchesName || matchesEquipment;
@@ -57,7 +61,7 @@ export const ExercisesProvider = ({
 
       const matchesEquipment =
         !(filters.equipment && filters.equipment.length > 0) ||
-        exercise.equipment.some((eq) => filters.equipment!.includes(eq.id));
+        exercise.equipment?.some((eq) => filters.equipment!.includes(eq));
 
       const matchesTags =
         !(filters.tags && filters.tags.length > 0) ||

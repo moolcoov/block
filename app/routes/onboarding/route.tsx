@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import { getUser, saveUser } from "~/features/user/model/storage";
 import { cn } from "~/shared/lib/utils";
 import { Button } from "~/shared/ui/Button";
-import { ControlButtons } from "~/shared/ui/ControlButtonts";
+import { ControlButtons } from "~/shared/ui/ControlButtons";
 import NumericInput from "~/shared/ui/NumericInput";
 
 interface UserCreationObject {

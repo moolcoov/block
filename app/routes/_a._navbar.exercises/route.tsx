@@ -1,9 +1,12 @@
-import { ExercisesProvider } from "~/features/exercises/model/ExercisesProvider";
-import { ExercisesList } from "./components/ExercisesList";
+import { ExercisesProvider } from "~/features/exercise/model/ExercisesProvider";
+import { ExercisesList } from "~/routes/_a._navbar.exercises/components/ExercisesList";
 import { ExercisesInfo } from "./components/ExercisesInfo";
 import { ExercisesHeader } from "./components/ExercisesHeader";
-import { useExercisesStore } from "~/features/exercises/model/store";
+import { useExercisesStore } from "~/features/exercise/model/store";
 import { useShallow } from "zustand/react/shallow";
+import { Loading } from "~/shared/ui/Loading";
+import { AnimatePresence } from "motion/react";
+import { CreateExerciseButton } from "./components/CreateExerciseButton";
 
 export default function ExercisesPage() {
   const [exercises, loading] = useExercisesStore(
@@ -13,14 +16,19 @@ export default function ExercisesPage() {
   return (
     <ExercisesProvider exercises={exercises}>
       <ExercisesHeader />
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <div className="flex flex-col gap-5 px-5 pt-5">
-          <ExercisesInfo />
-          <ExercisesList />
-        </div>
-      )}
+
+      <AnimatePresence>
+        {loading && <Loading />}
+
+        {!loading && (
+          <div className="flex flex-col gap-5 px-5 pt-5 pb-[62px]">
+            <ExercisesInfo />
+            <ExercisesList />
+          </div>
+        )}
+      </AnimatePresence>
+
+      <CreateExerciseButton />
     </ExercisesProvider>
   );
 }

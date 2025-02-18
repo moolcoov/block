@@ -9,13 +9,18 @@ interface FiltersButtonProps
 
 export const FiltersButton = ({
   activeFilters,
+  className,
   ...props
 }: FiltersButtonProps) => {
   return (
     <button
       className={cn(
-        "bg-muted flex h-[35px] items-center gap-1.5 rounded-full px-3",
-        { "text-background-100 bg-white": activeFilters && activeFilters > 0 },
+        "bg-muted active:bg-muted/80 flex h-[35px] items-center gap-1.5 rounded-full px-3 transition-colors",
+        {
+          "text-background-100 bg-white active:bg-white/80":
+            activeFilters && activeFilters > 0,
+        },
+        className,
       )}
       {...props}
     >

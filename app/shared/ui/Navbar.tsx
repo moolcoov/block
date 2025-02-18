@@ -1,26 +1,21 @@
 import { Link, useLocation, useNavigation } from "react-router";
-import { HeartIcon } from "./icons";
+import { BulletListIcon, DumbBellIcon, HeartIcon, PersonIcon } from "./icons";
 import { cn } from "~/shared/lib/utils";
 
 const links = [
   {
     label: "Тренировки",
-    icon: HeartIcon,
+    icon: <DumbBellIcon size={30} />,
     href: "/workouts",
   },
   {
     label: "Упражнения",
-    icon: HeartIcon,
+    icon: <BulletListIcon size={30} />,
     href: "/exercises",
   },
   {
-    label: "Прогресс",
-    icon: HeartIcon,
-    href: "/progress",
-  },
-  {
     label: "Профиль",
-    icon: HeartIcon,
+    icon: <PersonIcon size={30} />,
     href: "/profile",
   },
 ];
@@ -29,21 +24,21 @@ export const Navbar = () => {
   const pathname = useLocation().pathname;
 
   return (
-    <div className="fixed bottom-0 w-full px-5 pb-(--bottom-navbar)">
-      <nav className="bg-navbar flex h-[70px] w-full items-center rounded-full px-2.5 backdrop-blur-[50px]">
+    <div className="fixed bottom-0 z-40 w-full px-5 pb-(--bottom-navbar)">
+      <nav className="bg-navbar flex h-[70px] w-full items-center rounded-full px-2.5 backdrop-blur-lg">
         <div className="flex w-full items-center">
           {links.map((link) => (
             <Link
               key={link.label}
               to={link.href}
               className={cn(
-                "text-navbar-inactive flex flex-1 flex-col items-center gap-1",
+                "text-navbar-inactive flex flex-1 flex-col items-center gap-1 transition-transform active:scale-[0.9]",
                 {
                   "text-navbar-active": pathname === link.href,
                 },
               )}
             >
-              <link.icon size={25} />
+              {link.icon}
               <span className="text-[10px] font-medium">{link.label}</span>
             </Link>
           ))}

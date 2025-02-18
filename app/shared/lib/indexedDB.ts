@@ -5,7 +5,7 @@ const DB_NAME = "workoutDB";
 const VERSION = 1;
 
 export const initDB = async () => {
-  return openDB(DB_NAME, 3, {
+  return openDB(DB_NAME, VERSION, {
     upgrade(db) {
       if (!db.objectStoreNames.contains("exercises")) {
         db.createObjectStore("exercises", {
@@ -14,6 +14,11 @@ export const initDB = async () => {
       }
       if (!db.objectStoreNames.contains("workouts")) {
         db.createObjectStore("workouts", {
+          keyPath: "id",
+        });
+      }
+      if (!db.objectStoreNames.contains("media")) {
+        db.createObjectStore("media", {
           keyPath: "id",
         });
       }
@@ -36,7 +41,7 @@ export const useDatabase = <T>(fn: () => Promise<T>) => {
         setError(error);
         setLoading(false);
       });
-  }, [fn]);
+  }, []);
 
   return { loading, data, error };
 };
