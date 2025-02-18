@@ -15,6 +15,22 @@ export default function AppLayout() {
   }, []);
 
   React.useEffect(() => {
+    if (navigator.storage && navigator.storage.persist) {
+      navigator.storage.persist().then((persistent) => {
+        if (persistent) {
+          console.log(
+            "This app uses IndexedDB, your data won't wipe except by your explicit action.",
+          );
+        } else {
+          console.warn(
+            "This app uses IndexedDB, storage may be cleared by the UA under storage pressure.",
+          );
+        }
+      });
+    }
+  }, []);
+
+  React.useEffect(() => {
     if (!getUser()) {
       navigate("/onboarding");
     }
