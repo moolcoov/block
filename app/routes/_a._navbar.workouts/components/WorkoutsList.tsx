@@ -5,6 +5,7 @@ import {
   useWorkoutsSearchQuery,
 } from "~/features/workout/model/WorkoutsProvider";
 import { WorkoutCardSmall } from "~/features/workout/ui/WorkoutCard";
+import { WorkoutCreateModal } from "~/features/workout/ui/WorkoutCreateModal";
 import { WorkoutsFiltersModal } from "~/features/workout/ui/WorkoutsFiltersModal";
 import { pluralize } from "~/shared/lib/pluralize";
 import { Button } from "~/shared/ui/Button";
@@ -51,10 +52,12 @@ const ListHeader = () => {
           <FiltersButton activeFilters={activeFilters} />
         </WorkoutsFiltersModal>
       </div>
-      <Button variant={"secondary"}>
-        <PlusIcon size={18} />
-        <span>НОВАЯ ТРЕНИРОВКА</span>
-      </Button>
+      <WorkoutCreateModal>
+        <Button variant={"secondary"}>
+          <PlusIcon size={18} />
+          <span>НОВАЯ ТРЕНИРОВКА</span>
+        </Button>
+      </WorkoutCreateModal>
     </div>
   );
 };

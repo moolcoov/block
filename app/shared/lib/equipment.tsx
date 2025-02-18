@@ -4,6 +4,7 @@ interface Equipment {
   type: EquipmentType;
   name: string;
   weights: boolean;
+  defaultWeight?: number;
 }
 
 const equipment: Equipment[] = [
@@ -21,6 +22,7 @@ const equipment: Equipment[] = [
     type: "barbell",
     name: "Штанга",
     weights: true,
+    defaultWeight: 20,
   },
   {
     type: "battle_rope",
@@ -41,6 +43,7 @@ const equipment: Equipment[] = [
     type: "dumbbell",
     name: "Гантель",
     weights: true,
+    defaultWeight: 8,
   },
   {
     type: "jump_rope",
@@ -51,6 +54,7 @@ const equipment: Equipment[] = [
     type: "kettlebell",
     name: "Гиря",
     weights: true,
+    defaultWeight: 12,
   },
   {
     type: "machines",
@@ -120,4 +124,12 @@ export function getEquipment() {
 
 export function getEquipmentLabel(type: string) {
   return equipment.find((e) => e.type === type)?.name;
+}
+
+export default function getDefaultWeight(type: string) {
+  return equipment.find((e) => e.type === type)?.defaultWeight;
+}
+
+export function isWeightEquipment(type: string) {
+  return equipment.find((e) => e.type === type)?.weights;
 }

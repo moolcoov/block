@@ -1,5 +1,5 @@
 import { ExercisesProvider } from "~/features/exercise/model/ExercisesProvider";
-import { ExercisesList } from "./components/ExercisesList";
+import { ExercisesList } from "~/routes/_a._navbar.exercises/components/ExercisesList";
 import { ExercisesInfo } from "./components/ExercisesInfo";
 import { ExercisesHeader } from "./components/ExercisesHeader";
 import { useExercisesStore } from "~/features/exercise/model/store";

@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { MagnifierIcon } from "./icons";
+import { cn } from "../lib/utils";
 
 interface HeaderSearchProps {
   searchQuery: string;
@@ -7,6 +8,8 @@ interface HeaderSearchProps {
 
   expanded: boolean;
   setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+
+  className?: string;
 }
 
 export const HeaderSearch = ({
@@ -14,9 +17,15 @@ export const HeaderSearch = ({
   setSearchQuery,
   expanded,
   setExpanded,
+  className,
 }: HeaderSearchProps) => {
   return (
-    <div className="absolute top-4 right-0 flex w-[100dvw] justify-end gap-3 px-5">
+    <div
+      className={cn(
+        "absolute top-4 right-0 flex w-[100dvw] justify-end gap-3 px-5",
+        className,
+      )}
+    >
       <motion.div
         className="bg-muted flex h-10 w-10 min-w-[40px] items-center gap-2 overflow-hidden rounded-full px-3"
         animate={expanded ? { width: "100%" } : { width: "40px" }}

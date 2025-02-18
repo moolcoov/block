@@ -9,6 +9,7 @@ interface FiltersButtonProps
 
 export const FiltersButton = ({
   activeFilters,
+  className,
   ...props
 }: FiltersButtonProps) => {
   return (
@@ -19,6 +20,7 @@ export const FiltersButton = ({
           "text-background-100 bg-white active:bg-white/80":
             activeFilters && activeFilters > 0,
         },
+        className,
       )}
       {...props}
     >

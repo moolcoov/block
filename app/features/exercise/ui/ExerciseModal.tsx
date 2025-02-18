@@ -49,7 +49,7 @@ export const ExerciseModal = ({ id, children }: ExerciseModalProps) => {
 
   return (
     <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>{children}</DrawerTrigger>
+      <DrawerTrigger>{children}</DrawerTrigger>
       <DrawerContent className="h-[85vh] overflow-hidden">
         <DrawerClose asChild>
           <Button
@@ -102,13 +102,13 @@ const Content = ({ id }: { id: UUID }) => {
     <ExerciseProvider exercise={exercise}>
       <div className="relative">
         <div className="relative flex h-[50vh] w-full items-end justify-center bg-cover bg-center text-center">
-          <Video videoSrc={exercise.video} />
+          <ExerciseVideo videoSrc={exercise.video} />
           <h1 className="z-10 text-3xl font-black">{exercise.title}</h1>
         </div>
         <div className="px-5">
           <div className="my-3 flex items-center justify-center gap-2.5">
             <ExerciseNotesModal>
-              <ActionButton label="Заметки" onClick={() => {}} />
+              <ExerciseActionButton label="Заметки" onClick={() => {}} />
             </ExerciseNotesModal>
             {/* <ActionButton label="История" onClick={() => {}} /> */}
           </div>
@@ -134,7 +134,7 @@ const Content = ({ id }: { id: UUID }) => {
   );
 };
 
-const Video = ({ videoSrc }: { videoSrc?: ResourceMedia }) => {
+export const ExerciseVideo = ({ videoSrc }: { videoSrc?: ResourceMedia }) => {
   const { data: video, loading: videoLoading } = useDatabase(async () =>
     getMediaFromDB(videoSrc?.storedId),
   );
@@ -142,6 +142,11 @@ const Video = ({ videoSrc }: { videoSrc?: ResourceMedia }) => {
   if (!videoSrc) {
     return null;
   }
+
+  const url = React.useMemo(
+    () => (video ? URL.createObjectURL(video.data) : videoSrc.externalSrc),
+    [video, videoSrc],
+  );
 
   return (
     <AnimatePresence>
@@ -158,7 +163,7 @@ const Video = ({ videoSrc }: { videoSrc?: ResourceMedia }) => {
             muted
             playsInline
             className="absolute inset-0 mb-[-1px] h-full w-full object-cover object-center"
-            src={video ? URL.createObjectURL(video.data) : videoSrc.externalSrc}
+            src={url}
           />
         </>
       )}
@@ -171,7 +176,7 @@ interface ActionButtonProps {
   onClick: () => void;
 }
 
-const ActionButton = ({ label, onClick }: ActionButtonProps) => {
+export const ExerciseActionButton = ({ label, onClick }: ActionButtonProps) => {
   return (
     <button
       className="bg-muted flex h-[35px] items-center gap-1.5 rounded-full px-3"

@@ -2,7 +2,7 @@ import { initDB } from "~/shared/lib/indexedDB";
 import type { MediaItem } from "./types";
 import type { UUID } from "~/shared/types/uuid";
 
-const EXERCISES_STORE_NAME = "media";
+const MEDIA_STORE_NAME = "media";
 
 export const addMediaToDB = async (media: MediaItem) => {
   const db = await initDB();
@@ -11,7 +11,7 @@ export const addMediaToDB = async (media: MediaItem) => {
     throw Error("Not enough space");
   }
 
-  return db.add(EXERCISES_STORE_NAME, media);
+  return db.add(MEDIA_STORE_NAME, media);
 };
 
 export const getMediaFromDB = async (
@@ -21,7 +21,7 @@ export const getMediaFromDB = async (
     return undefined;
   }
   const db = await initDB();
-  return db.get(EXERCISES_STORE_NAME, id);
+  return db.get(MEDIA_STORE_NAME, id);
 };
 
 export const deleteMediaFromDB = async (id?: UUID) => {
@@ -29,7 +29,7 @@ export const deleteMediaFromDB = async (id?: UUID) => {
     return;
   }
   const db = await initDB();
-  return db.delete(EXERCISES_STORE_NAME, id);
+  return db.delete(MEDIA_STORE_NAME, id);
 };
 
 export const getStorageUsage = async () => {

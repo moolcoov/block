@@ -1,4 +1,5 @@
 import type { Exercise } from "~/features/exercise/model/types";
+import type { ResourceMedia } from "~/features/media/model/types";
 import type { EquipmentType } from "~/shared/lib/equipment";
 import type { Difficulty } from "~/shared/types/difficulty";
 import type { Tag } from "~/shared/types/tags";
@@ -10,12 +11,15 @@ export interface Workout {
   workoutTime: number; // в мин
   difficulty: Difficulty;
 
+  image?: ResourceMedia;
+
   equipment?: EquipmentType[];
   tags?: Tag[];
 
   sections: WorkoutSection[];
 
   createdAt: Date;
+  editedAt?: Date;
 
   saved?: boolean;
 }
@@ -28,12 +32,13 @@ export interface WorkoutSection {
 
 export interface WorkoutExercise extends Exercise {
   sets: WorkoutExerciseSet[];
+  selectedEquipment: EquipmentType;
 }
 
 export interface WorkoutExerciseSet {
   id: number;
-  reps: number;
-  weight?: "bodyWeight" | number;
+  reps?: number;
+  weight?: number;
   time?: number;
 }
 

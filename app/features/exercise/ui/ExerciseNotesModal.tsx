@@ -26,12 +26,7 @@ export const ExerciseNotesModal = ({ children }: ExerciseNotesModalProps) => {
   }, [notes]);
 
   return (
-    <Drawer
-      shouldScaleBackground={false}
-      open={open}
-      onOpenChange={setOpen}
-      nested
-    >
+    <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="h-[84vh] overflow-hidden">
         <DrawerHandle />

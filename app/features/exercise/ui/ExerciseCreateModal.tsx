@@ -274,7 +274,7 @@ const DifficultyScreen: CreateScreen = ({ next, prev }) => {
 
   return (
     <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button)">
-      <div className="flex flex-1 flex-col gap-8 overflow-y-scroll pt-20">
+      <div className="flex flex-1 flex-col gap-8 overflow-x-hidden overflow-y-auto pt-20">
         <h1 className="text-3xl font-black text-balance">УКАЖИТЕ СЛОЖНОСТЬ</h1>
 
         <div className="flex flex-col gap-1.5">
@@ -324,7 +324,7 @@ const EquipmentScreen: CreateScreen = ({ next, prev }) => {
 
   return (
     <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button)">
-      <div className="flex flex-1 flex-col gap-8 overflow-y-scroll pt-20">
+      <div className="flex flex-1 flex-col gap-8 overflow-x-hidden overflow-y-auto pt-20">
         <h1 className="text-3xl font-black text-balance">
           ВЫБЕРИТЕ ОБОРУДОВАНИЕ
         </h1>
@@ -385,7 +385,7 @@ const TagsScreen: CreateScreen = ({ next, prev }) => {
 
   return (
     <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button)">
-      <div className="flex flex-1 flex-col gap-8 overflow-y-scroll pt-20">
+      <div className="flex flex-1 flex-col gap-8 overflow-x-hidden overflow-y-auto pt-20">
         <h1 className="text-3xl font-black text-balance">ДОБАВЬТЕ ТЕГИ</h1>
 
         <div className="flex flex-wrap gap-3">
