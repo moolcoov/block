@@ -2,7 +2,7 @@ import { initDB } from "~/shared/lib/indexedDB";
 import type { MediaItem } from "./types";
 import type { UUID } from "~/shared/types/uuid";
 
-const MEDIA_STORE_NAME = "media";
+export const MEDIA_STORE_NAME = "media";
 
 export const addMediaToDB = async (media: MediaItem) => {
   const db = await initDB();

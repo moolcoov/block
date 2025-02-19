@@ -149,6 +149,14 @@ export const ExerciseVideo = ({ videoSrc }: { videoSrc?: ResourceMedia }) => {
     [video, videoSrc],
   );
 
+  React.useEffect(() => {
+    return () => {
+      if (video && url) {
+        URL.revokeObjectURL(url);
+      }
+    };
+  }, [video, url]);
+
   return (
     <AnimatePresence>
       {videoLoading && <Loading key="loading" />}

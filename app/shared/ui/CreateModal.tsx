@@ -8,8 +8,6 @@ interface CreateScreenProps {
 
 export type CreateScreen = ({ next, prev }: CreateScreenProps) => JSX.Element;
 
-// const screens = [TitleScreen, PhotoScreen, VideoScreen, EquipmentScreen];
-
 export const CreateModal = ({
   screens,
   onFinish,

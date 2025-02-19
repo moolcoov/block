@@ -2,7 +2,7 @@ import { initDB } from "~/shared/lib/indexedDB";
 import type { Workout } from "./types";
 import type { UUID } from "~/shared/types/uuid";
 
-const WORKOUTS_STORE_NAME = "workouts";
+export const WORKOUTS_STORE_NAME = "workouts";
 
 export const getWorkoutsFromDB = async () => {
   const db = await initDB();

@@ -7,3 +7,7 @@ export const getUser = (): User | undefined => {
   if (!user) return undefined;
   return JSON.parse(user);
 };
+
+export const updateUser = (user: User) => {
+  localStorage.setItem("user", JSON.stringify(user));
+};

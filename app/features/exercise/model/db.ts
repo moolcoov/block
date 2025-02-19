@@ -2,7 +2,7 @@ import { initDB } from "~/shared/lib/indexedDB";
 import type { Exercise } from "./types";
 import type { UUID } from "~/shared/types/uuid";
 
-const EXERCISES_STORE_NAME = "exercises";
+export const EXERCISES_STORE_NAME = "exercises";
 
 // TODO OPTIMIZE
 

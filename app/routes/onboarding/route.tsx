@@ -49,6 +49,9 @@ export default function OnboardingPage() {
         sex: userObject.sex,
         height: userObject.height,
         weight: userObject.weight,
+
+        xp: 0,
+        coins: 0,
       };
       saveUser(user);
     }

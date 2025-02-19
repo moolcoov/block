@@ -705,15 +705,17 @@ const WorkoutExerciseScreenContent = ({
           </div>
           <div className="flex flex-col gap-2 px-5">
             <table className="w-full table-fixed text-left">
-              <thead className="text-muted-foreground border-b text-sm [&>th]:py-2 [&>th]:font-medium">
-                <th>Сет</th>
-                <th>Вес</th>
-                <th>
-                  {exercise.type === ExerciseType.TIMED
-                    ? "Время"
-                    : "Повторений"}
-                </th>
-                <th></th>
+              <thead className="text-muted-foreground border-b text-sm [&>tr>td]:py-2 [&>tr>td]:font-medium">
+                <tr>
+                  <td>Сет</td>
+                  <td>Вес</td>
+                  <td>
+                    {exercise.type === ExerciseType.TIMED
+                      ? "Время"
+                      : "Повторений"}
+                  </td>
+                  <td />
+                </tr>
               </thead>
               <tbody className="text-lg *:px-5 *:py-2 [&>tr>td]:py-3 [&>tr>td]:font-semibold [&>tr>td>input]:outline-none">
                 {sets.map((set) => (

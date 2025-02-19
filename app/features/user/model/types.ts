@@ -3,6 +3,9 @@ interface User {
   sex: UserSex;
   weight: UserParameter;
   height: UserParameter;
+
+  xp: number;
+  coins: number;
 }
 
 type UserSex = "male" | "female";
