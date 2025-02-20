@@ -164,11 +164,10 @@ export const WorkoutCreateModal = ({
         >
           <CreateModal
             screens={[
-              ExercisesScreen,
               TitleScreen,
               PhotoScreen,
               DifficultyScreen,
-
+              ExercisesScreen,
               TagsScreen,
             ]}
             onFinish={finish}

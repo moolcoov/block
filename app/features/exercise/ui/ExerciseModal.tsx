@@ -110,7 +110,6 @@ const Content = ({ id }: { id: UUID }) => {
             <ExerciseNotesModal>
               <ExerciseActionButton label="Заметки" onClick={() => {}} />
             </ExerciseNotesModal>
-            {/* <ActionButton label="История" onClick={() => {}} /> */}
           </div>
 
           <div className="mt-6 flex w-full items-center px-3">

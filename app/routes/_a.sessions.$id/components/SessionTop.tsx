@@ -302,7 +302,6 @@ const Exercise = () => {
             {sets.map((set) => (
               <motion.tr
                 key={set.id}
-                // layoutId={`set_${section.id}_${exercise.id}_${set.id}`}
                 className={cn("*:not-first:pl-3.5 *:not-last:pr-3.5", {
                   "text-green-200": set.id < (state.currentSet ?? 0) + 1,
                   "text-muted-foreground": set.id > (state.currentSet ?? 0) + 1,

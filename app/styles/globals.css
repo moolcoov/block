@@ -53,6 +53,8 @@
 
   --color-xp: var(--xp);
   --color-lottie: var(--lottie);
+
+  --carousel-item-size: 0 0 90%;
 }
 
 html,

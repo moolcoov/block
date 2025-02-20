@@ -4,8 +4,6 @@ import type { UUID } from "~/shared/types/uuid";
 
 export const EXERCISES_STORE_NAME = "exercises";
 
-// TODO OPTIMIZE
-
 export const addExerciseToDB = async (exercise: Exercise) => {
   const db = await initDB();
   return db.add(EXERCISES_STORE_NAME, exercise);

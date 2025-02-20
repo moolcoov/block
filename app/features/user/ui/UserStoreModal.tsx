@@ -43,7 +43,7 @@ const Store = () => {
         <LottieCoinIcon size={64} />
         <NumberFlow
           className="text-lottie text-6xl font-black"
-          value={user.coins}
+          value={user.coins ?? 0}
           trend={1}
           style={
             {
