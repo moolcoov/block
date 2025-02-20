@@ -10,7 +10,7 @@ export interface User {
 
 export type UserSex = "male" | "female";
 
-interface UserParameter {
+export interface UserParameter {
   value: number;
   date: Date;
 }

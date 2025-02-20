@@ -6,6 +6,9 @@ const sourceDir = path.join(__dirname, "public", "client");
 const targetDir = path.join(__dirname, "public");
 
 async function copyFiles() {
+  // вот это так вот потому что react-router не хочет ложить
+  // клиентские файлы куда либо еще кроме /client
+
   try {
     if (await fs.pathExists(sourceDir)) {
       await fs.copy(sourceDir, targetDir, { overwrite: true });

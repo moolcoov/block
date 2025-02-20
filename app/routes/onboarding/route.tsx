@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import React, { type JSX } from "react";
 import { useNavigate } from "react-router";
 import { getUser, saveUser } from "~/features/user/model/storage";
+import type { User, UserParameter, UserSex } from "~/features/user/model/types";
 import { cn } from "~/shared/lib/utils";
 import { Button } from "~/shared/ui/Button";
 import { ControlButtons } from "~/shared/ui/ControlButtons";
