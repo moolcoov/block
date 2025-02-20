@@ -49,6 +49,9 @@ export default function OnboardingPage() {
         sex: userObject.sex,
         height: userObject.height,
         weight: userObject.weight,
+
+        xp: 0,
+        coins: 0,
       };
       saveUser(user);
     }
@@ -98,8 +101,6 @@ const AnimationBuilder = ({
   if (!Block) return null;
 
   const next = React.useCallback(() => {
-    console.log(index);
-
     if (index === blocks.length - 1) {
       finish();
       return;

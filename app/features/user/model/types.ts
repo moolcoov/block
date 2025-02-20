@@ -1,11 +1,14 @@
-interface User {
+export interface User {
   name: string;
   sex: UserSex;
   weight: UserParameter;
   height: UserParameter;
+
+  xp: number;
+  coins: number;
 }
 
-type UserSex = "male" | "female";
+export type UserSex = "male" | "female";
 
 interface UserParameter {
   value: number;

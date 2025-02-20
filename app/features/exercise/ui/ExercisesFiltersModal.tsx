@@ -16,6 +16,7 @@ import { Difficulty } from "~/shared/types/difficulty";
 import type { UUID } from "~/shared/types/uuid";
 import { Checkbox } from "~/shared/ui/Checkbox";
 import { getEquipment } from "~/shared/lib/equipment";
+import { useTagsStore } from "~/features/tag/model/store";
 
 export const ExercisesFiltersModal = ({
   children,
@@ -75,16 +76,9 @@ const ExercisesFilters = () => {
   );
 };
 
-const tags = [
-  { id: "1", label: "Штанга" },
-  { id: "2", label: "Бокс" },
-  { id: "3", label: "Брусья" },
-  { id: "4", label: "Бутерброд" },
-  { id: "5", label: "Велосипед" },
-  { id: "6", label: "Велотрековая баска" },
-];
-
 const ExercisesFiltersTags = () => {
+  const tags = useTagsStore((state) => state.tags);
+
   const [filters, setFilters] = useExercisesFilters();
 
   if (!tags || tags.length === 0) {

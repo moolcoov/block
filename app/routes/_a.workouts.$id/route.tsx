@@ -14,29 +14,6 @@ import { useDatabase } from "~/shared/lib/indexedDB";
 import { AnimatePresence } from "motion/react";
 import { Loading } from "~/shared/ui/Loading";
 
-const workout: Workout = {
-  id: "e3deb89b-5bed-4ddb-b12c-e18aeefe3d71",
-  title: "ВЕРХ ТЕЛА НА СИЛУ",
-  tags: [
-    {
-      id: "1",
-      label: "Мышцы кора",
-    },
-    {
-      id: "2",
-      label: "Пресс",
-    },
-    {
-      id: "3",
-      label: "Для начинающих",
-    },
-  ],
-  workoutTime: 28,
-  difficulty: Difficulty.EASY,
-  sections: [],
-  createdAt: new Date(),
-};
-
 export default function WorkoutPage({
   params: { id },
 }: {

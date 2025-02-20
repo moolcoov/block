@@ -1,7 +1,7 @@
 import type { ResourceMedia } from "~/features/media/model/types";
 import type { EquipmentType } from "~/shared/lib/equipment";
 import type { Difficulty } from "~/shared/types/difficulty";
-import type { Tag } from "~/shared/types/tags";
+import type { Tag } from "~/features/tag/model/types";
 import type { UUID } from "~/shared/types/uuid";
 
 export interface Exercise {

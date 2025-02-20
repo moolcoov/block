@@ -11,12 +11,12 @@ import {
   CameraIcon,
   DumbBellIcon,
   PhotoIcon,
+  PlusIcon,
   XmarkIcon,
 } from "~/shared/ui/icons";
 import { ExerciseType, type Exercise } from "../model/types";
 import { MediaUploader } from "~/features/media/ui/MediaUploader";
 import { Checkbox } from "~/shared/ui/Checkbox";
-import type { UUID } from "~/shared/types/uuid";
 import { ControlButtons } from "~/shared/ui/ControlButtons";
 import { CreateModal, type CreateScreen } from "~/shared/ui/CreateModal";
 import { useExercisesStore } from "../model/store";
@@ -25,13 +25,15 @@ import { Difficulty } from "~/shared/types/difficulty";
 import { addMediaToDB } from "~/features/media/model/db";
 import { getDifficultyIcon, getDifficultyLabel } from "~/shared/lib/difficulty";
 import { getEquipment, type EquipmentType } from "~/shared/lib/equipment";
+import type { Tag } from "~/features/tag/model/types";
+import { useTagsStore } from "~/features/tag/model/store";
 
 interface CreateExerciseObject {
   title?: string;
   type?: ExerciseType;
   difficulty?: Difficulty;
-  equipment?: UUID[];
-  tags?: UUID[];
+  equipment?: EquipmentType[];
+  selectedTags?: Tag[];
 
   image?: Blob;
   video?: Blob;
@@ -52,6 +54,26 @@ export const ExerciseCreateModal = ({
   children: React.ReactNode;
 }) => {
   const [open, setOpen] = React.useState(false);
+  return (
+    <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>{children}</DrawerTrigger>
+      <DrawerContent className="h-[85vh] overflow-hidden">
+        <DrawerClose asChild>
+          <Button
+            variant={"secondary"}
+            size={"icon"}
+            className="fixed top-5 left-5 z-40"
+          >
+            <XmarkIcon size={19} />
+          </Button>
+        </DrawerClose>
+        <CreateExercise setOpen={setOpen} />
+      </DrawerContent>
+    </Drawer>
+  );
+};
+
+const CreateExercise = ({ setOpen }: { setOpen: React.Dispatch<boolean> }) => {
   const addExercise = useExercisesStore((state) => state.addExercise);
   const [exerciseObject, setExerciseObject] =
     React.useState<CreateExerciseObject>({});
@@ -65,6 +87,7 @@ export const ExerciseCreateModal = ({
       equipment: exerciseObject.equipment || ["body_weight"],
       createdAt: new Date(),
       editedAt: new Date(),
+      tags: exerciseObject.selectedTags,
     };
 
     if (exerciseObject.image) {
@@ -100,42 +123,29 @@ export const ExerciseCreateModal = ({
     }
 
     await addExercise(exercise);
+    setExerciseObject({});
     setOpen(false);
   }, [exerciseObject, addExercise]);
 
   return (
-    <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="h-[85vh] overflow-hidden">
-        <DrawerClose asChild>
-          <Button
-            variant={"secondary"}
-            size={"icon"}
-            className="fixed top-5 left-5 z-40"
-          >
-            <XmarkIcon size={19} />
-          </Button>
-        </DrawerClose>
-        <CreateExerciseContext.Provider
-          value={{
-            exerciseObject,
-            setExerciseObject,
-          }}
-        >
-          <CreateModal
-            screens={[
-              TitleScreen,
-              PhotoScreen,
-              VideoScreen,
-              DifficultyScreen,
-              EquipmentScreen,
-              TagsScreen,
-            ]}
-            onFinish={finish}
-          />
-        </CreateExerciseContext.Provider>
-      </DrawerContent>
-    </Drawer>
+    <CreateExerciseContext.Provider
+      value={{
+        exerciseObject,
+        setExerciseObject,
+      }}
+    >
+      <CreateModal
+        screens={[
+          TitleScreen,
+          PhotoScreen,
+          VideoScreen,
+          DifficultyScreen,
+          EquipmentScreen,
+          TagsScreen,
+        ]}
+        onFinish={finish}
+      />
+    </CreateExerciseContext.Provider>
   );
 };
 
@@ -355,33 +365,54 @@ const EquipmentScreen: CreateScreen = ({ next, prev }) => {
   );
 };
 
-const tagsDef = [
-  { id: "1", label: "Штанга" },
-  { id: "2", label: "Бокс" },
-  { id: "3", label: "Брусья" },
-  { id: "4", label: "Бутерброд" },
-];
-
 const TagsScreen: CreateScreen = ({ next, prev }) => {
+  const { tags, addTag } = useTagsStore();
+
+  const [isAdding, setIsAdding] = React.useState(false);
+  const [newTagName, setNewTagName] = React.useState("");
+
   const { setExerciseObject } = useCreateExercise();
-  const [tags, setTags] = React.useState<UUID[]>([]);
+  const [selectedTags, setSelectedTags] = React.useState<Tag[]>([]);
 
-  const addTag = React.useCallback((tag: UUID) => {
-    return () => {
-      setTags((prev) => [...prev, tag]);
-    };
-  }, []);
+  const addSelectedTag = React.useCallback(
+    (tag: Tag) => {
+      return () => {
+        setSelectedTags((prev) => {
+          return [...prev, tag];
+        });
+      };
+    },
+    [setSelectedTags],
+  );
 
-  const removeTag = React.useCallback((tag: UUID) => {
-    return () => {
-      setTags((prev) => prev.filter((t) => t !== tag));
-    };
-  }, []);
+  const removeSelectedTag = React.useCallback(
+    (tag: Tag) => {
+      return () => {
+        setSelectedTags((prev) => prev.filter((t) => t.id !== tag.id));
+      };
+    },
+    [setSelectedTags],
+  );
+
+  React.useEffect(() => {
+    setExerciseObject((prev) => ({ ...prev, selectedTags }));
+  }, [selectedTags]);
 
   const onSubmit = React.useCallback(async () => {
-    setExerciseObject((prev) => ({ ...prev, tags }));
+    setExerciseObject((prev) => ({ ...prev, selectedTags }));
     await next();
-  }, [tags, next]);
+  }, [selectedTags, next, setExerciseObject]);
+
+  const onTagCreate = React.useCallback(async () => {
+    if (newTagName.trim() === "") {
+      setIsAdding(false);
+      setNewTagName("");
+      return;
+    }
+    await addTag({ id: uuidv4(), label: newTagName });
+    setIsAdding(false);
+    setNewTagName("");
+  }, [newTagName, addTag]);
 
   return (
     <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button)">
@@ -389,24 +420,45 @@ const TagsScreen: CreateScreen = ({ next, prev }) => {
         <h1 className="text-3xl font-black text-balance">ДОБАВЬТЕ ТЕГИ</h1>
 
         <div className="flex flex-wrap gap-3">
-          {tagsDef.map((t) => {
-            const active = tags?.includes(t.id);
+          {tags.map((t) => {
+            const active = selectedTags?.includes(t);
 
             return (
               <button
                 key={t.id}
                 className={cn(
-                  "bg-muted rounded-xl px-[18px] py-3 text-sm font-medium",
+                  "bg-muted h-11 rounded-xl px-[18px] py-3 text-sm font-medium",
                   {
                     "bg-accent text-background-200": active,
                   },
                 )}
-                onClick={active ? removeTag(t.id) : addTag(t.id)}
+                onClick={active ? removeSelectedTag(t) : addSelectedTag(t)}
               >
                 {t.label}
               </button>
             );
           })}
+          <button
+            className={cn(
+              "bg-muted h-11 rounded-xl px-4 py-3 text-sm font-medium",
+              {
+                "px-0 py-0": isAdding,
+              },
+            )}
+            onClick={() => setIsAdding(true)}
+          >
+            {isAdding ? (
+              <input
+                placeholder="Новый тег"
+                value={newTagName}
+                onBlur={onTagCreate}
+                onChange={(e) => setNewTagName(e.target.value)}
+                className="resize-none px-5 py-2 text-base outline-none"
+              />
+            ) : (
+              <PlusIcon size={14} />
+            )}
+          </button>
         </div>
       </div>
       <ControlButtons onNext={onSubmit} label="СОХРАНИТЬ" />

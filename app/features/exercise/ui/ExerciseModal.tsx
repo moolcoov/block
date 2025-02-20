@@ -6,7 +6,7 @@ import {
 } from "~/shared/ui/Drawer";
 import { XmarkIcon } from "~/shared/ui/icons";
 import { TagBadge } from "~/shared/ui/Tag";
-import type { Tag } from "~/shared/types/tags";
+import type { Tag } from "~/features/tag/model/types";
 import { InfoColumn } from "~/shared/ui/InfoColumn";
 import { getDifficultyIcon, getDifficultyLabel } from "~/shared/lib/difficulty";
 import type { UUID } from "~/shared/types/uuid";
@@ -20,7 +20,7 @@ import { ExerciseProvider } from "../model/ExerciseProvider";
 import { AnimatePresence, motion } from "motion/react";
 import { getMediaFromDB } from "~/features/media/model/db";
 import type { ResourceMedia } from "~/features/media/model/types";
-import type { Exercise } from "../model/types";
+import { ExerciseType, type Exercise } from "../model/types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -95,7 +95,6 @@ const Content = ({ id }: { id: UUID }) => {
   if (loading) return <Loading />;
 
   if (!exercise) return <div>Exercise not found</div>;
-  // TODO
 
   const DifficultyIcon = getDifficultyIcon(exercise.difficulty);
 
@@ -111,14 +110,19 @@ const Content = ({ id }: { id: UUID }) => {
             <ExerciseNotesModal>
               <ExerciseActionButton label="Заметки" onClick={() => {}} />
             </ExerciseNotesModal>
-            {/* <ActionButton label="История" onClick={() => {}} /> */}
           </div>
 
           <div className="mt-6 flex w-full items-center px-3">
-            {/* <InfoColumn
-              info={<span className="text-xl font-black">22 раза</span>}
-              label="Рекорд за день"
-            /> */}
+            <InfoColumn
+              info={
+                <span className="text-xl font-black">
+                  {exercise.type === ExerciseType.TIMED
+                    ? "На время"
+                    : "На количество"}
+                </span>
+              }
+              label="Тип упражнения"
+            />
             <InfoColumn
               info={<DifficultyIcon size={25} />}
               label={getDifficultyLabel(exercise.difficulty)}
@@ -148,6 +152,14 @@ export const ExerciseVideo = ({ videoSrc }: { videoSrc?: ResourceMedia }) => {
     () => (video ? URL.createObjectURL(video.data) : videoSrc.externalSrc),
     [video, videoSrc],
   );
+
+  React.useEffect(() => {
+    return () => {
+      if (video && url) {
+        URL.revokeObjectURL(url);
+      }
+    };
+  }, [video, url]);
 
   return (
     <AnimatePresence>
