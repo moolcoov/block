@@ -19,6 +19,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { SessionResults } from "./components/SessionResults";
 import { getUser, updateUser } from "~/features/user/model/storage";
 import { calculateXP } from "~/features/user/lib/xp";
+import { calculateCoins } from "~/features/user/lib/coins";
+import { useSessionsStore } from "~/features/session/model/store";
 
 export const easingFunction = [0.33, 1, 0.68, 1];
 
@@ -37,17 +39,18 @@ export const clientLoader = async ({
 };
 
 export default function SessionPage({
-  loaderData: { session },
+  loaderData: { session: sessionRef },
 }: {
   loaderData: { session: WorkoutSession };
 }) {
-  const [completed, setCompleted] = React.useState(session.completed);
+  const fetchSessions = useSessionsStore((state) => state.fetchSessions);
+  const [completed, setCompleted] = React.useState(sessionRef.completed);
   const [results, setResults] = React.useState<
     WorkoutSessionResults | undefined
-  >(session.results);
+  >(sessionRef.results);
 
   const onComplete = React.useCallback(
-    (session: WorkoutSession) => {
+    async (session: WorkoutSession) => {
       const trainingTime = Math.round(
         ((session.completedAt ?? new Date()).getTime() -
           (session.startedAt ?? new Date()).getTime()) /
@@ -63,7 +66,7 @@ export default function SessionPage({
 
       const user = getUser();
 
-      const results = {
+      const localResults = {
         xp: {
           prev: user?.xp ?? 0,
           new: (user?.xp ?? 0) + calculateXP(trainingTime, totalWeight),
@@ -71,28 +74,36 @@ export default function SessionPage({
 
         coins: {
           prev: user?.coins ?? 0,
-          new: (user?.coins ?? 0) + calculateXP(trainingTime, totalWeight),
+          new: (user?.coins ?? 0) + calculateCoins(trainingTime, totalWeight),
         },
       };
 
       if (user) {
-        updateUser({ ...user, xp: results.xp.new, coins: results.coins.new });
+        updateUser({
+          ...user,
+          xp: localResults.xp.new,
+          coins: localResults.coins.new,
+        });
       }
 
-      setResults(results);
+      setResults(localResults);
 
-      updateSessionInDB({
+      await updateSessionInDB({
         ...session,
         completed: true,
         completedAt: new Date(),
-        results,
-      }).then(() => setCompleted(true));
+        results: localResults,
+      });
+
+      await fetchSessions();
+
+      setCompleted(true);
     },
     [setCompleted, setResults],
   );
 
   return (
-    <SessionProvider session={session} onComplete={onComplete}>
+    <SessionProvider session={sessionRef} onComplete={onComplete}>
       <AnimatePresence mode="wait">
         {!completed && (
           <motion.div

@@ -9,6 +9,11 @@ export const getSessionFromDB = async (id: UUID) => {
   return db.get(SESSIONS_STORE_NAME, id);
 };
 
+export const getSessionsFromDB = async () => {
+  const db = await initDB();
+  return db.getAll(SESSIONS_STORE_NAME);
+};
+
 export const addSessionToDB = async (session: WorkoutSession) => {
   const db = await initDB();
   return db.add(SESSIONS_STORE_NAME, session);

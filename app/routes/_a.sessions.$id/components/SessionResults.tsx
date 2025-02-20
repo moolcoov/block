@@ -124,12 +124,16 @@ const InfoPage = ({
           info={<h2 className="font-medium-sans text-xl">{totalWeight} кг</h2>}
           label="Поднятый вес"
         />
-        <InfoColumn
-          info={
-            <h2 className="font-medium-sans text-xl">{results?.xp.new} XP</h2>
-          }
-          label="Опыта получено"
-        />
+        {results?.xp.new && results?.xp.prev && (
+          <InfoColumn
+            info={
+              <h2 className="font-medium-sans text-xl">
+                {results?.xp.new - results?.xp.prev} XP
+              </h2>
+            }
+            label="Опыта получено"
+          />
+        )}
       </div>
 
       <Button onClick={next}>ДАЛЕЕ</Button>

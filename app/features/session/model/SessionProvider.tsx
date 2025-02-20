@@ -27,7 +27,7 @@ const SessionContext = React.createContext<SessionContextType | undefined>(
 interface SessionProviderProps {
   session: WorkoutSession;
   children?: React.ReactNode;
-  onComplete?: (session: WorkoutSession) => void;
+  onComplete?: (session: WorkoutSession) => Promise<void>;
 }
 
 interface SessionState {
@@ -138,6 +138,7 @@ export const SessionProvider = ({
 }: SessionProviderProps) => {
   const [session, setSession] = React.useState(sessionRef);
   const navigate = useNavigate();
+  const update = React.useRef(true);
 
   const [state, dispatch] = React.useReducer(reducer, {
     status: session.section != undefined ? "exercise" : "start",
@@ -148,10 +149,15 @@ export const SessionProvider = ({
   });
 
   React.useEffect(() => {
+    const finish = async () => {
+      await onComplete?.(session);
+    };
+
     if (state.status === "finished") {
-      onComplete?.(session);
+      update.current = false;
+      finish();
     }
-  }, [state.status, session, onComplete]);
+  }, [state.status, session, onComplete, update.current]);
 
   React.useEffect(() => {
     const newSession = {
@@ -162,11 +168,13 @@ export const SessionProvider = ({
     };
 
     const timeout = setTimeout(() => {
-      updateSessionInDB(newSession);
+      if (update.current) {
+        updateSessionInDB(newSession);
+      }
     }, 1000);
 
     return () => clearTimeout(timeout);
-  }, [state, session]);
+  }, [state, session, update.current]);
 
   const cancelSession = React.useCallback(async () => {
     await updateSessionInDB({

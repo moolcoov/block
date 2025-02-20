@@ -192,7 +192,7 @@ const ProgressBar = () => {
   );
 };
 
-function calculateProgress(
+export function calculateProgress(
   sections: WorkoutSection[],
   currentSection: number,
   currentExercise: number,

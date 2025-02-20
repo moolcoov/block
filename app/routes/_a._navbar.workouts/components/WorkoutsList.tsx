@@ -16,7 +16,7 @@ export const WorkoutsList = () => {
   const workouts = useWorkouts();
 
   return (
-    <section className="flex flex-col gap-6 px-5 not-first:mt-8">
+    <section className="flex flex-col gap-6 px-5">
       <ListHeader />
       <div className="grid grid-cols-2 gap-3.5">
         {workouts.map((workout) => (

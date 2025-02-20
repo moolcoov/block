@@ -8,6 +8,8 @@ import { WorkoutsHeader } from "./components/WorkoutsHeader";
 import { useWorkoutsStore } from "~/features/workout/model/store";
 import { AnimatePresence } from "motion/react";
 import { Loading } from "~/shared/ui/Loading";
+import { SessionResumeButton } from "~/features/session/ui/SessionResumeButton";
+import { useSessionsStore } from "~/features/session/model/store";
 
 export default function WorkoutsPage() {
   const { workouts, loading } = useWorkoutsStore();
@@ -18,7 +20,7 @@ export default function WorkoutsPage() {
       {workouts && (
         <WorkoutsProvider workouts={workouts}>
           <WorkoutsHeader />
-          <div className="flex flex-col pt-6">
+          <div className="flex flex-col gap-8 pt-6">
             <Content />
           </div>
         </WorkoutsProvider>
@@ -29,6 +31,7 @@ export default function WorkoutsPage() {
 
 const Content = () => {
   const [searchQuery] = useWorkoutsSearchQuery();
+  const sessions = useSessionsStore((state) => state.sessions);
 
   if (searchQuery !== "") {
     return <WorkoutsList />;
@@ -36,6 +39,12 @@ const Content = () => {
 
   return (
     <>
+      {sessions.at(0) && !sessions[0].completed && !sessions[0].canceled && (
+        <div className="px-5">
+          <SessionResumeButton session={sessions[0]} />
+        </div>
+      )}
+
       <WorkoutsSavedList />
       <WorkoutsList />
     </>

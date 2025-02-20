@@ -1,12 +1,14 @@
 import React from "react";
 import { Outlet, useNavigate } from "react-router";
 import { useExercisesStore } from "~/features/exercise/model/store";
+import { useSessionsStore } from "~/features/session/model/store";
 import { getUser } from "~/features/user/model/storage";
 import { useWorkoutsStore } from "~/features/workout/model/store";
 
 export default function AppLayout() {
   const { fetchExercises } = useExercisesStore();
   const { fetchWorkouts } = useWorkoutsStore();
+  const { fetchSessions } = useSessionsStore();
 
   const navigate = useNavigate();
 
@@ -14,6 +16,7 @@ export default function AppLayout() {
     const fetchData = async () => {
       await fetchExercises();
       await fetchWorkouts();
+      await fetchSessions();
     };
     fetchData();
   }, []);
@@ -43,7 +46,6 @@ export default function AppLayout() {
   return (
     <>
       <Outlet />
-      {/* <button onClick={async () => await ins()}>INS</button> */}
     </>
   );
 }
