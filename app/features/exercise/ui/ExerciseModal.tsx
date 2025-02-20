@@ -20,7 +20,7 @@ import { ExerciseProvider } from "../model/ExerciseProvider";
 import { AnimatePresence, motion } from "motion/react";
 import { getMediaFromDB } from "~/features/media/model/db";
 import type { ResourceMedia } from "~/features/media/model/types";
-import type { Exercise } from "../model/types";
+import { ExerciseType, type Exercise } from "../model/types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -95,7 +95,6 @@ const Content = ({ id }: { id: UUID }) => {
   if (loading) return <Loading />;
 
   if (!exercise) return <div>Exercise not found</div>;
-  // TODO
 
   const DifficultyIcon = getDifficultyIcon(exercise.difficulty);
 
@@ -115,10 +114,16 @@ const Content = ({ id }: { id: UUID }) => {
           </div>
 
           <div className="mt-6 flex w-full items-center px-3">
-            {/* <InfoColumn
-              info={<span className="text-xl font-black">22 раза</span>}
-              label="Рекорд за день"
-            /> */}
+            <InfoColumn
+              info={
+                <span className="text-xl font-black">
+                  {exercise.type === ExerciseType.TIMED
+                    ? "На время"
+                    : "На количество"}
+                </span>
+              }
+              label="Тип упражнения"
+            />
             <InfoColumn
               info={<DifficultyIcon size={25} />}
               label={getDifficultyLabel(exercise.difficulty)}

@@ -17,10 +17,11 @@ import { SessionCover } from "./components/SessionImage";
 import React from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { SessionResults } from "./components/SessionResults";
-import { getUser, updateUser } from "~/features/user/model/storage";
+import { getUser } from "~/features/user/model/storage";
 import { calculateXP } from "~/features/user/lib/xp";
 import { calculateCoins } from "~/features/user/lib/coins";
 import { useSessionsStore } from "~/features/session/model/store";
+import { useUserStore } from "~/features/user/model/store";
 
 export const easingFunction = [0.33, 1, 0.68, 1];
 
@@ -44,6 +45,7 @@ export default function SessionPage({
   loaderData: { session: WorkoutSession };
 }) {
   const fetchSessions = useSessionsStore((state) => state.fetchSessions);
+  const updateUser = useUserStore((state) => state.updateUser);
   const [completed, setCompleted] = React.useState(sessionRef.completed);
   const [results, setResults] = React.useState<
     WorkoutSessionResults | undefined

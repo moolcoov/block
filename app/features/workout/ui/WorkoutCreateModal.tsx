@@ -69,7 +69,11 @@ import {
   SelectItem,
   SelectTrigger,
 } from "~/shared/ui/Select";
-import { calculateUserReps, calculateUserTime } from "../lib/load";
+import {
+  calculateUserReps,
+  calculateUserTime,
+  isExerciseSafeForUser,
+} from "../lib/load";
 import { WorkoutExerciseCard } from "./WorkoutExerciseCard";
 import { v4 as uuidv4 } from "uuid";
 import { calculateWorkoutTime } from "../lib/time";
@@ -160,10 +164,11 @@ export const WorkoutCreateModal = ({
         >
           <CreateModal
             screens={[
+              ExercisesScreen,
               TitleScreen,
               PhotoScreen,
               DifficultyScreen,
-              ExercisesScreen,
+
               TagsScreen,
             ]}
             onFinish={finish}
@@ -703,6 +708,26 @@ const WorkoutExerciseScreenContent = ({
               </ExerciseNotesModal>
             </div>
           </div>
+          {!sets.every((set) =>
+            isExerciseSafeForUser(
+              set.weight,
+              exercise.difficulty,
+              20,
+              30,
+              undefined,
+              set.reps,
+              set.time,
+            ),
+          ) && (
+            <div className="px-5 py-4">
+              <div className="flex flex-col items-center gap-1.5 text-center text-amber-500">
+                <h3 className="font-bold">Не переусердствуйте!</h3>
+                <p className="text-xs text-balance">
+                  Слишком большая нагрузка может навредить вашему здоровью
+                </p>
+              </div>
+            </div>
+          )}
           <div className="flex flex-col gap-2 px-5">
             <table className="w-full table-fixed text-left">
               <thead className="text-muted-foreground border-b text-sm [&>tr>td]:py-2 [&>tr>td]:font-medium">

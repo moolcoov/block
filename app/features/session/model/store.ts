@@ -20,7 +20,6 @@ const useSessionsStore = create<SessionsState>((set, get) => ({
       (a: WorkoutSession, b: WorkoutSession) =>
         b.createdAt.getTime() - a.createdAt.getTime(),
     );
-    console.log(sessions);
 
     set({ sessions, loading: false });
   },

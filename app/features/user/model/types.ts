@@ -1,4 +1,4 @@
-interface User {
+export interface User {
   name: string;
   sex: UserSex;
   weight: UserParameter;
@@ -8,7 +8,7 @@ interface User {
   coins: number;
 }
 
-type UserSex = "male" | "female";
+export type UserSex = "male" | "female";
 
 interface UserParameter {
   value: number;

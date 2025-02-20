@@ -210,7 +210,7 @@ const XPPage = ({
           >
             <motion.div
               animate={{
-                width: `max(10%, ${xpPercentage}%`,
+                width: `max(10%, ${(((results?.xp.new ?? 0) % LEVEL_TO_XP) / LEVEL_TO_XP) * 100}%`,
                 transition: { duration: 1.2 },
               }}
               className="bg-xp h-full w-[10%] rounded-full"
@@ -222,8 +222,7 @@ const XPPage = ({
             animate={{ opacity: 1, transition: { duration: 1, delay: 2.2 } }}
           >
             До следующего уровня:{" "}
-            {LEVEL_TO_XP - ((results?.xp.new ?? 0) - (results?.xp.prev ?? 0))}{" "}
-            XP
+            {LEVEL_TO_XP - ((results?.xp.new ?? 0) % LEVEL_TO_XP)} XP
           </motion.p>
         </div>
       </div>

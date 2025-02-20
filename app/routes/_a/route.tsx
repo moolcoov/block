@@ -3,12 +3,14 @@ import { Outlet, useNavigate } from "react-router";
 import { useExercisesStore } from "~/features/exercise/model/store";
 import { useSessionsStore } from "~/features/session/model/store";
 import { getUser } from "~/features/user/model/storage";
+import { useUserStore } from "~/features/user/model/store";
 import { useWorkoutsStore } from "~/features/workout/model/store";
 
 export default function AppLayout() {
   const { fetchExercises } = useExercisesStore();
   const { fetchWorkouts } = useWorkoutsStore();
   const { fetchSessions } = useSessionsStore();
+  const { fetchUser } = useUserStore();
 
   const navigate = useNavigate();
 
@@ -17,6 +19,7 @@ export default function AppLayout() {
       await fetchExercises();
       await fetchWorkouts();
       await fetchSessions();
+      await fetchUser();
     };
     fetchData();
   }, []);
