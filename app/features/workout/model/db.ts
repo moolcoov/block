@@ -23,3 +23,8 @@ export const updateWorkoutInDB = async (workout: Workout) => {
   const db = await initDB();
   return db.put(WORKOUTS_STORE_NAME, workout);
 };
+
+export const deleteWorkoutFromDB = async (id: UUID) => {
+  const db = await initDB();
+  return db.delete(WORKOUTS_STORE_NAME, id);
+};

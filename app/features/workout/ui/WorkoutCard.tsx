@@ -7,6 +7,15 @@ import { getMediaFromDB } from "~/features/media/model/db";
 import { useDatabase } from "~/shared/lib/indexedDB";
 import { motion } from "motion/react";
 import React from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/shared/ui/DropdownMenu";
+import { Button } from "~/shared/ui/Button";
+import { MoreIcon } from "~/shared/ui/icons/More";
+import { useWorkoutsStore } from "../model/store";
 
 interface WorkoutCardProps extends React.HTMLAttributes<HTMLDivElement> {
   workout: Workout;
@@ -71,10 +80,21 @@ export const WorkoutCardSmall = ({
   );
   const DifficultyIcon = getDifficultyIcon(workout.difficulty);
 
+  const deleteWorkout = useWorkoutsStore((state) => state.deleteWorkout);
+
   const imageSrc = React.useMemo(
     () =>
       image ? URL.createObjectURL(image.data) : workout.image?.externalSrc,
     [image, workout.image?.externalSrc],
+  );
+
+  const onDelete = React.useCallback(
+    async (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      await deleteWorkout(workout.id);
+    },
+    [workout.id],
   );
 
   return (
@@ -97,6 +117,23 @@ export const WorkoutCardSmall = ({
           loading="eager"
         />
       )}
+
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            size={"icon"}
+            variant={"secondary"}
+            className="absolute top-2 right-2 z-10"
+          >
+            <MoreIcon size={16} />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem className="text-red-500" onClick={onDelete}>
+            Удалить
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       <div className="z-10 flex w-full flex-col gap-1.5">
         <h2 className="font-medium-sans w-full overflow-hidden text-[14px] text-balance overflow-ellipsis">

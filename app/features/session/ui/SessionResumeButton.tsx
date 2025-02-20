@@ -33,13 +33,11 @@ export const SessionResumeButton = ({
     };
   }, []);
 
-  const mm = Math.floor((seconds % 3600) / 60);
+  const mm = Math.floor(seconds / 60);
   const ss = seconds % 60;
 
   const onCancel = React.useCallback(
     async (e: React.MouseEvent) => {
-      console.log("dasdd");
-
       e.preventDefault();
       e.stopPropagation();
       await updateSession({ ...session, canceled: true });
@@ -73,12 +71,11 @@ export const SessionResumeButton = ({
                 } as CSSProperties
               }
             >
-              <NumberFlow trend={1} value={mm} digits={{ 1: { max: 5 } }} />
+              <NumberFlow trend={1} value={mm} />
               <NumberFlow
                 prefix=":"
                 trend={1}
                 value={ss}
-                digits={{ 1: { max: 5 } }}
                 format={{ minimumIntegerDigits: 2 }}
               />
             </div>

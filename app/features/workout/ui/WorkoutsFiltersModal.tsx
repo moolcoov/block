@@ -13,10 +13,11 @@ import { getDifficultyIcon, getDifficultyLabel } from "~/shared/lib/difficulty";
 import { XmarkIcon } from "~/shared/ui/icons";
 import { Button } from "~/shared/ui/Button";
 import { Difficulty } from "~/shared/types/difficulty";
-import type { Tag } from "~/shared/types/tags";
+import type { Tag } from "~/features/tag/model/types";
 import type { UUID } from "~/shared/types/uuid";
 import { Checkbox } from "~/shared/ui/Checkbox";
 import { getEquipment, type EquipmentType } from "~/shared/lib/equipment";
+import { useTagsStore } from "~/features/tag/model/store";
 
 export const WorkoutsFiltersModal = ({
   children,
@@ -76,16 +77,8 @@ const WorkoutsFilters = () => {
   );
 };
 
-const tags: Tag[] = [
-  { id: "1", label: "Штанга" },
-  { id: "2", label: "Бокс" },
-  { id: "3", label: "Брусья" },
-  { id: "4", label: "Бутерброд" },
-  { id: "5", label: "Велосипед" },
-  { id: "6", label: "Велотрековая баска" },
-];
-
 const WorkoutsFiltersTags = () => {
+  const tags = useTagsStore((state) => state.tags);
   const [filters, setFilters] = useWorkoutsFilters();
 
   if (!tags || tags.length === 0) {

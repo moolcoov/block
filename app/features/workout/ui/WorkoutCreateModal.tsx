@@ -80,11 +80,13 @@ import { calculateWorkoutTime } from "../lib/time";
 import { addMediaToDB } from "~/features/media/model/db";
 import { useWorkoutsStore } from "../model/store";
 import { getEquipmentFromExercises } from "../lib/equipment";
+import { useTagsStore } from "~/features/tag/model/store";
+import type { Tag } from "~/features/tag/model/types";
 
 interface CreateWorkoutObject {
   title?: string;
   difficulty?: Difficulty;
-  tags?: UUID[];
+  tags?: Tag[];
 
   image?: Blob;
 
@@ -121,6 +123,7 @@ export const WorkoutCreateModal = ({
       equipment: getEquipmentFromExercises(workoutObject.sections),
       createdAt: new Date(),
       editedAt: new Date(),
+      tags: workoutObject.tags,
     };
 
     if (workoutObject.image) {
@@ -140,6 +143,7 @@ export const WorkoutCreateModal = ({
     }
 
     await addWorkout(workout);
+    setWorkoutObject({});
     setOpen(false);
   }, [workoutObject]);
 
@@ -970,33 +974,46 @@ function checkSets(
   );
 }
 
-const tagsDef = [
-  { id: "1", label: "Штанга" },
-  { id: "2", label: "Бокс" },
-  { id: "3", label: "Брусья" },
-  { id: "4", label: "Бутерброд" },
-];
-
 const TagsScreen: CreateScreen = ({ next, prev }) => {
+  const { tags, addTag } = useTagsStore();
+
+  const [isAdding, setIsAdding] = React.useState(false);
+  const [newTagName, setNewTagName] = React.useState("");
+
   const { setWorkoutObject } = useCreateWorkout();
-  const [tags, setTags] = React.useState<UUID[]>([]);
+  const [selectedTags, setSelectedTags] = React.useState<Tag[]>([]);
 
-  const addTag = React.useCallback((tag: UUID) => {
+  const addSelectedTag = React.useCallback((tag: Tag) => {
     return () => {
-      setTags((prev) => [...prev, tag]);
+      setSelectedTags((prev) => [...prev, tag]);
     };
   }, []);
 
-  const removeTag = React.useCallback((tag: UUID) => {
+  const removeSelectedTag = React.useCallback((tag: Tag) => {
     return () => {
-      setTags((prev) => prev.filter((t) => t !== tag));
+      setSelectedTags((prev) => prev.filter((t) => t !== tag));
     };
   }, []);
+
+  React.useEffect(() => {
+    setWorkoutObject((prev) => ({ ...prev, tags: selectedTags }));
+  }, [selectedTags]);
 
   const onSubmit = React.useCallback(async () => {
-    setWorkoutObject((prev) => ({ ...prev, tags }));
+    setWorkoutObject((prev) => ({ ...prev, tags: selectedTags }));
     await next();
-  }, [tags, next]);
+  }, [selectedTags, next]);
+
+  const onTagCreate = React.useCallback(async () => {
+    if (newTagName.trim() === "") {
+      setIsAdding(false);
+      setNewTagName("");
+      return;
+    }
+    await addTag({ id: uuidv4(), label: newTagName });
+    setIsAdding(false);
+    setNewTagName("");
+  }, [newTagName, setIsAdding, setNewTagName]);
 
   return (
     <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button)">
@@ -1004,24 +1021,45 @@ const TagsScreen: CreateScreen = ({ next, prev }) => {
         <h1 className="text-3xl font-black text-balance">ДОБАВЬТЕ ТЕГИ</h1>
 
         <div className="flex flex-wrap gap-3">
-          {tagsDef.map((t) => {
-            const active = tags?.includes(t.id);
+          {tags.map((t) => {
+            const active = selectedTags?.includes(t);
 
             return (
               <button
                 key={t.id}
                 className={cn(
-                  "bg-muted rounded-xl px-[18px] py-3 text-sm font-medium",
+                  "bg-muted h-11 rounded-xl px-[18px] py-3 text-sm font-medium",
                   {
                     "bg-accent text-background-200": active,
                   },
                 )}
-                onClick={active ? removeTag(t.id) : addTag(t.id)}
+                onClick={active ? removeSelectedTag(t) : addSelectedTag(t)}
               >
                 {t.label}
               </button>
             );
           })}
+          <button
+            className={cn(
+              "bg-muted h-11 rounded-xl px-4 py-3 text-sm font-medium",
+              {
+                "px-0 py-0": isAdding,
+              },
+            )}
+            onClick={() => setIsAdding(true)}
+          >
+            {isAdding ? (
+              <input
+                placeholder="Новый тег"
+                value={newTagName}
+                onBlur={onTagCreate}
+                onChange={(e) => setNewTagName(e.target.value)}
+                className="resize-none px-5 py-2 text-base outline-none"
+              />
+            ) : (
+              <PlusIcon size={14} />
+            )}
+          </button>
         </div>
       </div>
       <ControlButtons onNext={onSubmit} label="СОХРАНИТЬ" />

@@ -8,6 +8,8 @@ export const calculateCoins = (
   totalWeight: number,
 ): number => {
   return Math.round(
-    (trainingTime * XPFactors.time + totalWeight * XPFactors.weight) * 10,
+    (Math.min(trainingTime, 7200) * XPFactors.time +
+      totalWeight * XPFactors.weight) *
+      10,
   );
 };

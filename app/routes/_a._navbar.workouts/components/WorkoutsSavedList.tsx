@@ -16,12 +16,8 @@ export const WorkoutsSavedList = () => {
       <Carousel className="w-full">
         <CarouselContent>
           {savedWorkouts.map((workout) => (
-            <CarouselItem>
-              <Link
-                key={workout.id}
-                to={`/workouts/${workout.id}`}
-                className="block"
-              >
+            <CarouselItem key={workout.id}>
+              <Link to={`/workouts/${workout.id}`} className="block">
                 <WorkoutCardBig workout={workout} />
               </Link>
             </CarouselItem>

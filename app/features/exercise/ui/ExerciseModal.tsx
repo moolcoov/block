@@ -6,7 +6,7 @@ import {
 } from "~/shared/ui/Drawer";
 import { XmarkIcon } from "~/shared/ui/icons";
 import { TagBadge } from "~/shared/ui/Tag";
-import type { Tag } from "~/shared/types/tags";
+import type { Tag } from "~/features/tag/model/types";
 import { InfoColumn } from "~/shared/ui/InfoColumn";
 import { getDifficultyIcon, getDifficultyLabel } from "~/shared/lib/difficulty";
 import type { UUID } from "~/shared/types/uuid";

@@ -1,4 +1,4 @@
-import type { Tag } from "~/shared/types/tags";
+import type { Tag } from "~/features/tag/model/types";
 
 interface TagBadgeProps {
   dark?: boolean;

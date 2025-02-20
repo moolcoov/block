@@ -85,7 +85,7 @@ const WorkoutDurationTimer = () => {
     };
   }, []);
 
-  const mm = Math.floor((seconds % 3600) / 60);
+  const mm = Math.floor(seconds / 60);
   const ss = seconds % 60;
 
   return (
@@ -99,12 +99,11 @@ const WorkoutDurationTimer = () => {
           } as CSSProperties
         }
       >
-        <NumberFlow trend={1} value={mm} digits={{ 1: { max: 5 } }} />
+        <NumberFlow trend={1} value={mm} />
         <NumberFlow
           prefix=":"
           trend={1}
           value={ss}
-          digits={{ 1: { max: 5 } }}
           format={{ minimumIntegerDigits: 2 }}
         />
       </div>
