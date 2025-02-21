@@ -22,7 +22,7 @@ export const HeaderSearch = ({
   return (
     <div
       className={cn(
-        "absolute top-4 right-0 flex w-[100dvw] justify-end gap-3 px-5",
+        "absolute top-4 right-0 flex w-[100dvw] justify-end gap-3 px-5 lg:hidden",
         className,
       )}
     >

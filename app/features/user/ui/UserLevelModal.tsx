@@ -9,13 +9,27 @@ import { DumbBellColoredIcon, XmarkIcon } from "~/shared/ui/icons";
 import { useUserStore } from "../model/store";
 import { getXPLevel, LEVEL_TO_XP } from "../lib/xp";
 import NumberFlow from "@number-flow/react";
-import type { motion } from "motion/react";
 import type { CSSProperties } from "react";
+import { useMediaQuery } from "~/shared/hooks/use-media-query";
+import { Dialog, DialogContent, DialogTrigger } from "~/shared/ui/Dialog";
 
 export const UserLevelModal = ({ children }: { children: React.ReactNode }) => {
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+
+  if (isDesktop) {
+    return (
+      <Dialog>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent className="h-[85vh] overflow-hidden">
+          <Level />
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
     <Drawer shouldScaleBackground={false}>
-      <DrawerTrigger>{children}</DrawerTrigger>
+      <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="h-[85vh] overflow-hidden">
         <DrawerClose asChild>
           <Button

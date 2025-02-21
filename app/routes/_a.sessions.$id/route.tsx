@@ -111,11 +111,11 @@ export default function SessionPage({
           <motion.div
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { delay: 0.5 } }}
-            className="relative flex h-[100svh] flex-col overflow-hidden"
+            className="relative m-auto flex h-[100svh] w-full flex-col gap-5 overflow-hidden lg:max-h-[1080px] lg:max-w-7xl lg:flex-row lg:p-6"
             key="session"
           >
             <SessionCover />
-            <div className="z-10 flex h-full flex-col">
+            <div className="z-10 flex h-full flex-1 flex-col">
               <SessionHeader />
               <SessionTop />
               <SessionBottom />

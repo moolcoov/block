@@ -1,6 +1,14 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { redirect, useNavigate } from "react-router";
 import { getUser } from "~/features/user/model/storage";
+
+export const clientLoader = async () => {
+  if (getUser()) {
+    return redirect("/workouts");
+  } else {
+    return redirect("/onboarding");
+  }
+};
 
 export default function IndexPage() {
   const navigate = useNavigate();

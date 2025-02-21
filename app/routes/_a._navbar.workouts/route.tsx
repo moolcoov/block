@@ -10,6 +10,7 @@ import { AnimatePresence } from "motion/react";
 import { Loading } from "~/shared/ui/Loading";
 import { SessionResumeButton } from "~/features/session/ui/SessionResumeButton";
 import { useSessionsStore } from "~/features/session/model/store";
+import { SearchBar } from "~/shared/ui/SearchBar";
 
 export default function WorkoutsPage() {
   const { workouts, loading } = useWorkoutsStore();
@@ -19,9 +20,12 @@ export default function WorkoutsPage() {
       {loading && <Loading key={"loading"} />}
       {workouts && (
         <WorkoutsProvider workouts={workouts}>
-          <WorkoutsHeader />
-          <div className="flex flex-col gap-8 pt-6">
-            <Content />
+          <div className="flex-row-reverse gap-10 lg:flex lg:px-6">
+            <WorkoutsHeader />
+            <div className="flex min-w-0 flex-1 flex-col gap-8 pt-6">
+              <Search />
+              <Content />
+            </div>
           </div>
         </WorkoutsProvider>
       )}
@@ -40,7 +44,7 @@ const Content = () => {
   return (
     <>
       {sessions.at(0) && !sessions[0].completed && !sessions[0].canceled && (
-        <div className="px-5">
+        <div className="px-5 lg:px-0">
           <SessionResumeButton session={sessions[0]} />
         </div>
       )}
@@ -48,5 +52,15 @@ const Content = () => {
       <WorkoutsSavedList />
       <WorkoutsList />
     </>
+  );
+};
+
+const Search = () => {
+  const [searchQuery, setSearchQuery] = useWorkoutsSearchQuery();
+
+  return (
+    <div className="hidden lg:block">
+      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+    </div>
   );
 };

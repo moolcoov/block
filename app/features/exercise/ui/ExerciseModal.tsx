@@ -32,6 +32,8 @@ import { useExercisesStore } from "../model/store";
 import { MoreIcon } from "~/shared/ui/icons/More";
 import { getEquipmentLabel, type EquipmentType } from "~/shared/lib/equipment";
 import { cn } from "~/shared/lib/utils";
+import { useMediaQuery } from "~/shared/hooks/use-media-query";
+import { Dialog, DialogContent, DialogTrigger } from "~/shared/ui/Dialog";
 
 interface ExerciseModalProps {
   id: UUID;
@@ -39,14 +41,46 @@ interface ExerciseModalProps {
 }
 
 export const ExerciseModal = ({ id, children }: ExerciseModalProps) => {
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
   const [open, setOpen] = React.useState(false);
   const deleteExercise = useExercisesStore((state) => state.deleteExercise);
 
   const onDelete = React.useCallback(async () => {
-    setOpen(false);
-
     setInterval(async () => await deleteExercise(id), 300);
+    setOpen(false);
   }, [id, deleteExercise]);
+
+  if (isDesktop) {
+    return (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger>{children}</DialogTrigger>
+        {open && (
+          <DialogContent className="h-[85vh] overflow-x-hidden overflow-y-auto">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant={"secondary"}
+                  size={"icon"}
+                  className="fixed top-5 right-5 z-40"
+                >
+                  <MoreIcon size={16} />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="mr-2">
+                <DropdownMenuGroup>
+                  <DropdownMenuItem className="text-red-500" onClick={onDelete}>
+                    Удалить
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <Content id={id} />
+          </DialogContent>
+        )}
+      </Dialog>
+    );
+  }
 
   return (
     <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>

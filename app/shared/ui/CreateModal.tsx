@@ -43,7 +43,7 @@ export const CreateModal = ({
   return (
     <AnimatePresence>
       <motion.div
-        className="flex h-full max-h-full w-[100dvw] flex-col"
+        className="absolute flex h-full max-h-full w-[100dvw] flex-col lg:w-full"
         initial={
           index != 0
             ? {

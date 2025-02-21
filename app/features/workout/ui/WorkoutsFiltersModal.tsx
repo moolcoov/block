@@ -13,7 +13,6 @@ import { getDifficultyIcon, getDifficultyLabel } from "~/shared/lib/difficulty";
 import { XmarkIcon } from "~/shared/ui/icons";
 import { Button } from "~/shared/ui/Button";
 import { Difficulty } from "~/shared/types/difficulty";
-import type { Tag } from "~/features/tag/model/types";
 import type { UUID } from "~/shared/types/uuid";
 import { Checkbox } from "~/shared/ui/Checkbox";
 import { getEquipment, type EquipmentType } from "~/shared/lib/equipment";
@@ -32,7 +31,7 @@ export const WorkoutsFiltersModal = ({
   return (
     <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild={asChild}>{children}</DrawerTrigger>
-      <DrawerContent className="max-h-[85vh]">
+      <DrawerContent className="m-auto max-h-[85vh] lg:max-w-lg">
         <DrawerClose asChild>
           <Button
             variant={"secondary"}

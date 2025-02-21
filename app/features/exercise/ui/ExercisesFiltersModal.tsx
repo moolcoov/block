@@ -31,7 +31,7 @@ export const ExercisesFiltersModal = ({
   return (
     <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild={asChild}>{children}</DrawerTrigger>
-      <DrawerContent className="max-h-[85vh]">
+      <DrawerContent className="m-auto max-h-[85vh] lg:max-w-lg">
         <DrawerClose asChild>
           <Button
             variant={"secondary"}

@@ -12,7 +12,7 @@ export const WorkoutsSavedList = () => {
 
   return (
     <section className="flex flex-col gap-5">
-      <h1 className="px-5 text-xl font-black">СОХРАНЁННЫЕ</h1>
+      <h1 className="px-5 text-xl font-black lg:px-0">СОХРАНЁННЫЕ</h1>
       <Carousel className="w-full">
         <CarouselContent>
           {savedWorkouts.map((workout) => (

@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "./Button";
 import { ArrowLeftIcon } from "./icons";
 
@@ -17,6 +18,8 @@ export const ControlButtons = ({
   onNext,
   onBack,
 }: ControlButtonsProps) => {
+  const [pressed, setPressed] = React.useState(false);
+
   return (
     <div className="flex w-full gap-2">
       {withBackButton && (
@@ -27,7 +30,13 @@ export const ControlButtons = ({
           <ArrowLeftIcon size={28} />
         </button>
       )}
-      <Button disabled={disabled} onClick={onNext}>
+      <Button
+        disabled={disabled || pressed}
+        onClick={() => {
+          setPressed(true);
+          onNext();
+        }}
+      >
         {label}
       </Button>
     </div>

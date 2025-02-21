@@ -27,8 +27,8 @@ export const WorkoutActions = () => {
         label={saved ? "Сохранено" : "Сохранить"}
         onClick={() => setSaved(!saved)}
       />
-      <Action icon={<ShareIcon />} label="Поделиться" onClick={() => {}} />
-      <Action icon={<PencilIcon />} label="Изменить" onClick={() => {}} />
+      {/* <Action icon={<ShareIcon />} label="Поделиться" onClick={() => {}} />
+      <Action icon={<PencilIcon />} label="Изменить" onClick={() => {}} /> */}
     </div>
   );
 };

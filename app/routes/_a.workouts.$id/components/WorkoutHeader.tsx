@@ -23,21 +23,23 @@ export const WorkoutHeader = () => {
   const DifficultyIcon = getDifficultyIcon(workout.difficulty);
 
   return (
-    <header className="relative flex h-[75vh] w-full flex-col items-center justify-end text-center">
-      <div className="absolute inset-0 z-[5] bg-black/20" />
-      <div className="absolute inset-0 z-[5] bg-gradient-to-t from-black to-transparent to-40%" />
+    <header className="relative flex h-[75vh] w-full flex-col items-center justify-end text-center lg:h-full">
+      <div className="absolute inset-0 h-full w-full overflow-hidden lg:relative lg:h-full lg:w-full lg:rounded-3xl lg:border">
+        <div className="absolute inset-0 z-[5] bg-black/20" />
+        <div className="absolute inset-0 z-[5] bg-gradient-to-t from-black to-transparent to-40% lg:hidden" />
 
-      {imageSrc && (
-        <motion.img
-          src={imageSrc}
-          alt={workout.title}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="absolute inset-0 aspect-6/7 h-full w-full object-cover object-center"
-        />
-      )}
+        {imageSrc && (
+          <motion.img
+            src={imageSrc}
+            alt={workout.title}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="absolute inset-0 aspect-6/7 h-full w-full object-cover object-center"
+          />
+        )}
+      </div>
 
-      <div className="z-10 flex w-full flex-col items-center">
+      <div className="z-10 flex w-full flex-col items-center lg:mt-6">
         <h1 className="font-medium-sans text-3xl text-balance">
           {workout.title}
         </h1>

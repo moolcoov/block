@@ -27,6 +27,8 @@ import { getDifficultyIcon, getDifficultyLabel } from "~/shared/lib/difficulty";
 import { getEquipment, type EquipmentType } from "~/shared/lib/equipment";
 import type { Tag } from "~/features/tag/model/types";
 import { useTagsStore } from "~/features/tag/model/store";
+import { useMediaQuery } from "~/shared/hooks/use-media-query";
+import { Dialog, DialogContent, DialogTrigger } from "~/shared/ui/Dialog";
 
 interface CreateExerciseObject {
   title?: string;
@@ -53,7 +55,20 @@ export const ExerciseCreateModal = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
   const [open, setOpen] = React.useState(false);
+
+  if (isDesktop) {
+    return (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent className="px-none py-none h-full max-h-[750px] overflow-x-hidden overflow-y-auto">
+          <CreateExercise setOpen={setOpen} />
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
     <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
@@ -177,7 +192,7 @@ const TitleScreen: CreateScreen = ({ next, prev }) => {
   }, [next, title, type]);
 
   return (
-    <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button)">
+    <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button) lg:gap-6 lg:px-7 lg:pt-10 lg:pb-7">
       <div className="flex flex-1 flex-col items-center overflow-y-auto">
         <div className="flex w-full flex-1 justify-center">
           <textarea
@@ -225,7 +240,7 @@ const PhotoScreen: CreateScreen = ({ next, prev }) => {
   }, [file, next]);
 
   return (
-    <div className="flex h-full flex-col gap-4 px-5 pt-20 pb-(--bottom-button)">
+    <div className="flex h-full flex-col gap-4 px-5 pt-20 pb-(--bottom-button) lg:gap-6 lg:px-7 lg:pt-10 lg:pb-7">
       <div className="flex flex-1 flex-col items-start gap-8 overflow-y-auto">
         <h1 className="text-3xl font-black">ДОБАВЬТЕ ФОТО</h1>
         <MediaUploader
@@ -253,9 +268,9 @@ const VideoScreen: CreateScreen = ({ next, prev }) => {
   }, [file, next]);
 
   return (
-    <div className="flex h-full flex-col gap-4 px-5 pt-20 pb-(--bottom-button)">
+    <div className="flex h-full flex-col gap-4 px-5 pt-20 pb-(--bottom-button) lg:gap-6 lg:px-7 lg:pt-10 lg:pb-7">
       <div className="flex flex-1 flex-col items-start gap-8 overflow-y-auto">
-        <h1 className="text-3xl font-black">ДОБАВЬТЕ ФОТО</h1>
+        <h1 className="text-3xl font-black">ДОБАВЬТЕ ВИДЕО</h1>
         <MediaUploader
           icon={<CameraIcon size={40} />}
           title="Видео с упражнением"
@@ -283,8 +298,8 @@ const DifficultyScreen: CreateScreen = ({ next, prev }) => {
   }, [difficulty, next]);
 
   return (
-    <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button)">
-      <div className="flex flex-1 flex-col gap-8 overflow-x-hidden overflow-y-auto pt-20">
+    <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button) lg:gap-6 lg:px-7 lg:pt-10 lg:pb-7">
+      <div className="flex flex-1 flex-col gap-8 overflow-x-hidden overflow-y-auto pt-20 lg:pt-0">
         <h1 className="text-3xl font-black text-balance">УКАЖИТЕ СЛОЖНОСТЬ</h1>
 
         <div className="flex flex-col gap-1.5">
@@ -333,8 +348,8 @@ const EquipmentScreen: CreateScreen = ({ next, prev }) => {
   }, [activeEquipment, next]);
 
   return (
-    <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button)">
-      <div className="flex flex-1 flex-col gap-8 overflow-x-hidden overflow-y-auto pt-20">
+    <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button) lg:gap-6 lg:px-7 lg:pt-10 lg:pb-7">
+      <div className="flex flex-1 flex-col gap-8 overflow-x-hidden overflow-y-auto pt-20 lg:pt-0">
         <h1 className="text-3xl font-black text-balance">
           ВЫБЕРИТЕ ОБОРУДОВАНИЕ
         </h1>
@@ -415,8 +430,8 @@ const TagsScreen: CreateScreen = ({ next, prev }) => {
   }, [newTagName, addTag]);
 
   return (
-    <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button)">
-      <div className="flex flex-1 flex-col gap-8 overflow-x-hidden overflow-y-auto pt-20">
+    <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button) lg:gap-6 lg:px-7 lg:pt-10 lg:pb-7">
+      <div className="flex flex-1 flex-col gap-8 overflow-x-hidden overflow-y-auto pt-20 lg:pt-0">
         <h1 className="text-3xl font-black text-balance">ДОБАВЬТЕ ТЕГИ</h1>
 
         <div className="flex flex-wrap gap-3">

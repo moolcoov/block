@@ -5,6 +5,7 @@ import useEmblaCarousel, {
 
 import { cn } from "~/shared/lib/utils";
 import { Button } from "./Button";
+import { useMediaQuery } from "../hooks/use-media-query";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -55,11 +56,12 @@ const Carousel = React.forwardRef<
     },
     ref,
   ) => {
+    const isDesktop = useMediaQuery("(min-width: 1024px)");
     const [carouselRef, api] = useEmblaCarousel(
       {
         ...opts,
         axis: orientation === "horizontal" ? "x" : "y",
-        containScroll: false,
+        containScroll: isDesktop ? "trimSnaps" : false,
       },
       plugins,
     );
