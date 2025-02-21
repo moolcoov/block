@@ -129,7 +129,7 @@ const InfoPage = ({
             }
             label="Поднятый вес"
           />
-          {results?.xp.new && results?.xp.prev && (
+          {results?.xp.new != undefined && results?.xp.prev != undefined && (
             <InfoColumn
               info={
                 <h2 className="font-medium-sans text-xl">

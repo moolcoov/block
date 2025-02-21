@@ -28,3 +28,8 @@ export const deleteWorkoutFromDB = async (id: UUID) => {
   const db = await initDB();
   return db.delete(WORKOUTS_STORE_NAME, id);
 };
+
+export const deleteAllWorkoutsFromDB = async () => {
+  const db = await initDB();
+  return db.clear(WORKOUTS_STORE_NAME);
+};

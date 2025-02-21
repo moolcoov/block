@@ -6,6 +6,9 @@ export interface User {
 
   xp: number;
   coins: number;
+
+  character: UserCharacter;
+  availableClothes: string[];
 }
 
 export type UserSex = "male" | "female";
@@ -13,4 +16,12 @@ export type UserSex = "male" | "female";
 export interface UserParameter {
   value: number;
   date: Date;
+}
+
+export interface UserCharacter {
+  hair: string;
+  pants: string;
+  boots: string;
+  hat: string;
+  item: string;
 }

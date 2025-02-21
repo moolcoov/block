@@ -9,3 +9,7 @@ export const getTags = () => {
 export const updateTags = (tags: Tag[]) => {
   localStorage.setItem("tags", JSON.stringify(tags));
 };
+
+export const deleteTags = () => {
+  localStorage.removeItem("tags");
+};

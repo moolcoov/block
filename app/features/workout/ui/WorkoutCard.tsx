@@ -50,7 +50,7 @@ export const WorkoutCardBig = ({
       {imageSrc && (
         <motion.img
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={{ opacity: 1, transition: { delay: 0.3 } }}
           className="absolute inset-0 aspect-6/7 h-full w-full object-cover object-center"
           src={imageSrc}
         />
@@ -110,7 +110,7 @@ export const WorkoutCardSmall = ({
       {imageSrc && (
         <motion.img
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={{ opacity: 1, transition: { delay: 0.3 } }}
           className="absolute inset-0 aspect-6/7 h-full w-full object-cover object-center"
           src={imageSrc}
           alt={workout.title}

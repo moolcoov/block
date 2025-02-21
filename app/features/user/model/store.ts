@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import type { User } from "./types";
-import { getUser, updateUser } from "./storage";
+import { getUser, updateUserStorage } from "./storage";
 
 interface UserState {
   user: User | null;
@@ -21,7 +21,7 @@ const useUserStore = create<UserState>((set) => ({
   },
 
   updateUser: async (user) => {
-    updateUser(user);
+    updateUserStorage(user);
     set({ user });
   },
 }));
