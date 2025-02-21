@@ -82,6 +82,8 @@ import { useWorkoutsStore } from "../model/store";
 import { getEquipmentFromExercises } from "../lib/equipment";
 import { useTagsStore } from "~/features/tag/model/store";
 import type { Tag } from "~/features/tag/model/types";
+import { useMediaQuery } from "~/shared/hooks/use-media-query";
+import { Dialog, DialogContent, DialogTrigger } from "~/shared/ui/Dialog";
 
 interface CreateWorkoutObject {
   title?: string;
@@ -107,6 +109,7 @@ export const WorkoutCreateModal = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
   const [open, setOpen] = React.useState(false);
   const addWorkout = useWorkoutsStore((state) => state.addWorkout);
   const [workoutObject, setWorkoutObject] = React.useState<CreateWorkoutObject>(
@@ -146,6 +149,33 @@ export const WorkoutCreateModal = ({
     setWorkoutObject({});
     setOpen(false);
   }, [workoutObject]);
+
+  if (isDesktop) {
+    return (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent className="px-none py-none h-full max-h-[750px] overflow-x-hidden overflow-y-auto">
+          <CreateWorkoutContext.Provider
+            value={{
+              workoutObject,
+              setWorkoutObject,
+            }}
+          >
+            <CreateModal
+              screens={[
+                TitleScreen,
+                PhotoScreen,
+                DifficultyScreen,
+                ExercisesScreen,
+                TagsScreen,
+              ]}
+              onFinish={finish}
+            />
+          </CreateWorkoutContext.Provider>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   return (
     <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
@@ -209,7 +239,7 @@ const TitleScreen: CreateScreen = ({ next, prev }) => {
   }, [next, title]);
 
   return (
-    <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button)">
+    <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button) lg:gap-6 lg:px-7 lg:pt-10 lg:pb-7">
       <div className="flex flex-1 flex-col items-center overflow-y-auto">
         <div className="flex w-full flex-1 justify-center">
           <textarea
@@ -235,7 +265,7 @@ const PhotoScreen: CreateScreen = ({ next, prev }) => {
   }, [file, next]);
 
   return (
-    <div className="flex h-full flex-col gap-4 px-5 pt-20 pb-(--bottom-button)">
+    <div className="flex h-full flex-col gap-4 px-5 pt-20 pb-(--bottom-button) lg:gap-6 lg:px-7 lg:pt-10 lg:pb-7">
       <div className="flex flex-1 flex-col items-start gap-8 overflow-y-auto">
         <h1 className="text-3xl font-black">ДОБАВЬТЕ ФОТО</h1>
         <MediaUploader
@@ -264,8 +294,8 @@ const DifficultyScreen: CreateScreen = ({ next, prev }) => {
   }, [difficulty, next]);
 
   return (
-    <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button)">
-      <div className="flex flex-1 flex-col gap-8 overflow-x-hidden overflow-y-auto pt-20">
+    <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button) lg:gap-6 lg:px-7 lg:pt-10 lg:pb-7">
+      <div className="flex flex-1 flex-col gap-8 overflow-x-hidden overflow-y-auto pt-20 lg:pt-0">
         <h1 className="text-3xl font-black text-balance">УКАЖИТЕ СЛОЖНОСТЬ</h1>
 
         <div className="flex flex-col gap-1.5">
@@ -386,8 +416,8 @@ const ExercisesScreen: CreateScreen = ({ next, prev }) => {
   }, [sections, next]);
 
   return (
-    <div className="flex h-full flex-col items-center gap-4 pb-(--bottom-button)">
-      <div className="mb-16 flex w-full flex-1 flex-col gap-10 overflow-x-hidden overflow-y-auto px-5 pt-20">
+    <div className="flex h-full flex-col items-center gap-4 pb-(--bottom-button) lg:gap-6 lg:px-7 lg:pt-10 lg:pb-7">
+      <div className="mb-16 flex w-full flex-1 flex-col gap-10 overflow-x-hidden overflow-y-auto px-5 pt-20 lg:px-0 lg:pt-0">
         {sections.map((section) => (
           <div className="flex flex-col items-center gap-5">
             <div className="flex w-full items-center gap-2">
@@ -463,7 +493,7 @@ const ExercisesScreen: CreateScreen = ({ next, prev }) => {
         ))}
       </div>
       <button
-        className="bg-muted absolute bottom-22 flex h-10 w-fit items-center justify-center gap-2.5 rounded-full px-4 transition-transform active:scale-[0.92]"
+        className="bg-muted absolute bottom-25 flex h-10 w-fit items-center justify-center gap-2.5 rounded-full px-4 transition-transform active:scale-[0.92]"
         onClick={addSection}
       >
         <PlusIcon size={14} />
@@ -510,7 +540,7 @@ const AddExerciseModal = ({
   return (
     <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="h-[82vh] overflow-hidden">
+      <DrawerContent className="m-auto h-[82vh] overflow-hidden lg:max-w-lg">
         <DrawerHandle />
 
         <ExercisesProvider exercises={exercises}>
@@ -540,7 +570,7 @@ const ExercisesListScreen = ({
   const [expanded, setExpanded] = React.useState(false);
 
   return (
-    <div className="flex h-full w-full flex-col gap-6 overflow-y-auto px-5 pt-8 pb-5">
+    <div className="flex h-full w-full flex-col gap-6 overflow-y-auto px-5 pt-8 pb-5 lg:pt-7">
       <div className="flex items-center">
         <ExercisesFiltersModal asChild>
           <FiltersButton
@@ -893,7 +923,7 @@ const SetRow = ({
               type="number"
               placeholder="10"
               value={set.weight}
-              className="outline-none"
+              className="spin-hide outline-none"
               onChange={(e) => onWeightChange(e)}
               style={{
                 width: set.weight ? `${set.weight.toString().length}ch` : "2ch",
@@ -910,7 +940,7 @@ const SetRow = ({
               type="number"
               placeholder="30"
               value={set.time}
-              className="outline-none"
+              className="spin-hide outline-none"
               onChange={(e) => onTimeChange(e)}
               style={{
                 width: set.time ? `${set.time.toString().length}ch` : "2ch",
@@ -923,7 +953,7 @@ const SetRow = ({
             type="number"
             placeholder="10"
             value={set.reps}
-            className="outline-none"
+            className="spin-hide outline-none"
             onChange={(e) => onRepsChange(e)}
             style={{
               width: set.reps ? `${set.reps.toString().length}ch` : "2ch",
@@ -1016,8 +1046,8 @@ const TagsScreen: CreateScreen = ({ next, prev }) => {
   }, [newTagName, setIsAdding, setNewTagName]);
 
   return (
-    <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button)">
-      <div className="flex flex-1 flex-col gap-8 overflow-x-hidden overflow-y-auto pt-20">
+    <div className="flex h-full flex-col gap-4 px-5 pb-(--bottom-button) lg:gap-6 lg:px-7 lg:pt-10 lg:pb-7">
+      <div className="flex flex-1 flex-col gap-8 overflow-x-hidden overflow-y-auto pt-20 lg:pt-0">
         <h1 className="text-3xl font-black text-balance">ДОБАВЬТЕ ТЕГИ</h1>
 
         <div className="flex flex-wrap gap-3">

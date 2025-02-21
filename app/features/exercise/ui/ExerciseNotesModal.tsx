@@ -28,7 +28,7 @@ export const ExerciseNotesModal = ({ children }: ExerciseNotesModalProps) => {
   return (
     <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent className="h-[84vh] overflow-hidden">
+      <DrawerContent className="m-auto h-[84vh] overflow-hidden lg:max-w-lg">
         <DrawerHandle />
         <button
           className="absolute top-2 right-0 px-5 py-3.5 transition-colors active:opacity-70"

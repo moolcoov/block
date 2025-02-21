@@ -3,7 +3,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import React, { type JSX } from "react";
-import { useNavigate } from "react-router";
+import { redirect, useNavigate } from "react-router";
 import { getUser, saveUser } from "~/features/user/model/storage";
 import type { User, UserParameter, UserSex } from "~/features/user/model/types";
 import { cn } from "~/shared/lib/utils";
@@ -26,6 +26,12 @@ interface UserCreationContextType {
 const UserCreationContext = React.createContext<
   UserCreationContextType | undefined
 >(undefined);
+
+export const clientLoader = async () => {
+  if (getUser()) {
+    return redirect("/workouts");
+  }
+};
 
 export default function OnboardingPage() {
   const navigate = useNavigate();
@@ -195,7 +201,7 @@ const HiBlock: AnimationBlock = ({ next }) => {
               }
               className="text-3xl font-black"
             >
-              Это — Swing
+              Это — Block
             </motion.h1>
             <motion.h1
               initial={{ translateY: "100%", opacity: 0, scale: 0.8 }}

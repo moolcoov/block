@@ -14,9 +14,9 @@ export const WorkoutsHeader = () => {
   const user = getUser();
 
   return (
-    <header className="bg-background-200 sticky top-0 z-20 flex h-18 w-full border-b px-5">
+    <header className="bg-background-200 sticky top-0 z-20 flex h-18 w-full shrink-0 grow-0 basis-auto border-b px-5 lg:top-5 lg:mt-5 lg:w-96 lg:rounded-3xl lg:border lg:px-8">
       <motion.div
-        className="z-10 flex gap-8"
+        className="z-10 flex items-center justify-center gap-8 lg:w-full lg:gap-0"
         animate={
           expanded
             ? { opacity: 0, transform: "translateX(-10px)" }
@@ -25,19 +25,19 @@ export const WorkoutsHeader = () => {
       >
         <UserLevelModal>
           <div
-            className="flex items-center gap-2 transition-transform outline-none active:scale-[0.95]"
+            className="flex items-center justify-center gap-2 transition-transform outline-none active:scale-[0.95] lg:flex-1"
             role="button"
           >
             <DumbBellColoredIcon size={32} />
             <span className="text-xp font-bold">{getXPLevel(user?.xp)} ур</span>
           </div>
         </UserLevelModal>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-center gap-3 lg:flex-1">
           <span className="font-bold">2 нед</span>
         </div>
         <UserStoreModal>
           <div
-            className="flex items-center gap-2 transition-transform outline-none active:scale-[0.95]"
+            className="flex items-center justify-center gap-2 transition-transform outline-none active:scale-[0.95] lg:flex-1"
             role="button"
           >
             <LottieCoinIcon size={26} />

@@ -40,7 +40,7 @@ export const WorkoutCardBig = ({
   return (
     <div
       className={cn(
-        "relative flex aspect-6/7 w-full items-end overflow-hidden rounded-4xl border px-[26px] py-5",
+        "relative flex aspect-6/7 w-full items-end overflow-hidden rounded-4xl border px-[26px] py-5 lg:rounded-[34px] lg:px-8 lg:py-7",
         className,
       )}
       {...props}
@@ -56,14 +56,14 @@ export const WorkoutCardBig = ({
         />
       )}
 
-      <div className="z-10 flex flex-col gap-2">
-        <h2 className="font-medium-sans text-2xl text-balance break-words">
+      <div className="z-10 flex flex-col gap-2 lg:gap-3">
+        <h2 className="font-medium-sans text-2xl text-balance break-words lg:text-3xl">
           {workout.title}
         </h2>
-        <div className="text-muted-foreground text-var(--container-sm) flex items-center gap-2 text-sm font-medium">
+        <div className="text-muted-foreground text-var(--container-sm) flex items-center gap-2 text-sm font-medium lg:gap-3 lg:text-base">
           <span>{secondsToMinutes(workout.workoutTime)} мин</span>
           <span>·</span>
-          <span>{<DifficultyIcon size={15} />}</span>
+          <span className="lg:[&>svg]:h-4">{<DifficultyIcon size={15} />}</span>
         </div>
       </div>
     </div>
@@ -100,13 +100,13 @@ export const WorkoutCardSmall = ({
   return (
     <div
       className={cn(
-        "relative flex aspect-6/7 w-full items-end overflow-hidden rounded-2xl border px-4 py-4",
+        "relative flex aspect-6/7 w-full items-end overflow-hidden rounded-2xl border px-4 py-4 lg:rounded-3xl lg:px-6 lg:py-5",
         className,
       )}
       {...props}
     >
       <div className="absolute inset-0 z-[5] bg-black/20" />
-      <div className="from-background-200 absolute inset-0 z-[5] bg-gradient-to-t from-15% to-transparent to-65%" />
+      <div className="from-background-200 absolute inset-0 z-[5] bg-gradient-to-t from-15% to-transparent to-65% lg:from-25% lg:to-80%" />
       {imageSrc && (
         <motion.img
           initial={{ opacity: 0 }}
@@ -135,14 +135,14 @@ export const WorkoutCardSmall = ({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <div className="z-10 flex w-full flex-col gap-1.5">
-        <h2 className="font-medium-sans w-full overflow-hidden text-[14px] text-balance overflow-ellipsis">
+      <div className="z-10 flex w-full flex-col gap-1.5 lg:gap-2">
+        <h2 className="font-medium-sans w-full overflow-hidden text-[14px] text-balance overflow-ellipsis lg:text-xl">
           {workout.title}
         </h2>
-        <div className="text-muted-foreground text-var(--container-sm) flex items-center gap-1 text-xs font-medium">
+        <div className="text-muted-foreground text-var(--container-sm) flex items-center gap-1 text-xs font-medium lg:gap-2 lg:text-sm">
           <span>{secondsToMinutes(workout.workoutTime)} мин</span>
           <span>·</span>
-          <span>{<DifficultyIcon size={10} />}</span>
+          <span className="lg:[&>svg]:h-3">{<DifficultyIcon size={10} />}</span>
         </div>
       </div>
     </div>

@@ -9,11 +9,26 @@ import { LottieCoinIcon, XmarkIcon } from "~/shared/ui/icons";
 import { useUserStore } from "../model/store";
 import NumberFlow from "@number-flow/react";
 import type { CSSProperties } from "react";
+import { Dialog, DialogContent, DialogTrigger } from "~/shared/ui/Dialog";
+import { useMediaQuery } from "~/shared/hooks/use-media-query";
 
 export const UserStoreModal = ({ children }: { children: React.ReactNode }) => {
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+
+  if (isDesktop) {
+    return (
+      <Dialog>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent className="h-[85vh] overflow-hidden">
+          <Store />
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
     <Drawer shouldScaleBackground={false}>
-      <DrawerTrigger>{children}</DrawerTrigger>
+      <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="h-[85vh] overflow-hidden">
         <DrawerClose asChild>
           <Button

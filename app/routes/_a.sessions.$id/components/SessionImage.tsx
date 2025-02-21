@@ -10,6 +10,19 @@ import { useDatabase } from "~/shared/lib/indexedDB";
 
 export const SessionCover = () => {
   const { state } = useSessionState();
+
+  return (
+    <div className="absolute inset-0 h-screen w-screen flex-1 overflow-hidden lg:static lg:h-full lg:rounded-4xl lg:border">
+      <div className="absolute inset-0 z-[5] h-full w-full bg-black/40"></div>
+      <AnimatePresence>
+        {state.status === "exercise" && <ExerciseVideoWrapper />}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const ExerciseVideoWrapper = () => {
+  const { state } = useSessionState();
   const workout = useSessionWorkout();
 
   if (
@@ -22,16 +35,7 @@ export const SessionCover = () => {
   const exercise =
     workout.sections[state.currentSection].exercises[state.currentExercise];
 
-  return (
-    <div className="absolute inset-0 h-screen w-screen overflow-hidden">
-      <div className="absolute inset-0 z-[5] h-full w-full bg-black/40"></div>
-      <AnimatePresence>
-        {state.status === "exercise" && (
-          <ExerciseVideo exercise={exercise} key={"video"} />
-        )}
-      </AnimatePresence>
-    </div>
-  );
+  return <ExerciseVideo exercise={exercise} key={"video"} />;
 };
 
 const ExerciseVideo = ({ exercise }: { exercise: Exercise }) => {
@@ -68,7 +72,7 @@ const ExerciseVideo = ({ exercise }: { exercise: Exercise }) => {
       muted
       playsInline
       src={url}
-      className="h-full object-cover object-center"
+      className="h-full w-full object-cover object-center"
     />
   );
 };

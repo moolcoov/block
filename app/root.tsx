@@ -8,7 +8,31 @@ import "dayjs/locale/ru";
 
 dayjs.locale("ru");
 
+export function meta() {
+  return [{ title: "Block — Тренировки, чтобы держать себя в форме" }];
+}
+
 export const links: Route.LinksFunction = () => [
+  { rel: "icon", href: "/icon-96x96.png", type: "image/png", sizes: "96x96" },
+  {
+    rel: "icon",
+    href: "/icon.svg",
+    type: "image/svg+xml",
+  },
+  {
+    rel: "shortcut icon",
+    href: "/icon.ico",
+  },
+  {
+    rel: "apple-touch-icon",
+    href: "/apple-touch-icon.png",
+    sizes: "180x180",
+  },
+  {
+    rel: "manifest",
+    href: "/manifest.webmanifest",
+  },
+
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -41,6 +65,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="apple-mobile-web-app-title" content="Block" />
         <Meta />
         <Links />
       </head>

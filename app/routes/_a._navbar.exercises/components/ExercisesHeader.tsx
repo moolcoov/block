@@ -8,7 +8,7 @@ export const ExercisesHeader = () => {
   const [searchQuery, setSearchQuery] = useExercisesSearchQuery();
 
   return (
-    <header className="bg-background-200 sticky top-0 z-20 flex h-18 w-full items-center border-b px-5">
+    <header className="bg-background-200 sticky top-0 z-20 flex h-18 w-full items-center border-b px-5 lg:hidden">
       <motion.h1
         className="font-medium-sans text-xl"
         animate={
