@@ -32,6 +32,11 @@ export const deleteMediaFromDB = async (id?: UUID) => {
   return db.delete(MEDIA_STORE_NAME, id);
 };
 
+export const deleteAllMediaFromDB = async () => {
+  const db = await initDB();
+  return db.clear(MEDIA_STORE_NAME);
+};
+
 export const getStorageUsage = async () => {
   if (navigator.storage && navigator.storage.estimate) {
     const { quota, usage } = await navigator.storage.estimate();

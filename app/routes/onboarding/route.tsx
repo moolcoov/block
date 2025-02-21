@@ -59,6 +59,15 @@ export default function OnboardingPage() {
 
         xp: 0,
         coins: 0,
+
+        character: {
+          hair: "",
+          pants: "",
+          boots: "",
+          hat: "",
+          item: "",
+        },
+        availableClothes: [],
       };
       saveUser(user);
     }
@@ -337,6 +346,7 @@ const NameBlock: AnimationBlock = ({ next }) => {
         <Button
           disabled={name === ""}
           onClick={!submitted ? onSubmit : undefined}
+          className="m-auto lg:max-w-xl"
         >
           ДАЛЕЕ
         </Button>

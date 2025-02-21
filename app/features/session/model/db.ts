@@ -23,3 +23,8 @@ export const updateSessionInDB = async (session: WorkoutSession) => {
   const db = await initDB();
   return db.put(SESSIONS_STORE_NAME, session);
 };
+
+export const deleteAllSessionsFromDB = async () => {
+  const db = await initDB();
+  return db.clear(SESSIONS_STORE_NAME);
+};

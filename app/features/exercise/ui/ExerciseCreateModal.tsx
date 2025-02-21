@@ -9,7 +9,8 @@ import {
 } from "~/shared/ui/Drawer";
 import {
   CameraIcon,
-  DumbBellIcon,
+  ClockColoredIcon,
+  DumbBellColoredIcon,
   PhotoIcon,
   PlusIcon,
   XmarkIcon,
@@ -204,7 +205,7 @@ const TitleScreen: CreateScreen = ({ next, prev }) => {
         </div>
         <div className="flex w-full gap-4">
           <TypeButton
-            icon={<DumbBellIcon size={34} />}
+            icon={<DumbBellColoredIcon size={34} />}
             label="На количество"
             onClick={() => {
               setType(ExerciseType.QUANTITY);
@@ -212,7 +213,11 @@ const TitleScreen: CreateScreen = ({ next, prev }) => {
             active={type === ExerciseType.QUANTITY}
           />
           <TypeButton
-            icon={<DumbBellIcon size={34} />}
+            icon={
+              <div className="p-0.5">
+                <ClockColoredIcon size={30} />
+              </div>
+            }
             label="На время"
             onClick={() => {
               setType(ExerciseType.TIMED);

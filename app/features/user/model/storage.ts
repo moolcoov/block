@@ -10,6 +10,10 @@ export const getUser = (): User | undefined => {
   return JSON.parse(user);
 };
 
-export const updateUser = (user: User) => {
+export const updateUserStorage = (user: User) => {
   localStorage.setItem("user", JSON.stringify(user));
+};
+
+export const deleteUser = () => {
+  localStorage.removeItem("user");
 };

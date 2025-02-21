@@ -107,6 +107,8 @@ input:not(
 }
 
 ::-webkit-scrollbar {
+  position: absolute;
+  z-index: 9999;
   width: 11px;
 }
 

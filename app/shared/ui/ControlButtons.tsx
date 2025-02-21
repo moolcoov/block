@@ -21,7 +21,7 @@ export const ControlButtons = ({
   const [pressed, setPressed] = React.useState(false);
 
   return (
-    <div className="flex w-full gap-2">
+    <div className="m-auto flex w-full justify-center gap-2 lg:max-w-xl">
       {withBackButton && (
         <button
           className="bg-muted flex h-14 w-full max-w-14 items-center justify-center rounded-full transition-transform active:scale-[0.95]"

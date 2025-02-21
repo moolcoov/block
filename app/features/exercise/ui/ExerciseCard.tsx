@@ -24,7 +24,7 @@ export const ExerciseCard = ({ exercise }: { exercise: Exercise }) => {
             <motion.img
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
               className="h-full w-full object-cover object-center"
               src={imageSrc}
               alt={exercise.title}
