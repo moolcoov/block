@@ -17,6 +17,8 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerDescription,
+  DrawerTitle,
   DrawerTrigger,
 } from "~/shared/ui/Drawer";
 import { Button } from "~/shared/ui/Button";
@@ -24,10 +26,12 @@ import { XmarkIcon } from "~/shared/ui/icons";
 import { useMediaQuery } from "~/shared/hooks/use-media-query";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
+  DialogDescription,
+  DialogTitle,
   DialogTrigger,
 } from "~/shared/ui/Dialog";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 export const WorkoutExercises = () => {
   const workout = useWorkout();
@@ -64,6 +68,10 @@ const WorkoutExerciseScreen = ({
       <Dialog>
         <DialogTrigger className="outline-none">{children}</DialogTrigger>
         <DialogContent className="h-[85vh] overflow-hidden">
+          <VisuallyHidden.Root>
+            <DialogTitle>Упражнение</DialogTitle>
+            <DialogDescription>Просмотр упражнения</DialogDescription>
+          </VisuallyHidden.Root>
           <ExerciseProvider exercise={exercise}>
             <ModalContent exercise={exercise} />
           </ExerciseProvider>
@@ -76,6 +84,10 @@ const WorkoutExerciseScreen = ({
     <Drawer shouldScaleBackground={false}>
       <DrawerTrigger className="outline-none">{children}</DrawerTrigger>
       <DrawerContent className="h-[85vh] overflow-hidden">
+        <VisuallyHidden.Root>
+          <DrawerTitle>Упражнение</DrawerTitle>
+          <DrawerDescription>Просмотр упражнения</DrawerDescription>
+        </VisuallyHidden.Root>
         <DrawerClose asChild>
           <Button
             variant={"secondary"}

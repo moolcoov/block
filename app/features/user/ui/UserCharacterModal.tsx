@@ -4,17 +4,25 @@ import {
   DrawerContent,
   DrawerClose,
   Drawer,
+  DrawerDescription,
+  DrawerTitle,
 } from "~/shared/ui/Drawer";
 import { XmarkIcon } from "~/shared/ui/icons";
-import { Dialog, DialogContent, DialogTrigger } from "~/shared/ui/Dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "~/shared/ui/Dialog";
 import { useMediaQuery } from "~/shared/hooks/use-media-query";
 import { CharacterProfile } from "./UserCharacter";
 import { getAvailableClothes, type Clothes } from "../lib/character";
-import { useState } from "react";
 import React from "react";
 import { useUserStore } from "../model/store";
 import { cn } from "~/shared/lib/utils";
 import { motion } from "motion/react";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 export const CharacterModal = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
@@ -24,6 +32,10 @@ export const CharacterModal = ({ children }: { children: React.ReactNode }) => {
       <Dialog>
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="h-[85vh] overflow-x-hidden overflow-y-auto">
+          <VisuallyHidden.Root>
+            <DialogTitle>Персонаж</DialogTitle>
+            <DialogDescription>Ваш персонаж</DialogDescription>
+          </VisuallyHidden.Root>
           <Character />
         </DialogContent>
       </Dialog>
@@ -34,6 +46,10 @@ export const CharacterModal = ({ children }: { children: React.ReactNode }) => {
     <Drawer shouldScaleBackground={false}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="h-[85vh] overflow-hidden">
+        <VisuallyHidden.Root>
+          <DrawerTitle>Персонаж</DrawerTitle>
+          <DrawerDescription>Ваш персонаж</DrawerDescription>
+        </VisuallyHidden.Root>
         <DrawerClose asChild>
           <Button
             variant={"secondary"}

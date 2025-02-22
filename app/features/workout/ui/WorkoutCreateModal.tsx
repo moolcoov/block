@@ -5,7 +5,9 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerDescription,
   DrawerHandle,
+  DrawerTitle,
   DrawerTrigger,
 } from "~/shared/ui/Drawer";
 import {
@@ -83,7 +85,14 @@ import { getEquipmentFromExercises } from "../lib/equipment";
 import { useTagsStore } from "~/features/tag/model/store";
 import type { Tag } from "~/features/tag/model/types";
 import { useMediaQuery } from "~/shared/hooks/use-media-query";
-import { Dialog, DialogContent, DialogTrigger } from "~/shared/ui/Dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "~/shared/ui/Dialog";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 interface CreateWorkoutObject {
   title?: string;
@@ -155,6 +164,10 @@ export const WorkoutCreateModal = ({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="px-none py-none h-full max-h-[750px] overflow-x-hidden overflow-y-auto">
+          <VisuallyHidden.Root>
+            <DialogTitle>Создание тренировки</DialogTitle>
+            <DialogDescription>Создание тренировки</DialogDescription>
+          </VisuallyHidden.Root>
           <CreateWorkoutContext.Provider
             value={{
               workoutObject,
@@ -181,6 +194,10 @@ export const WorkoutCreateModal = ({
     <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="h-[85vh] overflow-hidden">
+        <VisuallyHidden.Root>
+          <DrawerTitle>Создание тренировки</DrawerTitle>
+          <DrawerDescription>Создание тренировки</DrawerDescription>
+        </VisuallyHidden.Root>
         <DrawerClose asChild>
           <Button
             variant={"secondary"}
@@ -541,6 +558,10 @@ const AddExerciseModal = ({
     <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="m-auto h-[82vh] overflow-hidden lg:max-w-lg">
+        <VisuallyHidden.Root>
+          <DrawerTitle>Выбор упражнения</DrawerTitle>
+          <DrawerDescription>Выбор упражнения</DrawerDescription>
+        </VisuallyHidden.Root>
         <DrawerHandle />
 
         <ExercisesProvider exercises={exercises}>

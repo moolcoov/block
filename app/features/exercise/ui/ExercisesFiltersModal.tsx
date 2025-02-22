@@ -2,6 +2,7 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -17,7 +18,7 @@ import type { UUID } from "~/shared/types/uuid";
 import { Checkbox } from "~/shared/ui/Checkbox";
 import { getEquipment } from "~/shared/lib/equipment";
 import { useTagsStore } from "~/features/tag/model/store";
-
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 export const ExercisesFiltersModal = ({
   children,
   asChild,
@@ -32,6 +33,9 @@ export const ExercisesFiltersModal = ({
     <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild={asChild}>{children}</DrawerTrigger>
       <DrawerContent className="m-auto max-h-[85vh] lg:max-w-lg">
+        <VisuallyHidden.Root>
+          <DrawerDescription>Фильтры упражнений</DrawerDescription>
+        </VisuallyHidden.Root>
         <DrawerClose asChild>
           <Button
             variant={"secondary"}

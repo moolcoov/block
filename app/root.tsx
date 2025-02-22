@@ -1,10 +1,31 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import {
+  isRouteErrorResponse,
+  Link,
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useNavigate,
+} from "react-router";
 
 import type { Route } from "./+types/root";
 import "~/styles/globals.css";
 import { Loading } from "./shared/ui/Loading";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./shared/ui/AlertDialog";
+import { deleteEverything } from "./shared/lib/data";
 
 dayjs.locale("ru");
 
@@ -84,4 +105,61 @@ export default function App() {
 
 export function HydrateFallback() {
   return <Loading />;
+}
+
+export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+  const navigate = useNavigate();
+
+  if (isRouteErrorResponse(error) && error.status === 404) {
+    return (
+      <div className="flex h-screen w-screen flex-col items-center justify-center pb-28">
+        <img src="/shah_i_mat.svg" alt="Александр Шахов I" />
+        <h1 className="mt-5 text-center text-3xl font-black">
+          Эта страница не найдена. Увы
+        </h1>
+        <Link
+          to="/"
+          className="bg-muted mt-5 rounded-2xl px-4 py-3 font-medium"
+        >
+          На главную
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex h-screen w-screen flex-col items-center justify-center pb-28">
+      <img src="/lottie.svg" alt="lottie" />
+      <h1 className="mt-5 text-center text-3xl font-black">
+        Кажется, что-то пошло не так
+      </h1>
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <button className="mt-5 rounded-2xl bg-red-500/30 px-4 py-3 font-medium text-red-500 transition-transform active:scale-[0.95]">
+            Удалить все данные (крайний случай)
+          </button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Удалить все данные?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Это необратимое действие
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Отмена</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-500/20 text-red-500"
+              onClick={async () => {
+                await deleteEverything();
+                navigate("/onboarding");
+              }}
+            >
+              Удалить
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  );
 }

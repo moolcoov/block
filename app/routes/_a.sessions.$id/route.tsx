@@ -53,6 +53,10 @@ export default function SessionPage({
 
   const onComplete = React.useCallback(
     async (session: WorkoutSession) => {
+      if (completed) {
+        return;
+      }
+
       const trainingTime = Math.round(
         ((session.completedAt ?? new Date()).getTime() -
           (session.startedAt ?? new Date()).getTime()) /

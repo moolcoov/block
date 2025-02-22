@@ -152,11 +152,11 @@ const clothes: Clothes[] = [
 ];
 
 const defaultClothes = {
-  hair: clothes.find((item) => item.id === "brown_hair"),
-  pants: clothes.find((item) => item.id === "shnike_pants"),
-  boots: clothes.find((item) => item.id === "shnike_boots"),
-  hat: clothes.find((item) => item.id === "no_hat"),
-  item: clothes.find((item) => item.id === "no_item"),
+  hair: clothes.find((item) => item.id === "brown_hair") as Clothes,
+  pants: clothes.find((item) => item.id === "shnike_pants") as Clothes,
+  boots: clothes.find((item) => item.id === "shnike_boots") as Clothes,
+  hat: clothes.find((item) => item.id === "no_hat") as Clothes,
+  item: clothes.find((item) => item.id === "no_item") as Clothes,
 };
 
 export const getCharacter = (
@@ -178,6 +178,10 @@ export const getCharacter = (
     hat: hat,
     item: item,
   };
+};
+
+export const getDefaultClothes = () => {
+  return defaultClothes;
 };
 
 export interface CharacterClothes {

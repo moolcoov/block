@@ -1,6 +1,6 @@
 const XPFactors = {
-  time: 0.7,
-  weight: 0.4,
+  time: 0.5,
+  weight: 0.1,
 };
 
 export const calculateCoins = (

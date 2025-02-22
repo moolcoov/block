@@ -32,9 +32,6 @@ export const WorkoutsHeader = () => {
             <span className="text-xp font-bold">{getXPLevel(user?.xp)} ур</span>
           </div>
         </UserLevelModal>
-        <div className="flex items-center justify-center gap-3 lg:flex-1">
-          <span className="font-bold">2 нед</span>
-        </div>
         <UserStoreModal>
           <div
             className="flex items-center justify-center gap-2 transition-transform outline-none active:scale-[0.95] lg:flex-1"

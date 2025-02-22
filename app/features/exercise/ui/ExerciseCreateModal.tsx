@@ -5,6 +5,8 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerDescription,
+  DrawerTitle,
   DrawerTrigger,
 } from "~/shared/ui/Drawer";
 import {
@@ -29,7 +31,14 @@ import { getEquipment, type EquipmentType } from "~/shared/lib/equipment";
 import type { Tag } from "~/features/tag/model/types";
 import { useTagsStore } from "~/features/tag/model/store";
 import { useMediaQuery } from "~/shared/hooks/use-media-query";
-import { Dialog, DialogContent, DialogTrigger } from "~/shared/ui/Dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "~/shared/ui/Dialog";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 interface CreateExerciseObject {
   title?: string;
@@ -64,6 +73,10 @@ export const ExerciseCreateModal = ({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="px-none py-none h-full max-h-[750px] overflow-x-hidden overflow-y-auto">
+          <VisuallyHidden.Root>
+            <DialogTitle>Создать упражнение</DialogTitle>
+            <DialogDescription>Создание упражнения</DialogDescription>
+          </VisuallyHidden.Root>
           <CreateExercise setOpen={setOpen} />
         </DialogContent>
       </Dialog>
@@ -74,6 +87,10 @@ export const ExerciseCreateModal = ({
     <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="h-[85vh] overflow-hidden">
+        <VisuallyHidden.Root>
+          <DrawerTitle>Создать упражнение</DrawerTitle>
+          <DrawerDescription>Создание упражнения</DrawerDescription>
+        </VisuallyHidden.Root>
         <DrawerClose asChild>
           <Button
             variant={"secondary"}

@@ -7,6 +7,8 @@ import { cn } from "~/shared/lib/utils";
 import { Button } from "./Button";
 import { useMediaQuery } from "../hooks/use-media-query";
 
+// ui.shadcn.com
+
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
 type CarouselOptions = UseCarouselParameters[0];

@@ -2,6 +2,8 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerDescription,
+  DrawerTitle,
   DrawerTrigger,
 } from "~/shared/ui/Drawer";
 import { XmarkIcon } from "~/shared/ui/icons";
@@ -33,8 +35,14 @@ import { MoreIcon } from "~/shared/ui/icons/More";
 import { getEquipmentLabel, type EquipmentType } from "~/shared/lib/equipment";
 import { cn } from "~/shared/lib/utils";
 import { useMediaQuery } from "~/shared/hooks/use-media-query";
-import { Dialog, DialogContent, DialogTrigger } from "~/shared/ui/Dialog";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "~/shared/ui/Dialog";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 interface ExerciseModalProps {
   id: UUID;
   children: React.ReactNode;
@@ -56,6 +64,10 @@ export const ExerciseModal = ({ id, children }: ExerciseModalProps) => {
         <DialogTrigger>{children}</DialogTrigger>
         {open && (
           <DialogContent className="h-[85vh] overflow-x-hidden overflow-y-auto">
+            <VisuallyHidden.Root>
+              <DialogTitle>Упражнение</DialogTitle>
+              <DialogDescription>Просмотр упражнения</DialogDescription>
+            </VisuallyHidden.Root>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -74,7 +86,6 @@ export const ExerciseModal = ({ id, children }: ExerciseModalProps) => {
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
-
             <Content id={id} />
           </DialogContent>
         )}
@@ -86,6 +97,10 @@ export const ExerciseModal = ({ id, children }: ExerciseModalProps) => {
     <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger>{children}</DrawerTrigger>
       <DrawerContent className="h-[85vh] overflow-hidden">
+        <VisuallyHidden.Root>
+          <DrawerTitle>Упражнение</DrawerTitle>
+          <DrawerDescription>Просмотр упражнения</DrawerDescription>
+        </VisuallyHidden.Root>
         <DrawerClose asChild>
           <Button
             variant={"secondary"}
@@ -95,7 +110,6 @@ export const ExerciseModal = ({ id, children }: ExerciseModalProps) => {
             <XmarkIcon size={19} />
           </Button>
         </DrawerClose>
-
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -114,7 +128,6 @@ export const ExerciseModal = ({ id, children }: ExerciseModalProps) => {
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
-
         <Content id={id} />
       </DrawerContent>
     </Drawer>
