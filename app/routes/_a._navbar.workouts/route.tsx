@@ -11,9 +11,14 @@ import { Loading } from "~/shared/ui/Loading";
 import { SessionResumeButton } from "~/features/session/ui/SessionResumeButton";
 import { useSessionsStore } from "~/features/session/model/store";
 import { SearchBar } from "~/shared/ui/SearchBar";
+import { useSearchParams } from "react-router";
+import { WorkoutAddSharedModal } from "~/features/workout/ui/WorkoutsAddSharedModal";
 
 export default function WorkoutsPage() {
   const { workouts, loading } = useWorkoutsStore();
+  const [params] = useSearchParams();
+
+  const workoutData = params.get("data");
 
   return (
     <AnimatePresence>
@@ -27,6 +32,7 @@ export default function WorkoutsPage() {
               <Content />
             </div>
           </div>
+          {workoutData && <WorkoutAddSharedModal workoutData={workoutData} />}
         </WorkoutsProvider>
       )}
     </AnimatePresence>

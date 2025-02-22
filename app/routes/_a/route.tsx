@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet, redirect, useNavigate } from "react-router";
+import { Outlet, redirect, useNavigate, useSearchParams } from "react-router";
 import { useExercisesStore } from "~/features/exercise/model/store";
 import { useSessionsStore } from "~/features/session/model/store";
 import { useTagsStore } from "~/features/tag/model/store";
@@ -8,13 +8,17 @@ import { useUserStore } from "~/features/user/model/store";
 import { useWorkoutsStore } from "~/features/workout/model/store";
 import InstallPromptTrigger from "~/shared/ui/InstallPrompt";
 
-export const clientLoader = async () => {
-  if (!getUser()) {
-    return redirect("/onboarding");
+export const clientLoader = async ({ request }: { request: Request }) => {
+  const data = new URL(request.url).searchParams.get("data");
+
+  if (!data && !getUser()) {
+    return redirect(`/onboarding`);
   }
 };
 
 export default function AppLayout() {
+  const [searchParams] = useSearchParams();
+
   const { fetchExercises } = useExercisesStore();
   const { fetchWorkouts } = useWorkoutsStore();
   const { fetchSessions } = useSessionsStore();
@@ -52,9 +56,12 @@ export default function AppLayout() {
 
   React.useEffect(() => {
     if (!getUser()) {
-      navigate("/onboarding");
+      navigate({
+        pathname: "/onboarding",
+        search: searchParams.toString(),
+      });
     }
-  }, []);
+  }, [searchParams]);
 
   return (
     <>

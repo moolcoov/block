@@ -7,6 +7,7 @@ import {
 import { useWorkout } from "./WorkoutProvider";
 import React, { useState } from "react";
 import { useWorkoutsStore } from "~/features/workout/model/store";
+import { WorkoutShareModal } from "~/features/workout/ui/WorkoutShareModal";
 
 export const WorkoutActions = () => {
   const workout = useWorkout();
@@ -27,8 +28,9 @@ export const WorkoutActions = () => {
         label={saved ? "Сохранено" : "Сохранить"}
         onClick={() => setSaved(!saved)}
       />
-      {/* <Action icon={<ShareIcon />} label="Поделиться" onClick={() => {}} />
-       */}
+      <WorkoutShareModal workout={workout}>
+        <Action icon={<ShareIcon />} label="Поделиться" onClick={() => {}} />
+      </WorkoutShareModal>
     </div>
   );
 };
