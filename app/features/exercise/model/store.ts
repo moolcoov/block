@@ -55,6 +55,10 @@ const useExercisesStore = create<ExercisesState>((set, get) => ({
 
     await deleteExerciseFromDB(id);
 
+    if (!exercise) {
+      return;
+    }
+
     if (exercise.image?.type === "stored") {
       await deleteMediaFromDB(exercise.image.storedId);
     }

@@ -5,6 +5,8 @@ import { Drawer as DrawerPrimitive } from "vaul";
 
 import { cn } from "~/shared/lib/utils";
 
+// ui.shadcn.com
+
 const Drawer = ({
   shouldScaleBackground = true,
   nested,
@@ -87,6 +89,18 @@ const DrawerTitle = React.forwardRef<
 ));
 DrawerTitle.displayName = DrawerPrimitive.Title.displayName;
 
+const DrawerDescription = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <DrawerPrimitive.Description
+    ref={ref}
+    className={cn("text-muted-foreground text-sm", className)}
+    {...props}
+  />
+));
+DrawerDescription.displayName = DrawerPrimitive.Description.displayName;
+
 const DrawerHandle = React.forwardRef<
   React.ComponentRef<typeof DrawerPrimitive.Handle>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Handle>
@@ -109,4 +123,5 @@ export {
   DrawerHeader,
   DrawerTitle,
   DrawerHandle,
+  DrawerDescription,
 };

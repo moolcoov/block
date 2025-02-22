@@ -4,10 +4,18 @@ import {
   DrawerContent,
   DrawerClose,
   Drawer,
+  DrawerDescription,
+  DrawerTitle,
 } from "~/shared/ui/Drawer";
 import { XmarkIcon } from "~/shared/ui/icons";
 import { useUserStore } from "../model/store";
-import { Dialog, DialogContent, DialogTrigger } from "~/shared/ui/Dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "~/shared/ui/Dialog";
 import { useMediaQuery } from "~/shared/hooks/use-media-query";
 import React from "react";
 import {
@@ -23,6 +31,7 @@ import {
 } from "~/shared/ui/AlertDialog";
 import { deleteEverything } from "~/shared/lib/data";
 import { useNavigate } from "react-router";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 export const UserSettingsModal = ({
   children,
@@ -36,6 +45,10 @@ export const UserSettingsModal = ({
       <Dialog>
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="h-[85vh] overflow-hidden">
+          <VisuallyHidden.Root>
+            <DialogTitle>Настройки</DialogTitle>
+            <DialogDescription>Настройки профиля</DialogDescription>
+          </VisuallyHidden.Root>
           <Settings />
         </DialogContent>
       </Dialog>
@@ -46,6 +59,10 @@ export const UserSettingsModal = ({
     <Drawer shouldScaleBackground={false}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="h-[85vh] overflow-hidden">
+        <VisuallyHidden.Root>
+          <DrawerTitle>Настройки</DrawerTitle>
+          <DrawerDescription>Настройки профиля</DrawerDescription>
+        </VisuallyHidden.Root>
         <DrawerClose asChild>
           <Button
             variant={"secondary"}

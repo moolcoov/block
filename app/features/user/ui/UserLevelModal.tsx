@@ -4,6 +4,8 @@ import {
   DrawerContent,
   DrawerClose,
   Drawer,
+  DrawerDescription,
+  DrawerTitle,
 } from "~/shared/ui/Drawer";
 import { DumbBellColoredIcon, XmarkIcon } from "~/shared/ui/icons";
 import { useUserStore } from "../model/store";
@@ -11,7 +13,14 @@ import { getXPLevel, LEVEL_TO_XP } from "../lib/xp";
 import NumberFlow from "@number-flow/react";
 import type { CSSProperties } from "react";
 import { useMediaQuery } from "~/shared/hooks/use-media-query";
-import { Dialog, DialogContent, DialogTrigger } from "~/shared/ui/Dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "~/shared/ui/Dialog";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 export const UserLevelModal = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
@@ -21,6 +30,10 @@ export const UserLevelModal = ({ children }: { children: React.ReactNode }) => {
       <Dialog>
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="h-[85vh] overflow-hidden">
+          <VisuallyHidden.Root>
+            <DialogTitle>Уровень</DialogTitle>
+            <DialogDescription>Ваш уровень</DialogDescription>
+          </VisuallyHidden.Root>
           <Level />
         </DialogContent>
       </Dialog>
@@ -31,6 +44,10 @@ export const UserLevelModal = ({ children }: { children: React.ReactNode }) => {
     <Drawer shouldScaleBackground={false}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="h-[85vh] overflow-hidden">
+        <VisuallyHidden.Root>
+          <DrawerTitle>Уровень</DrawerTitle>
+          <DrawerDescription>Ваш уровень</DrawerDescription>
+        </VisuallyHidden.Root>
         <DrawerClose asChild>
           <Button
             variant={"secondary"}

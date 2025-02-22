@@ -1,12 +1,15 @@
 import {
   Drawer,
   DrawerContent,
+  DrawerDescription,
   DrawerHandle,
+  DrawerTitle,
   DrawerTrigger,
 } from "~/shared/ui/Drawer";
 import React from "react";
 import { useExercise } from "../model/ExerciseProvider";
 import { useExercisesStore } from "../model/store";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 interface ExerciseNotesModalProps {
   children: React.ReactNode;
@@ -29,6 +32,10 @@ export const ExerciseNotesModal = ({ children }: ExerciseNotesModalProps) => {
     <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="m-auto h-[84vh] overflow-hidden lg:max-w-lg">
+        <VisuallyHidden.Root>
+          <DrawerTitle>Заметки</DrawerTitle>
+          <DrawerDescription>Заметки упражнения</DrawerDescription>
+        </VisuallyHidden.Root>
         <DrawerHandle />
         <button
           className="absolute top-2 right-0 px-5 py-3.5 transition-colors active:opacity-70"

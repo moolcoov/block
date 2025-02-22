@@ -4,17 +4,26 @@ import {
   DrawerContent,
   DrawerClose,
   Drawer,
+  DrawerDescription,
+  DrawerTitle,
 } from "~/shared/ui/Drawer";
 import { LottieCoinIcon, XmarkIcon } from "~/shared/ui/icons";
 import { useUserStore } from "../model/store";
 import NumberFlow from "@number-flow/react";
 import type { CSSProperties } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "~/shared/ui/Dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "~/shared/ui/Dialog";
 import { useMediaQuery } from "~/shared/hooks/use-media-query";
 import { getClothes, getClothesTypeLabel } from "../lib/character";
 import { motion } from "motion/react";
 import React from "react";
 import { cn } from "~/shared/lib/utils";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 export const UserStoreModal = ({ children }: { children: React.ReactNode }) => {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
@@ -24,6 +33,10 @@ export const UserStoreModal = ({ children }: { children: React.ReactNode }) => {
       <Dialog>
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="h-[85vh] overflow-x-hidden overflow-y-auto">
+          <VisuallyHidden.Root>
+            <DialogTitle>Магазин</DialogTitle>
+            <DialogDescription>Магазин предметов</DialogDescription>
+          </VisuallyHidden.Root>
           <Store />
         </DialogContent>
       </Dialog>
@@ -34,6 +47,10 @@ export const UserStoreModal = ({ children }: { children: React.ReactNode }) => {
     <Drawer shouldScaleBackground={false}>
       <DrawerTrigger asChild>{children}</DrawerTrigger>
       <DrawerContent className="h-[85vh] overflow-hidden">
+        <VisuallyHidden.Root>
+          <DrawerTitle>Магазин</DrawerTitle>
+          <DrawerDescription>Магазин предметов</DrawerDescription>
+        </VisuallyHidden.Root>
         <DrawerClose asChild>
           <Button
             variant={"secondary"}
