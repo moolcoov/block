@@ -3,7 +3,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import React, { type JSX } from "react";
-import { redirect, useNavigate } from "react-router";
+import { redirect, useNavigate, useSearchParams } from "react-router";
 import { getUser, saveUser } from "~/features/user/model/storage";
 import type { User, UserParameter, UserSex } from "~/features/user/model/types";
 import { createEverything } from "~/shared/lib/data";
@@ -35,6 +35,7 @@ export const clientLoader = async () => {
 };
 
 export default function OnboardingPage() {
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -46,7 +47,12 @@ export default function OnboardingPage() {
   const [userObject, setUserObject] = React.useState<UserCreationObject>({});
 
   const finish = React.useCallback(() => {
-    createEverything(userObject).then(() => navigate("/workouts"));
+    createEverything(userObject).then(() =>
+      navigate({
+        pathname: "/workouts",
+        search: searchParams.toString(),
+      }),
+    );
   }, [userObject]);
 
   return (
