@@ -153,7 +153,7 @@ export const SessionProvider = ({
       await onComplete?.(session);
     };
 
-    if (state.status === "finished") {
+    if (state.status === "finished" && update.current) {
       update.current = false;
       finish();
     }

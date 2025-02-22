@@ -1,8 +1,8 @@
 export const LEVEL_TO_XP = 212;
 
 const XPFactors = {
-  time: 0.9,
-  weight: 0.2,
+  time: 0.6,
+  weight: 0.05,
 };
 
 export const calculateXP = (

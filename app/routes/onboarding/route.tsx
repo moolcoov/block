@@ -6,12 +6,13 @@ import React, { type JSX } from "react";
 import { redirect, useNavigate } from "react-router";
 import { getUser, saveUser } from "~/features/user/model/storage";
 import type { User, UserParameter, UserSex } from "~/features/user/model/types";
+import { createEverything } from "~/shared/lib/data";
 import { cn } from "~/shared/lib/utils";
 import { Button } from "~/shared/ui/Button";
 import { ControlButtons } from "~/shared/ui/ControlButtons";
 import NumericInput from "~/shared/ui/NumericInput";
 
-interface UserCreationObject {
+export interface UserCreationObject {
   name?: string;
   sex?: UserSex;
   weight?: UserParameter;
@@ -45,34 +46,7 @@ export default function OnboardingPage() {
   const [userObject, setUserObject] = React.useState<UserCreationObject>({});
 
   const finish = React.useCallback(() => {
-    if (
-      userObject.name &&
-      userObject.sex &&
-      userObject.height &&
-      userObject.weight
-    ) {
-      const user: User = {
-        name: userObject.name,
-        sex: userObject.sex,
-        height: userObject.height,
-        weight: userObject.weight,
-
-        xp: 0,
-        coins: 0,
-
-        character: {
-          hair: "",
-          pants: "",
-          boots: "",
-          hat: "",
-          item: "",
-        },
-        availableClothes: [],
-      };
-      saveUser(user);
-    }
-
-    navigate("/workouts");
+    createEverything(userObject).then(() => navigate("/workouts"));
   }, [userObject]);
 
   return (
