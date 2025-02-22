@@ -67,7 +67,7 @@ export const WorkoutAddSharedModal = ({
 
   return (
     <Drawer shouldScaleBackground={false} open={open} onOpenChange={setOpen}>
-      <DrawerContent className="h-[85vh] overflow-x-hidden overflow-y-auto">
+      <DrawerContent className="h-[85vh] overflow-x-hidden">
         <VisuallyHidden.Root>
           <DrawerTitle>Добавить упражнение</DrawerTitle>
           <DrawerDescription>Добавить упражнение</DrawerDescription>
@@ -129,7 +129,7 @@ const Share = ({ workout }: { workout?: Workout }) => {
   }, [file, workout, navigate, addWorkout]);
 
   return (
-    <div className="flex h-full w-full flex-col items-center gap-5 px-5 py-5">
+    <div className="flex h-full w-full flex-col items-center gap-5 overflow-y-auto px-5 py-5">
       <p className="text-center text-sm font-medium">Добавить упражнение</p>
       <h1 className="font-medium-sans text-center text-2xl">{workout.title}</h1>
       <div className="w-full flex-1">
@@ -144,7 +144,7 @@ const Share = ({ workout }: { workout?: Workout }) => {
           aspectRatio="6/7"
         />
       </div>
-      <Button disabled={!file} onClick={onSubmit}>
+      <Button disabled={!file} onClick={onSubmit} className="min-h-12">
         ДОБАВИТЬ
       </Button>
     </div>
